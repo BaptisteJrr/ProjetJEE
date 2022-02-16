@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptistemycompany;
+package com.jin.baptiste.company;
 
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
