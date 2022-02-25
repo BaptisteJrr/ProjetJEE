@@ -4,6 +4,9 @@
  */
 package com.jin.baptiste.company;
 
+import entities.NewEntity;
+import entities.NewEntityFacadeLocal;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 
@@ -15,7 +18,15 @@ import javax.ejb.LocalBean;
 @LocalBean
 public class NewSessionBean {
 
+    @EJB
+    private NewEntityFacadeLocal newEntityFacade;
+
+    
+    
     public void businessMethod() {
+        NewEntity e = new NewEntity();
+        e.setNom("TOTO");
+        this.newEntityFacade.create(e);
     }
 
     // Add business logic below. (Right-click in editor and choose

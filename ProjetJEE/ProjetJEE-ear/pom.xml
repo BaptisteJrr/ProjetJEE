@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
     <artifactId>ProjetJEE</artifactId>
-    <groupId>com.jin.baptistemycompany</groupId>
+    <groupId>com.jin.baptiste.company</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
@@ -42,13 +42,13 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.jin.baptistemycompany</groupId>
+            <groupId>com.jin.baptiste.company</groupId>
             <artifactId>ProjetJEE-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
-            <groupId>com.jin.baptistemycompany</groupId>
+            <groupId>com.jin.baptiste.company</groupId>
             <artifactId>ProjetJEE-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>

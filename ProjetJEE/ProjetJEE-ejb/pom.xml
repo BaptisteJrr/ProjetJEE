@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
     <artifactId>ProjetJEE</artifactId>
-    <groupId>com.jin.baptistemycompany</groupId>
+    <groupId>com.jin.baptiste.company</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
@@ -20,6 +20,18 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>eclipselink</artifactId>
+            <version>2.5.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.persistence</groupId>
+            <artifactId>org.eclipse.persistence.jpa.modelgen.processor</artifactId>
+            <version>2.5.2</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
