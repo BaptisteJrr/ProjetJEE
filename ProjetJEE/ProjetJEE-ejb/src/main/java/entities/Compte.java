@@ -6,11 +6,12 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -18,18 +19,17 @@ import javax.persistence.OneToMany;
  * @author Wang
  */
 @Entity
-public class Client implements Serializable {
+public class Compte implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nom;
-    private String prenom;
-    private String email;
+    private double solde;
+    @ManyToOne
+    private Client client;
     @OneToMany
-    private ArrayList<Compte> listeCompte;   
-
+    private Collection<Panier> listePanier;
     public Long getId() {
         return id;
     }
@@ -48,10 +48,10 @@ public class Client implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
+        if (!(object instanceof Compte)) {
             return false;
         }
-        Client other = (Client) object;
+        Compte other = (Compte) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -60,7 +60,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Client[ id=" + id + " ]";
+        return "entities.Compte[ id=" + id + " ]";
     }
     
 }
