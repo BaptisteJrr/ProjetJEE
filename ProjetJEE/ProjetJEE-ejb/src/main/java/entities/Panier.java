@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -26,7 +27,55 @@ public class Panier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private boolean flagLivre;
+    private boolean flagRegle;
+    
+    @OneToMany
+    private ArrayList<Produit> listeProduit;
+    
+    @OneToOne
+    private Client client;
+    
+    
+    @OneToOne
+    private Compte compte; 
+    
+    private double prixTTC;
+    
+    private Date date;
+    
+    
+    public Panier() {
+        this.flagLivre = false;
+        this.flagRegle = false;
+    }
 
+    public boolean isFlagLivre() {
+        return flagLivre;
+    }
+
+    public void setFlagLivre(boolean flagLivre) {
+        this.flagLivre = flagLivre;
+    }
+
+    public boolean isFlagRegle() {
+        return flagRegle;
+    }
+
+    public void setFlagRegle(boolean flagRegle) {
+        this.flagRegle = flagRegle;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+    
+    
     public ArrayList<Produit> getListeProduit() {
         return listeProduit;
     }
@@ -58,15 +107,7 @@ public class Panier implements Serializable {
     public void setCompte(Compte compte) {
         this.compte = compte;
     }
-
-    public Panier() {
-    }
-    @OneToMany
-    private ArrayList<Produit> listeProduit;
-    private double prixTTC;
-    private Date date;
-    @ManyToOne
-    private Compte compte;
+    
 
     public Long getId() {
         return id;

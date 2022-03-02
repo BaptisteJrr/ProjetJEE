@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -29,6 +30,8 @@ public class Client implements Serializable {
     private String email;
     @OneToMany
     private ArrayList<Compte> listeCompte;   
+    @OneToOne(mappedBy = "client")
+    private Panier panier;
 
     public String getNom() {
         return nom;

@@ -5,6 +5,8 @@
  */
 package com.jin.baptiste.company.exposition.livreur;
 
+import entities.Panier;
+import java.util.ArrayList;
 import javax.ejb.Stateless;
 
 /**
@@ -13,6 +15,16 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ExpoLegLvr implements ExpoLegLvrLocal {
+
+    @Override
+    public void livrer(ArrayList<Panier> listePanier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public ArrayList<Panier> listerPanier() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

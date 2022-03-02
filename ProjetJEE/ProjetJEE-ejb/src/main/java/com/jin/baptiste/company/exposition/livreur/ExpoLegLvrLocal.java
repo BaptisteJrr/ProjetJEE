@@ -5,6 +5,8 @@
  */
 package com.jin.baptiste.company.exposition.livreur;
 
+import entities.Panier;
+import java.util.ArrayList;
 import javax.ejb.Local;
 
 /**
@@ -13,5 +15,9 @@ import javax.ejb.Local;
  */
 @Local
 public interface ExpoLegLvrLocal {
+    public void livrer(ArrayList<Panier> listePanier );
+    public ArrayList<Panier> listerPanier();
+    
+    
     
 }
