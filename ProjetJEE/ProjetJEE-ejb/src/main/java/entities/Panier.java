@@ -26,6 +26,41 @@ public class Panier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public ArrayList<Produit> getListeProduit() {
+        return listeProduit;
+    }
+
+    public void setListeProduit(ArrayList<Produit> listeProduit) {
+        this.listeProduit = listeProduit;
+    }
+
+    public double getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(double prixTTC) {
+        this.prixTTC = prixTTC;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Compte getCompte() {
+        return compte;
+    }
+
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
+
+    public Panier() {
+    }
     @OneToMany
     private ArrayList<Produit> listeProduit;
     private double prixTTC;

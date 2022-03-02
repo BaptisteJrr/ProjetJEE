@@ -25,6 +25,49 @@ public class Produit implements Serializable {
     private TypeProduitEnum type;
     private String nom;
     private double prixHT;
+
+    public TypeProduitEnum getType() {
+        return type;
+    }
+
+    public void setType(TypeProduitEnum type) {
+        this.type = type;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public double getPrixHT() {
+        return prixHT;
+    }
+
+    public void setPrixHT(double prixHT) {
+        this.prixHT = prixHT;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public Produit() {
+    }
     private String description;
     private int stock;
 

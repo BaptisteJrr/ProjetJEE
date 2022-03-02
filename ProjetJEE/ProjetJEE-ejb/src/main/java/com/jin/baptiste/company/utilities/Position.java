@@ -3,60 +3,48 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package com.jin.baptiste.company.utilities;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 /**
  *
  * @author Wang
  */
 @Entity
-public class Compte implements Serializable {
+public class Position implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private double solde;
-    @ManyToOne
-    private Client client;
-    @OneToMany
-    private Collection<Panier> listePanier;
+    private Double solde;
+    private Date date;
 
-    public double getSolde() {
+    public Double getSolde() {
         return solde;
     }
 
-    public void setSolde(double solde) {
+    public void setSolde(Double solde) {
         this.solde = solde;
     }
 
-    public Client getClient() {
-        return client;
+    public Date getDate() {
+        return date;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Collection<Panier> getListePanier() {
-        return listePanier;
+    public Position() {
     }
 
-    public void setListePanier(Collection<Panier> listePanier) {
-        this.listePanier = listePanier;
-    }
-
-    public Compte() {
-    }
     public Long getId() {
         return id;
     }
@@ -75,10 +63,10 @@ public class Compte implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Compte)) {
+        if (!(object instanceof Position)) {
             return false;
         }
-        Compte other = (Compte) object;
+        Position other = (Position) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +75,7 @@ public class Compte implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Compte[ id=" + id + " ]";
+        return "com.jin.baptiste.company.utilities.Position[ id=" + id + " ]";
     }
     
 }
