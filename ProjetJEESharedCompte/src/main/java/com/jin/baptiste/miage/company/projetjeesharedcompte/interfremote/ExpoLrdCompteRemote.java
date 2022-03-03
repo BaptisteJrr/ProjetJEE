@@ -3,23 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.exposition.client;
+package com.jin.baptiste.miage.company.projetjeesharedcompte.interfremote;
 
+import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.ClientExport;
 import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.DecouverInterditException;
 import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.Position;
-import entities.Client;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 /**
  *
  * @author Wang
  */
-@Local
-public interface ExpoLegCltLocal {
+@Remote
+public interface ExpoLrdCompteRemote {
     
     public void creerClient(String nom, String prenom, String email);
     
-    public Client getClient(Long idClient);
+    public ClientExport getClient(Long idClient);
     
     public void creerCompte(Double solde, Long idClient);
     

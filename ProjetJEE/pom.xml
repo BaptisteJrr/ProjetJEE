@@ -10,4 +10,11 @@
     <module>ProjetJEE-web</module>
     <module>ProjetJEE-ejb</module>
   </modules>
+    <dependencies>
+        <dependency>
+            <groupId>com.jin.baptiste.miage.company</groupId>
+            <artifactId>ProjetJEESharedCompte</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -5,7 +5,7 @@
  */
 package com.jin.baptiste.company.metier;
 
-import com.jin.baptiste.company.utilities.Position;
+import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.Position;
 import javax.ejb.Stateless;
 
 /**

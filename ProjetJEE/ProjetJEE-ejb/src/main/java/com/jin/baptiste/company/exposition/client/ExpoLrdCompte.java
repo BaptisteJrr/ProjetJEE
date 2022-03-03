@@ -7,6 +7,8 @@ package com.jin.baptiste.company.exposition.client;
 
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.miage.company.projetjeesharedcompte.interfremote.ExpoLrdCompteRemote;
+import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.ClientExport;
 import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.Position;
 import entities.Client;
 import javax.ejb.EJB;
@@ -17,8 +19,9 @@ import javax.ejb.Stateless;
  * @author Wang
  */
 @Stateless
-public class ExpoLegClt implements ExpoLegCltLocal {
+public class ExpoLrdCompte implements ExpoLrdCompteRemote {
 
+    
     @EJB
     private MetierCompteLocal metierCompte;
 
@@ -30,9 +33,10 @@ public class ExpoLegClt implements ExpoLegCltLocal {
         this.metierClient.creerClient(nom, prenom, email);
     }
 
-    @Override
-    public Client getClient(Long idClient) {
-        return this.metierClient.getClient(idClient);
+
+    public ClientExport getClient(Long idClient) {
+        Client clt = this.metierClient.getClient(idClient);
+        return new ClientExport(clt.getId(), clt.getNom(), clt.getPrenom(), clt.getEmail());
     }
 
     @Override
@@ -54,7 +58,4 @@ public class ExpoLegClt implements ExpoLegCltLocal {
     public Position getCompte(long idCompte) {
         return this.metierCompte.getCompte(idCompte);
     }
-       
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 }
