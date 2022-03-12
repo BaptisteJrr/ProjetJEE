@@ -7,7 +7,7 @@ package com.jin.baptiste.company.exposition.client;
 
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
-import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.Position;
+import com.jin.baptiste.company.utilities.Position;
 import entities.Client;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,7 +26,7 @@ public class ExpoLegClt implements ExpoLegCltLocal {
     private MetierClientLocal metierClient;
     
     @Override
-    public void creerClient(String nom, String prenom, String email) {
+    public void creerCLient(String nom, String prenom, String email) {
         this.metierClient.creerClient(nom, prenom, email);
     }
 

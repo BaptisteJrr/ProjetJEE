@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.miage.company.projetjeesharedcompte.utilities;
+package com.jin.baptiste.company.utilities;
 
 import java.io.Serializable;
 import java.util.Date;

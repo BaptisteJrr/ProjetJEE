@@ -5,8 +5,8 @@
  */
 package com.jin.baptiste.company.exposition.client;
 
-import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.DecouverInterditException;
-import com.jin.baptiste.miage.company.projetjeesharedcompte.utilities.Position;
+import com.jin.baptiste.company.utilities.DecouverInterditException;
+import com.jin.baptiste.company.utilities.Position;
 import entities.Client;
 import javax.ejb.Local;
 
@@ -17,7 +17,7 @@ import javax.ejb.Local;
 @Local
 public interface ExpoLegCltLocal {
     
-    public void creerClient(String nom, String prenom, String email);
+    public void creerCLient(String nom, String prenom, String email);
     
     public Client getClient(Long idClient);
     
