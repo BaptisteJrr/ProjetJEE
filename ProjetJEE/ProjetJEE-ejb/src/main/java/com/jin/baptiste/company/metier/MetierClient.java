@@ -27,11 +27,17 @@ public class MetierClient implements MetierClientLocal {
     }
 
     @Override
-    public Client getClient(Long idClient) {
+    public Client getClient(long idClient) {
         return this.clientFacade.find(idClient);
     }
+    
     
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public boolean authentification(String nom, String prenom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

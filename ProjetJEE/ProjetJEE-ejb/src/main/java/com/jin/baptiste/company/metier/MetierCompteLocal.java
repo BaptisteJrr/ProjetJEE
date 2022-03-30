@@ -13,9 +13,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface MetierCompteLocal {
+    
     public void creerCompte (double solde, long idClient);
+    
+    public void getComptebyidCompte(long idCompte);
+    
+    public void getComptebyidClient(long idClient);
     
     public void crediter(long idCompte, double somme);
     
     public void debiter(long idCompte, double somme);
+    
 }

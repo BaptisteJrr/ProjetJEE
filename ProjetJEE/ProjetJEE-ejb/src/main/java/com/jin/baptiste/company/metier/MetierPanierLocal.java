@@ -14,4 +14,16 @@ import javax.ejb.Local;
 @Local
 public interface MetierPanierLocal {
     
+        public void payer(long idPanier);
+        
+        public void livrer(long idPanier);
+        
+        public void ajouterProduit(long idProduit,long idPanier);
+    
+        public void retirerProduit(long idProduit, long idPanier);
+    
+        public void retirerAllProduit(long idProduit, long idPanier);
+        
+        public void supprimerPanier(long idPanier);
+    
 }
