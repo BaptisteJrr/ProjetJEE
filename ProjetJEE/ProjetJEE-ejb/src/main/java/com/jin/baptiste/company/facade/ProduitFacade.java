@@ -6,7 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
-import com.jin.baptiste.company.entities.TypeProduitEnum;
+import entities.TypeProduitEnum;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
