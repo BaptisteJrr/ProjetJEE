@@ -38,8 +38,6 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     public void retirerProduit(long idProduit, long idPanier) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-<<<<<<< HEAD
-=======
 
     @Override
     public void retirerAllProduit(long idProduit, long idPanier) {
@@ -55,6 +53,4 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     public void livrer(long idPanier) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
->>>>>>> f9c3dbc0d84cf31e1d535ec9ed4ea214e6ca2b2e
-    
 }
