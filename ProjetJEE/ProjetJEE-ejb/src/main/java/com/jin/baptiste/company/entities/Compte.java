@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -27,7 +28,8 @@ public class Compte implements Serializable {
     private Long id;
     private double solde;
     
-    @ManyToOne
+
+    @OneToOne(mappedBy = "compte")
     private transient Client client;
     
     @OneToMany(mappedBy = "compte")
@@ -62,11 +64,8 @@ public class Compte implements Serializable {
     public void setListePanier(Collection<Panier> listePanier) {
         this.listePanier = listePanier;
     }
-    
-    
-    
-    
-
+        
+       
     public Long getId() {
         return id;
     }

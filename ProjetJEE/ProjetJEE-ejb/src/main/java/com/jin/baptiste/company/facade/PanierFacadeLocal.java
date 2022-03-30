@@ -34,4 +34,10 @@ public interface PanierFacadeLocal {
     
     public void retirerProduit(long idProduit, long idPanier);
     
+    public void retirerAllProduit(long idProduit, long idPanier);
+    
+    public void payer(long idPanier);
+    
+    public void livrer(long idPanier);
+    
 }

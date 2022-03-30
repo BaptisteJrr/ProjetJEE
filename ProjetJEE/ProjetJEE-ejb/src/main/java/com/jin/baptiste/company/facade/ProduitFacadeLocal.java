@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
+import entities.TypeProduitEnum;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -29,5 +30,12 @@ public interface ProduitFacadeLocal {
     List<Produit> findRange(int[] range);
 
     int count();
+    
+    public void creerProduit(String nom, TypeProduitEnum type, double prixHT, String description, int stock);
+    
+    public void vendreProduit(long idProduit, int quantite);
+    
+    public void stockerProduit(long idProduit, int quantite);
+    
     
 }

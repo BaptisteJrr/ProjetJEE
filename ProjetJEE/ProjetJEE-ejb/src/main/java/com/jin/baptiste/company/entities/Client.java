@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 /**
@@ -30,8 +31,9 @@ public class Client implements Serializable {
     private String email;
     
     // les info bouclent pas
-    @OneToMany(mappedBy = "client")
-    private transient Collection<Compte> listeCompte;
+    @OneToOne
+    private Compte compte;
+    
     @OneToMany(mappedBy = "client")
     private Collection<Panier> listePanier;
 
@@ -65,13 +67,14 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    public Collection<Compte> getListeCompte() {
-        return listeCompte;
+    public Compte getCompte() {
+        return compte;
     }
 
-    public void setListeCompte(Collection<Compte> listeCompte) {
-        this.listeCompte = listeCompte;
+    public void setCompte(Compte compte) {
+        this.compte = compte;
     }
+
 
     public Collection<Panier> getListePanier() {
         return listePanier;
@@ -80,10 +83,6 @@ public class Client implements Serializable {
     public void setListePanier(Collection<Panier> listePanier) {
         this.listePanier = listePanier;
     }
-    
-
-    
-    
     
     
     public Long getId() {
@@ -116,9 +115,9 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "Client{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", listeCompte=" + listeCompte + ", listePanier=" + listePanier + '}';
+        return "Client{" + "id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", email=" + email + ", compte=" + compte + ", listePanier=" + listePanier + '}';
     }
-    
+ 
     
     
 }

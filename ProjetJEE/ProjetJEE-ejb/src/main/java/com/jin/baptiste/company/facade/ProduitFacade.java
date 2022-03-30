@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
+import entities.TypeProduitEnum;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,21 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
 
     public ProduitFacade() {
         super(Produit.class);
+    }
+
+    @Override
+    public void creerProduit(String nom, TypeProduitEnum type, double prixHT, String description, int stock) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void vendreProduit(long idProduit, int quantite) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void stockerProduit(long idProduit, int quantite) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -6,10 +6,12 @@
 package com.jin.baptiste.company.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 /**
@@ -30,6 +32,8 @@ public class Produit implements Serializable {
     private Panier panier;
     private String description;
     private int stock;
+    @ManyToMany(mappedBy = "listeProduit")
+    private List<Panier> paniers;
 
     public Produit() {
     }
