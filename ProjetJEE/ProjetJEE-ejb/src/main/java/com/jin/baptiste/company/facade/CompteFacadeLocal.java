@@ -36,4 +36,8 @@ public interface CompteFacadeLocal {
 
     public void debiter(long idCompte, double somme);
     
+    public void ajouterPanier(long idPanier);
+    
+    public void retirerPanier(long idPanier);
+    
 }

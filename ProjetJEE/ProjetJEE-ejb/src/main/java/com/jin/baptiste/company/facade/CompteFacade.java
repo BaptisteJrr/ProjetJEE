@@ -54,5 +54,15 @@ public class CompteFacade extends AbstractFacade<Compte> implements CompteFacade
     public void debiter(long idCompte, double somme) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public void ajouterPanier(long idPanier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void retirerPanier(long idPanier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

@@ -30,4 +30,8 @@ public interface PanierFacadeLocal {
 
     int count();
     
+    public void ajouterProduit(long idProduit,long idPanier);
+    
+    public void retirerProduit(long idProduit, long idPanier);
+    
 }

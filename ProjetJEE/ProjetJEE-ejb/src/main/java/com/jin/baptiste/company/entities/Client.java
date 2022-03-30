@@ -29,7 +29,7 @@ public class Client implements Serializable {
     private String prenom;
     private String email;
     
-    
+    // les info bouclent pas
     @OneToMany(mappedBy = "client")
     private transient Collection<Compte> listeCompte;
     @OneToMany(mappedBy = "client")
