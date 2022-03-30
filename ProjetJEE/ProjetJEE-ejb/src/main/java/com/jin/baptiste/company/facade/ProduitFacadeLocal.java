@@ -6,7 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
-import entities.TypeProduitEnum;
+import com.jin.baptiste.company.entities.TypeProduitEnum;
 import java.util.List;
 import javax.ejb.Local;
 
