@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -29,7 +30,8 @@ public class Panier implements Serializable {
     private boolean flagLivre;
     private boolean flagRegle;
     
-    @OneToMany(mappedBy = "panier")
+
+    @ManyToMany
     private Collection<Produit> listeProduit;
     @ManyToOne
     private Client client;
@@ -96,13 +98,7 @@ public class Panier implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    
-    
-    
-    
-    
-    
+         
     
     public Long getId() {
         return id;
