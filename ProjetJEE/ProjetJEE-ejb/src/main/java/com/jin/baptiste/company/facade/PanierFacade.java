@@ -28,5 +28,15 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     public PanierFacade() {
         super(Panier.class);
     }
+
+    @Override
+    public void ajouterProduit(long idProduit, long idPanier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void retirerProduit(long idProduit, long idPanier) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
