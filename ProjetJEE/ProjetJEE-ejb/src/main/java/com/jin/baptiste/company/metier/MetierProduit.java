@@ -5,7 +5,14 @@
  */
 package com.jin.baptiste.company.metier;
 
+import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.facade.ProduitFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 /**
@@ -15,19 +22,56 @@ import javax.ejb.Stateless;
 @Stateless
 public class MetierProduit implements MetierProduitLocal {
 
+    @EJB
+    private ProduitFacadeLocal produitFacade;
+
+    
+    
     @Override
     public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = this.produitFacade.find(idProduit);
+        if(nom != null){
+            p.setNom(nom);
+        }
+        if(description != null){
+            p.setDescription(description);
+        }
+        p.setPrixHT(prixHT);
+        if(type != null){
+            p.setType(type);
+        }
+        this.produitFacade.edit(p);
     }
 
     @Override
-    public void vendreProduit(long idProduit, int quantite) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void vendreProduit(long idProduit, int quantite) { // Ajouter exception
+        Produit p = this.produitFacade.find(idProduit);
+        if(p.getStock() - quantite < 0){
+            try {
+                throw new ProduitStockInsuffisantException();
+            } catch (ProduitStockInsuffisantException ex) {
+                Logger.getLogger(MetierProduit.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            p.setStock(p.getStock() - quantite);
+            this.produitFacade.edit(p);
+        }
+        
     }
 
     @Override
     public void stockerProduit(long idProduit, int quantite) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if(quantite < 0 ){
+            try {
+                throw new ProduitQuantiteNegativeException();
+            } catch (ProduitQuantiteNegativeException ex) {
+                Logger.getLogger(MetierProduit.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            
+        }
+            
     }
 
     // Add business logic below. (Right-click in editor and choose
@@ -35,11 +79,18 @@ public class MetierProduit implements MetierProduitLocal {
 
     @Override
     public void supprimerProduit(long idProduit) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = this.produitFacade.find(idProduit);
+        this.produitFacade.remove(p);
     }
 
     @Override
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = new Produit();
+        p.setNom(nom);
+        p.setDescription(description);
+        p.setPrixHT(prixHT);
+        p.setType(type);
+        p.setStock(stock);
+        this.produitFacade.create(p);
     }
 }
