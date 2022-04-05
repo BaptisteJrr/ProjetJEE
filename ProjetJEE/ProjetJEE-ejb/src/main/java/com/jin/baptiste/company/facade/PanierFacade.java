@@ -6,6 +6,9 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.entities.Produit;
+import java.util.Collection;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,8 +20,13 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class PanierFacade extends AbstractFacade<Panier> implements PanierFacadeLocal {
 
+    @EJB
+    private ProduitFacadeLocal produitFacade;
+
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    
 
     @Override
     protected EntityManager getEntityManager() {
@@ -31,26 +39,49 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
 
     @Override
     public void ajouterProduit(long idProduit, long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Panier p = this.find(idPanier);
+        Produit pro = this.produitFacade.find(idProduit);
+        Collection<Produit> liste = p.getListeProduit();
+        liste.add(pro);
+        p.setListeProduit(liste);
+        this.edit(p);
+        
     }
 
     @Override
     public void retirerProduit(long idProduit, long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Panier p = this.find(idPanier);
+        Produit pro = this.produitFacade.find(idProduit);
+        Collection<Produit> liste = p.getListeProduit();
+        liste.remove(pro);
+        p.setListeProduit(liste);
+        this.edit(p);
     }
 
     @Override
     public void retirerAllProduit(long idProduit, long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Panier p = this.find(idPanier);
+        Produit pro = this.produitFacade.find(idProduit);
+        Collection<Produit> liste = p.getListeProduit();
+        while(liste.contains(pro)){
+            liste.remove(pro);
+        }
+        p.setListeProduit(liste);
+        this.edit(p);
+        
     }
 
     @Override
     public void payer(long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Panier p = this.find(idPanier);
+        p.setFlagRegle(true);
+        this.edit(p);
     }
 
     @Override
     public void livrer(long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Panier p = this.find(idPanier);
+        p.setFlagLivre(true);
+        this.edit(p);
     }
 }

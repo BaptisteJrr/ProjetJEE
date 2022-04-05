@@ -7,6 +7,10 @@ package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,17 +36,43 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
 
     @Override
     public void creerProduit(String nom, TypeProduitEnum type, double prixHT, String description, int stock) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = new Produit();
+        p.setDescription(description);
+        p.setNom(nom);
+        p.setPrixHT(prixHT);
+        p.setType(type);
+        p.setStock(stock);
+        this.edit(p);
     }
 
     @Override
     public void vendreProduit(long idProduit, int quantite) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = this.find(idProduit);
+        if(p.getStock() - quantite < 0){
+            try {
+                throw new ProduitStockInsuffisantException();
+            } catch (ProduitStockInsuffisantException ex) {
+                Logger.getLogger(ProduitFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            p.setStock(p.getStock() - quantite);
+            this.edit(p);
+        }
     }
 
     @Override
     public void stockerProduit(long idProduit, int quantite) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Produit p = this.find(idProduit);
+        if(quantite < 0){
+            try {
+                throw new ProduitQuantiteNegativeException();
+            } catch (ProduitQuantiteNegativeException ex) {
+                Logger.getLogger(ProduitFacade.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            p.setStock(p.getStock() + quantite);
+            this.edit(p);
+        }
     }
     
 }

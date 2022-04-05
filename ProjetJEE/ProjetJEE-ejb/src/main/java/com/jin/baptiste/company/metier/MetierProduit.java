@@ -84,13 +84,7 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     @Override
-    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {
-        Produit p = new Produit();
-        p.setNom(nom);
-        p.setDescription(description);
-        p.setPrixHT(prixHT);
-        p.setType(type);
-        p.setStock(stock);
-        this.produitFacade.create(p);
+    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {        
+        this.produitFacade.creerProduit(nom, type, prixHT, description, stock);
     }
 }
