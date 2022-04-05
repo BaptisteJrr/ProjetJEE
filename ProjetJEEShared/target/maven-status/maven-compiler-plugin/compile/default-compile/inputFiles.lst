@@ -1,3 +1,11 @@
-C:\Users\LeNonGrillePain\Desktop\ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\Position.java
-C:\Users\LeNonGrillePain\Desktop\ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\miage\company\projetjeesharedcompte\interfremote\ExpoLrdCompteRemote.java
-C:\Users\LeNonGrillePain\Desktop\ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\ClientExport.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\Exception\ClientNonTrouveException.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\PanierExport.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\Exception\ProduitQuantiteNegativeException.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\Exception\ProduitStockInsuffisantException.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\CompteExport.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\Position.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\miage\company\projetjeesharedcompte\interfremote\ExpoLrdCompteRemote.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\ClientExport.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\Exception\CompteSommeNegaException.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\Exception\CompteSoldeNegaException.java
+C:\Users\Wang\Documents\Dev\M1ProjetJEE\ProjetJEEShared\src\main\java\com\jin\baptiste\company\projetjeeshared\utilities\ProduitExport.java
