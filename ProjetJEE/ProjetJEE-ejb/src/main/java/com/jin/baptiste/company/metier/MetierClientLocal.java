@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Panier;
 import javax.ejb.Local;
 
 /**
@@ -20,7 +21,6 @@ public interface MetierClientLocal {
     public Client getClient(long idClient);
     
     public boolean authentification(String nom, String prenom);
-   
     
-    
+    public void ajouterPanier(Panier panier, long idCLient);
 }

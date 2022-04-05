@@ -6,7 +6,11 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
+import com.jin.baptiste.company.facade.PanierFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientNonTrouveException;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -29,15 +33,25 @@ public class MetierClient implements MetierClientLocal {
     @Override
     public Client getClient(long idClient) {
         return this.clientFacade.find(idClient);
-    }
-    
-    
+    }  
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
     @Override
     public boolean authentification(String nom, String prenom) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Client> findAllClient = this.clientFacade.findAll();
+        boolean auth = false;
+        for(Client c : findAllClient){       
+            if (c.getNom().equals(nom) && c.getPrenom().equals(prenom))
+                auth = true;
+        }
+        return auth;
+    }
+
+    @Override
+    public void ajouterPanier(Panier panier, long idClient) {
+        Client clt = this.clientFacade.find(idClient);
+        clt.getListePanier().add(panier);
     }
 }

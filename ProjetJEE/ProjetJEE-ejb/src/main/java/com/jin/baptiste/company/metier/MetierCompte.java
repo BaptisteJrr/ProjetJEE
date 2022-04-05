@@ -5,6 +5,9 @@
  */
 package com.jin.baptiste.company.metier;
 
+import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Compte;
+import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -17,10 +20,12 @@ import javax.ejb.Stateless;
 public class MetierCompte implements MetierCompteLocal {
 
     @EJB
-    private CompteFacadeLocal compteFacade;
+    private ClientFacadeLocal clientFacade;
 
+    @EJB
+    private CompteFacadeLocal compteFacade;
     
-    
+  
     @Override
     public void creerCompte(double solde, long idClient) {
         this.compteFacade.creerCompte(solde,idClient);
@@ -40,12 +45,15 @@ public class MetierCompte implements MetierCompteLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public void getComptebyidCompte(long idCompte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Compte getComptebyidCompte(long idCompte) {
+        Compte cpt =  this.compteFacade.find(idCompte);
+        return cpt;
     }
 
     @Override
-    public void getComptebyidClient(long idClient) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Compte getComptebyidClient(long idClient) {
+        Client clt = this.clientFacade.find(idClient);
+        Compte cpt = this.compteFacade.find(clt.getCompte());
+        return cpt;
     }
 }
