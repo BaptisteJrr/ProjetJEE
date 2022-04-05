@@ -33,7 +33,7 @@ public class Produit implements Serializable {
     private String description;
     private int stock;
     @ManyToMany(mappedBy = "listeProduit")
-    private List<Panier> paniers;
+    private List<Panier> listePanier;
 
     public Produit() {
     }

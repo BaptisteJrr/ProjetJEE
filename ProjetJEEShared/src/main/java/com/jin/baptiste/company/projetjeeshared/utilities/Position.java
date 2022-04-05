@@ -5,10 +5,39 @@
  */
 package com.jin.baptiste.company.projetjeeshared.utilities;
 
+import java.io.Serializable;
+import java.util.Date;
+
 /**
  *
  * @author LeNonGrillePain
  */
-public class Position {
+public class Position implements Serializable{
+    
+    private static final long serialVersionUID = 1L;
+    private double solde;
+    private Date date;
+
+    public Position(double solde, Date date) {
+        this.solde = solde;
+        this.date = date;
+    }
+
+    public double getSolde() {
+        return solde;
+    }
+
+    public void setSolde(double solde) {
+        this.solde = solde;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
     
 }

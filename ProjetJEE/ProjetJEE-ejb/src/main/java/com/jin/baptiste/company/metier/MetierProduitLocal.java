@@ -17,8 +17,11 @@ public interface MetierProduitLocal {
     
     public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type);
     
-        public void vendreProduit(long idProduit, int quantite);
+    public void vendreProduit(long idProduit, int quantite);
     
     public void stockerProduit(long idProduit, int quantite);
     
+    public void supprimerProduit(long idProduit);
+    
+    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock);
 }

@@ -32,4 +32,14 @@ public class MetierProduit implements MetierProduitLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public void supprimerProduit(long idProduit) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
