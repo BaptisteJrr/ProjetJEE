@@ -44,7 +44,6 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
         Collection<Produit> liste = p.getListeProduit();
         liste.add(pro);
         p.setListeProduit(liste);
-        this.edit(p);
         
     }
 
@@ -55,7 +54,6 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
         Collection<Produit> liste = p.getListeProduit();
         liste.remove(pro);
         p.setListeProduit(liste);
-        this.edit(p);
     }
 
     @Override
@@ -67,7 +65,6 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
             liste.remove(pro);
         }
         p.setListeProduit(liste);
-        this.edit(p);
         
     }
 
@@ -75,13 +72,11 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     public void payer(long idPanier) {
         Panier p = this.find(idPanier);
         p.setFlagRegle(true);
-        this.edit(p);
     }
 
     @Override
     public void livrer(long idPanier) {
         Panier p = this.find(idPanier);
         p.setFlagLivre(true);
-        this.edit(p);
     }
 }

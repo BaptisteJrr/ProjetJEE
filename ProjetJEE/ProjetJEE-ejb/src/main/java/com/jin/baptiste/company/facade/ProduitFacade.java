@@ -42,7 +42,7 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
         p.setPrixHT(prixHT);
         p.setType(type);
         p.setStock(stock);
-        this.edit(p);
+        this.create(p);
     }
 
     @Override
@@ -56,7 +56,6 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
             }
         }else{
             p.setStock(p.getStock() - quantite);
-            this.edit(p);
         }
     }
 
@@ -71,7 +70,6 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
             }
         }else{
             p.setStock(p.getStock() + quantite);
-            this.edit(p);
         }
     }
     
