@@ -7,6 +7,8 @@ package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +23,6 @@ public class CompteFacade extends AbstractFacade<Compte> implements CompteFacade
 
     @EJB
     private ClientFacadeLocal clientFacade;
-    
     
     
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
@@ -47,22 +48,22 @@ public class CompteFacade extends AbstractFacade<Compte> implements CompteFacade
 
     @Override
     public void crediter(long idCompte, double somme) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Compte cpt = this.find(idCompte);
+        if(somme > 0)
+            cpt.setSolde(cpt.getSolde() + somme);
+        else
+            new CompteSommeNegaException();
     }
 
     @Override
     public void debiter(long idCompte, double somme) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void ajouterPanier(long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void retirerPanier(long idPanier) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+        Compte cpt = this.find(idCompte);
+        if(somme > 0)
+            cpt.setSolde(cpt.getSolde() - somme);
+        else
+            new CompteSommeNegaException();
+        
+        if(cpt.getSolde() < 0 )
+            new CompteSoldeNegaException();
+    }    
 }
