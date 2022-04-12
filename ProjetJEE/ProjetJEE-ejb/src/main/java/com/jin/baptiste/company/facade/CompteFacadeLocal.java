@@ -28,12 +28,5 @@ public interface CompteFacadeLocal {
 
     List<Compte> findRange(int[] range);
 
-    int count();
-
-    public void creerCompte(double solde, long idClient);
-
-    public void crediter(long idCompte, double somme);
-
-    public void debiter(long idCompte, double somme);
-        
+    int count();        
 }

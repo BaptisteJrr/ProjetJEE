@@ -29,7 +29,5 @@ public interface ClientFacadeLocal {
     List<Client> findRange(int[] range);
 
     int count();
-
-    public void creerClient(String nom, String prenom, String email);
     
 }

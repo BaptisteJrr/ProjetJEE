@@ -27,7 +27,11 @@ public class MetierClient implements MetierClientLocal {
 
     @Override
     public void creerClient(String nom, String prenom, String email) {
-        this.clientFacade.creerClient(nom,prenom,email);
+        Client c = new Client();
+        c.setNom(nom);
+        c.setEmail(email);
+        c.setPrenom(prenom);
+        this.clientFacade.create(c);
     }
 
     @Override

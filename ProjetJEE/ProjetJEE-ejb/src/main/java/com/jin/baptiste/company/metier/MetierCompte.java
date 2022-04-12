@@ -9,6 +9,8 @@ import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -28,17 +30,37 @@ public class MetierCompte implements MetierCompteLocal {
   
     @Override
     public void creerCompte(double solde, long idClient) {
-        this.compteFacade.creerCompte(solde,idClient);
+        Compte c = new Compte();
+        c.setSolde(solde);
+        Client cl = this.clientFacade.find(idClient);
+        c.setClient(cl);        
+        this.compteFacade.create(c);
     }
 
     @Override
     public void crediter(long idCompte, double somme) {
-        this.compteFacade.crediter(idCompte,somme);
+        Compte cpt = this.compteFacade.find(idCompte);
+        if(somme > 0){
+            cpt.setSolde(cpt.getSolde() + somme);
+            this.compteFacade.edit(cpt);
+        }   
+        else{
+            new CompteSommeNegaException();
+        }
     }
 
     @Override
     public void debiter(long idCompte, double somme) {
-        this.compteFacade.debiter(idCompte,somme);
+        Compte cpt = this.compteFacade.find(idCompte);
+        if(somme > 0){
+            cpt.setSolde(cpt.getSolde() - somme);
+            this.compteFacade.edit(cpt);
+        }
+        else
+            new CompteSommeNegaException();
+        
+        if(cpt.getSolde() < 0 )
+            new CompteSoldeNegaException();
     }
 
     // Add business logic below. (Right-click in editor and choose
