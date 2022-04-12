@@ -36,34 +36,4 @@ public class CompteFacade extends AbstractFacade<Compte> implements CompteFacade
     public CompteFacade() {
         super(Compte.class);
     }
-
-    @Override
-    public void creerCompte(double solde, long idClient) {
-        Compte c = new Compte();
-        c.setSolde(solde);
-        Client cl = this.clientFacade.find(idClient);
-        c.setClient(cl);        
-        this.create(c);
-    }
-
-    @Override
-    public void crediter(long idCompte, double somme) {
-        Compte cpt = this.find(idCompte);
-        if(somme > 0)
-            cpt.setSolde(cpt.getSolde() + somme);
-        else
-            new CompteSommeNegaException();
-    }
-
-    @Override
-    public void debiter(long idCompte, double somme) {
-        Compte cpt = this.find(idCompte);
-        if(somme > 0)
-            cpt.setSolde(cpt.getSolde() - somme);
-        else
-            new CompteSommeNegaException();
-        
-        if(cpt.getSolde() < 0 )
-            new CompteSoldeNegaException();
-    }    
 }

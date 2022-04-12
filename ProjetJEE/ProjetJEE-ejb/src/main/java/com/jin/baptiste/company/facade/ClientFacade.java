@@ -29,13 +29,5 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
         super(Client.class);
     }
 
-    @Override
-    public void creerClient(String nom, String prenom, String email) {
-        Client c = new Client();
-        c.setNom(nom);
-        c.setEmail(email);
-        c.setPrenom(prenom);
-        this.create(c);
-    }
     
 }
