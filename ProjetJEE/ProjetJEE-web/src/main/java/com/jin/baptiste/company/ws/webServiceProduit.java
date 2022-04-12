@@ -7,6 +7,7 @@ package com.jin.baptiste.company.ws;
 
 import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -28,6 +29,11 @@ public class webServiceProduit {
     @Oneway
     public void modifierProduit(@WebParam(name = "idProduit") long idProduit, @WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") double prixHT, @WebParam(name = "type") TypeProduitEnum type) {
         ejbRef.modifierProduit(idProduit, nom, description, prixHT, type);
+    }
+
+    @WebMethod(operationName = "getProduit")
+    public ProduitExport getProduit(@WebParam(name = "idProduit") Long idProduit) {
+        return ejbRef.getProduit(idProduit);
     }
 
     @WebMethod(operationName = "vendreProduit")

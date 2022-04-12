@@ -38,6 +38,15 @@ public class Produit implements Serializable {
     public Produit() {
     }
 
+    public List<Panier> getListePanier() {
+        return listePanier;
+    }
+
+    public void setListePanier(List<Panier> listePanier) {
+        this.listePanier = listePanier;
+    }
+    
+    
     public String getNom() {
         return nom;
     }

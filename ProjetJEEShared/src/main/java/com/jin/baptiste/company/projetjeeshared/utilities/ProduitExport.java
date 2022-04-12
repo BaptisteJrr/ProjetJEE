@@ -16,19 +16,17 @@ import java.util.List;
 public class ProduitExport implements Serializable{
     private Long id;
     private String nom;
-    private TypeProduitEnum type;
+    private String type;
     private double prixHT;
-    private long idPanier;
     private String description;
     private int stock;
     private List<Long> listIdPaniers;
 
-    public ProduitExport(Long id, String nom, TypeProduitEnum type, double prixHT, long idPanier, String description, int stock, List<Long> listIdPaniers) {
+    public ProduitExport(Long id, String nom, String type, double prixHT, String description, int stock, List<Long> listIdPaniers) {
         this.id = id;
         this.nom = nom;
         this.type = type;
         this.prixHT = prixHT;
-        this.idPanier = idPanier;
         this.description = description;
         this.stock = stock;
         this.listIdPaniers = listIdPaniers;
@@ -50,11 +48,11 @@ public class ProduitExport implements Serializable{
         this.nom = nom;
     }
 
-    public TypeProduitEnum getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(TypeProduitEnum type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -66,13 +64,6 @@ public class ProduitExport implements Serializable{
         this.prixHT = prixHT;
     }
 
-    public long getIdPanier() {
-        return idPanier;
-    }
-
-    public void setIdPanier(long idPanier) {
-        this.idPanier = idPanier;
-    }
 
     public String getDescription() {
         return description;

@@ -9,6 +9,7 @@ import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -86,5 +87,16 @@ public class MetierPanier implements MetierPanierLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public PanierExport getPanier(long idPanier) {
+        Panier p = this.panierFacade.find(idPanier);
+        Collection<Long> listeIdProduit = null;
+        for( Produit prod : p.getListeProduit()){
+            listeIdProduit.add(prod.getId());
+        }
+        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
+        return pe;
+    }
     
 }

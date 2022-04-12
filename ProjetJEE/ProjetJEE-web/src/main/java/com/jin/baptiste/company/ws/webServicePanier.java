@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.ws;
 
 import com.jin.baptiste.company.metier.MetierPanierLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -57,6 +58,11 @@ public class webServicePanier {
     @Oneway
     public void supprimerPanier(@WebParam(name = "idPanier") long idPanier) {
         ejbRef.supprimerPanier(idPanier);
+    }
+
+    @WebMethod(operationName = "getPanier")
+    public PanierExport getPanier(@WebParam(name = "idPanier") long idPanier) {
+        return ejbRef.getPanier(idPanier);
     }
     
 }

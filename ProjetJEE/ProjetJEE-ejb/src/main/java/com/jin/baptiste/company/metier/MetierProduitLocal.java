@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +17,8 @@ import javax.ejb.Local;
 public interface MetierProduitLocal {
     
     public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type);
+    
+    public ProduitExport getProduit(Long idProduit);
     
     public void vendreProduit(long idProduit, int quantite);
     
