@@ -7,6 +7,8 @@ package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.facade.PanierFacadeLocal;
+import com.jin.baptiste.company.facade.ProduitFacade;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
@@ -23,7 +25,11 @@ import javax.ejb.Stateless;
 public class MetierProduit implements MetierProduitLocal {
 
     @EJB
+    private PanierFacadeLocal panierFacade;
+
+    @EJB
     private ProduitFacadeLocal produitFacade;
+    
 
     
     
@@ -61,16 +67,17 @@ public class MetierProduit implements MetierProduitLocal {
 
     @Override
     public void stockerProduit(long idProduit, int quantite) {
-        if(quantite < 0 ){
+        Produit p = this.produitFacade.find(idProduit);
+        if(quantite < 0){
             try {
                 throw new ProduitQuantiteNegativeException();
             } catch (ProduitQuantiteNegativeException ex) {
-                Logger.getLogger(MetierProduit.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProduitFacade.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }else{
+            p.setStock(p.getStock() + quantite);
         }
-        else{
-            
-        }
+        this.produitFacade.edit(p);
             
     }
 
@@ -85,6 +92,12 @@ public class MetierProduit implements MetierProduitLocal {
 
     @Override
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {        
-        this.produitFacade.creerProduit(nom, type, prixHT, description, stock);
+        Produit p = new Produit();
+        p.setDescription(description);
+        p.setNom(nom);
+        p.setPrixHT(prixHT);
+        p.setType(type);
+        p.setStock(stock);
+        this.produitFacade.create(p);
     }
 }

@@ -36,47 +36,4 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     public PanierFacade() {
         super(Panier.class);
     }
-
-    @Override
-    public void ajouterProduit(long idProduit, long idPanier) {
-        Panier p = this.find(idPanier);
-        Produit pro = this.produitFacade.find(idProduit);
-        Collection<Produit> liste = p.getListeProduit();
-        liste.add(pro);
-        p.setListeProduit(liste);
-        
-    }
-
-    @Override
-    public void retirerProduit(long idProduit, long idPanier) {
-        Panier p = this.find(idPanier);
-        Produit pro = this.produitFacade.find(idProduit);
-        Collection<Produit> liste = p.getListeProduit();
-        liste.remove(pro);
-        p.setListeProduit(liste);
-    }
-
-    @Override
-    public void retirerAllProduit(long idProduit, long idPanier) {
-        Panier p = this.find(idPanier);
-        Produit pro = this.produitFacade.find(idProduit);
-        Collection<Produit> liste = p.getListeProduit();
-        while(liste.contains(pro)){
-            liste.remove(pro);
-        }
-        p.setListeProduit(liste);
-        
-    }
-
-    @Override
-    public void payer(long idPanier) {
-        Panier p = this.find(idPanier);
-        p.setFlagRegle(true);
-    }
-
-    @Override
-    public void livrer(long idPanier) {
-        Panier p = this.find(idPanier);
-        p.setFlagLivre(true);
-    }
 }

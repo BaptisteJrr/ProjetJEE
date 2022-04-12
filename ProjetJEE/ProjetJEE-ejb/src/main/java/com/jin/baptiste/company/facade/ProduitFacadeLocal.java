@@ -31,11 +31,4 @@ public interface ProduitFacadeLocal {
 
     int count();
     
-    public void creerProduit(String nom, TypeProduitEnum type, double prixHT, String description, int stock);
-    
-    public void vendreProduit(long idProduit, int quantite);
-    
-    public void stockerProduit(long idProduit, int quantite);
-    
-    
 }

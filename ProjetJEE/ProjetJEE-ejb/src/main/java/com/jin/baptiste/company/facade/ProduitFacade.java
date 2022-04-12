@@ -33,44 +33,5 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
     public ProduitFacade() {
         super(Produit.class);
     }
-
-    @Override
-    public void creerProduit(String nom, TypeProduitEnum type, double prixHT, String description, int stock) {
-        Produit p = new Produit();
-        p.setDescription(description);
-        p.setNom(nom);
-        p.setPrixHT(prixHT);
-        p.setType(type);
-        p.setStock(stock);
-        this.create(p);
-    }
-
-    @Override
-    public void vendreProduit(long idProduit, int quantite) {
-        Produit p = this.find(idProduit);
-        if(p.getStock() - quantite < 0){
-            try {
-                throw new ProduitStockInsuffisantException();
-            } catch (ProduitStockInsuffisantException ex) {
-                Logger.getLogger(ProduitFacade.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            p.setStock(p.getStock() - quantite);
-        }
-    }
-
-    @Override
-    public void stockerProduit(long idProduit, int quantite) {
-        Produit p = this.find(idProduit);
-        if(quantite < 0){
-            try {
-                throw new ProduitQuantiteNegativeException();
-            } catch (ProduitQuantiteNegativeException ex) {
-                Logger.getLogger(ProduitFacade.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            p.setStock(p.getStock() + quantite);
-        }
-    }
     
 }
