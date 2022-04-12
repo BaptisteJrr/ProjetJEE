@@ -10,6 +10,7 @@ import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientNonTrouveException;
+import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -35,8 +36,14 @@ public class MetierClient implements MetierClientLocal {
     }
 
     @Override
-    public Client getClient(long idClient) {
-        return this.clientFacade.find(idClient);
+    public ClientExport getClient(long idClient) {
+        Client clt = this.clientFacade.find(idClient);
+        List<Long> listeIdPanier = null;
+        for(Panier p : clt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),listeIdPanier);
+        return clte;
     }  
 
     // Add business logic below. (Right-click in editor and choose

@@ -7,10 +7,13 @@ package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
+import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -67,15 +70,25 @@ public class MetierCompte implements MetierCompteLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public Compte getComptebyidCompte(long idCompte) {
+    public CompteExport getComptebyidCompte(long idCompte) {        
         Compte cpt =  this.compteFacade.find(idCompte);
-        return cpt;
+        List<Long> listeIdPanier = null;
+        for(Panier p : cpt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),cpt.getClient().getId(),listeIdPanier);
+        return cpte;
     }
 
     @Override
-    public Compte getComptebyidClient(long idClient) {
+    public CompteExport getComptebyidClient(long idClient) {
         Client clt = this.clientFacade.find(idClient);
         Compte cpt = this.compteFacade.find(clt.getCompte());
-        return cpt;
+        List<Long> listeIdPanier = null;
+        for(Panier p : cpt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),idClient,listeIdPanier);
+        return cpte;
     }
 }

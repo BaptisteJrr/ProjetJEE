@@ -5,8 +5,9 @@
  */
 package com.jin.baptiste.company.ws;
 
-import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -15,7 +16,7 @@ import javax.jws.WebService;
 
 /**
  *
- * @author LeNonGrillePain
+ * @author Wang
  */
 @WebService(serviceName = "webServiceClient")
 public class webServiceClient {
@@ -31,8 +32,19 @@ public class webServiceClient {
     }
 
     @WebMethod(operationName = "getClient")
-    public Client getClient(@WebParam(name = "idClient") Long idClient) {
+    public ClientExport getClient(@WebParam(name = "idClient") long idClient) {
         return ejbRef.getClient(idClient);
+    }
+
+    @WebMethod(operationName = "authentification")
+    public boolean authentification(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom) {
+        return ejbRef.authentification(nom, prenom);
+    }
+
+    @WebMethod(operationName = "ajouterPanier")
+    @Oneway
+    public void ajouterPanier(@WebParam(name = "panier") Panier panier, @WebParam(name = "idCLient") long idCLient) {
+        ejbRef.ajouterPanier(panier, idCLient);
     }
     
 }

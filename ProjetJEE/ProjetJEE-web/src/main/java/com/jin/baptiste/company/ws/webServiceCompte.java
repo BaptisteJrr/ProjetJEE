@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.ws;
 
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -14,7 +15,7 @@ import javax.jws.WebService;
 
 /**
  *
- * @author LeNonGrillePain
+ * @author Wang
  */
 @WebService(serviceName = "webServiceCompte")
 public class webServiceCompte {
@@ -27,6 +28,16 @@ public class webServiceCompte {
     @Oneway
     public void creerCompte(@WebParam(name = "solde") double solde, @WebParam(name = "idClient") long idClient) {
         ejbRef.creerCompte(solde, idClient);
+    }
+
+    @WebMethod(operationName = "getComptebyidCompte")
+    public CompteExport getComptebyidCompte(@WebParam(name = "idCompte") long idCompte) {
+        return ejbRef.getComptebyidCompte(idCompte);
+    }
+
+    @WebMethod(operationName = "getComptebyidClient")
+    public CompteExport getComptebyidClient(@WebParam(name = "idClient") long idClient) {
+        return ejbRef.getComptebyidClient(idClient);
     }
 
     @WebMethod(operationName = "crediter")

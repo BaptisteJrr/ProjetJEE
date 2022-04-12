@@ -7,6 +7,7 @@ package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import javax.ejb.Local;
 
 /**
@@ -18,7 +19,7 @@ public interface MetierClientLocal {
     
     public void creerClient(String nom, String prenom, String email);
     
-    public Client getClient(long idClient);
+    public ClientExport getClient(long idClient);
     
     public boolean authentification(String nom, String prenom);
     
