@@ -32,10 +32,10 @@ public class MetierCompte implements MetierCompteLocal {
     
   
     @Override
-    public void creerCompte(double solde, long idClient) {
+    public void creerCompte(double solde, String email) {
         Compte c = new Compte();
         c.setSolde(solde);
-        Client cl = this.clientFacade.find(idClient);
+        Client cl = this.clientFacade.findbyEmail(email);
         c.setClient(cl);        
         this.compteFacade.create(c);
     }

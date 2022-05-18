@@ -30,4 +30,5 @@ public interface ClientFacadeLocal {
 
     int count();
     
+    Client findbyEmail(String email);
 }

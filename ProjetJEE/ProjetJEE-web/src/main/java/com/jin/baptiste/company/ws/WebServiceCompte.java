@@ -17,8 +17,8 @@ import javax.jws.WebService;
  *
  * @author Wang
  */
-@WebService(serviceName = "webServiceCompte")
-public class webServiceCompte {
+@WebService(serviceName = "WebServiceCompte")
+public class WebServiceCompte {
 
     @EJB
     private MetierCompteLocal ejbRef;// Add business logic below. (Right-click in editor and choose
@@ -26,8 +26,8 @@ public class webServiceCompte {
 
     @WebMethod(operationName = "creerCompte")
     @Oneway
-    public void creerCompte(@WebParam(name = "solde") double solde, @WebParam(name = "idClient") long idClient) {
-        ejbRef.creerCompte(solde, idClient);
+    public void creerCompte(@WebParam(name = "solde") double solde, @WebParam(name = "email") String email) {
+        ejbRef.creerCompte(solde, email);
     }
 
     @WebMethod(operationName = "getComptebyidCompte")

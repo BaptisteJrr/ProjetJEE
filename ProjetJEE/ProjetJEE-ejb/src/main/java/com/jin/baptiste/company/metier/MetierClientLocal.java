@@ -17,11 +17,13 @@ import javax.ejb.Local;
 @Local
 public interface MetierClientLocal {
     
-    public void creerClient(String nom, String prenom, String email);
+    public void creerClient(String nom, String prenom, String email, String adresse);
     
     public ClientExport getClient(long idClient);
     
-    public boolean authentification(String nom, String prenom);
+    public boolean authentification(String email);
     
     public void ajouterPanier(Panier panier, long idCLient);
+    
+    public ClientExport getClientparMail(String email);
 }

@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Client;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,6 +28,17 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
 
     public ClientFacade() {
         super(Client.class);
+    }
+
+    @Override
+    public Client findbyEmail(String email) {
+        List<Client> listeClt = findAll();
+        for (Client c : listeClt){
+            if(c.getEmail().equals(email)){
+                return c;
+            }
+        }
+        return null;
     }
 
     

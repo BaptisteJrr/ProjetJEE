@@ -28,6 +28,7 @@ public class Client implements Serializable {
     private String nom;
     private String prenom;
     private String email;
+    private String adresse;
     
     // les info bouclent pas
     @OneToOne
@@ -39,9 +40,14 @@ public class Client implements Serializable {
     public Client() {
     }
 
-    
-    
-    
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+   
     public String getNom() {
         return nom;
     }

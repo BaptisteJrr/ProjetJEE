@@ -18,8 +18,8 @@ import javax.jws.WebService;
  *
  * @author Wang
  */
-@WebService(serviceName = "webServiceClient")
-public class webServiceClient {
+@WebService(serviceName = "WebServiceClient")
+public class WebServiceClient {
 
     @EJB
     private MetierClientLocal ejbRef;// Add business logic below. (Right-click in editor and choose
@@ -27,8 +27,8 @@ public class webServiceClient {
 
     @WebMethod(operationName = "creerClient")
     @Oneway
-    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "email") String email) {
-        ejbRef.creerClient(nom, prenom, email);
+    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "email") String email, @WebParam(name = "adresse") String adresse) {
+        ejbRef.creerClient(nom, prenom, email, adresse);
     }
 
     @WebMethod(operationName = "getClient")
@@ -37,14 +37,19 @@ public class webServiceClient {
     }
 
     @WebMethod(operationName = "authentification")
-    public boolean authentification(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom) {
-        return ejbRef.authentification(nom, prenom);
+    public boolean authentification(@WebParam(name = "email") String email) {
+        return ejbRef.authentification(email);
     }
 
     @WebMethod(operationName = "ajouterPanier")
     @Oneway
     public void ajouterPanier(@WebParam(name = "panier") Panier panier, @WebParam(name = "idCLient") long idCLient) {
         ejbRef.ajouterPanier(panier, idCLient);
+    }
+
+    @WebMethod(operationName = "getClientparMail")
+    public ClientExport getClientparMail(@WebParam(name = "email") String email) {
+        return ejbRef.getClientparMail(email);
     }
     
 }

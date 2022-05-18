@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.metier;
 
-import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
 import javax.ejb.Local;
 
@@ -16,7 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface MetierCompteLocal {
     
-    public void creerCompte (double solde, long idClient);
+    public void creerCompte (double solde, String email);
     
     public CompteExport getComptebyidCompte(long idCompte);
     

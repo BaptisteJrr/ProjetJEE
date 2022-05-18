@@ -27,11 +27,12 @@ public class MetierClient implements MetierClientLocal {
     
 
     @Override
-    public void creerClient(String nom, String prenom, String email) {
+    public void creerClient(String nom, String prenom, String email, String adresse) {
         Client c = new Client();
         c.setNom(nom);
         c.setEmail(email);
         c.setPrenom(prenom);
+        c.setAdresse(adresse);
         this.clientFacade.create(c);
     }
 
@@ -50,11 +51,11 @@ public class MetierClient implements MetierClientLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public boolean authentification(String nom, String prenom) {
+    public boolean authentification(String email) {
         List<Client> findAllClient = this.clientFacade.findAll();
         boolean auth = false;
         for(Client c : findAllClient){       
-            if (c.getNom().equals(nom) && c.getPrenom().equals(prenom))
+            if (c.getEmail().equals(email))
                 auth = true;
         }
         return auth;
@@ -64,5 +65,17 @@ public class MetierClient implements MetierClientLocal {
     public void ajouterPanier(Panier panier, long idClient) {
         Client clt = this.clientFacade.find(idClient);
         clt.getListePanier().add(panier);
+    }
+    
+    //Error a traiter
+    @Override
+    public ClientExport getClientparMail(String email) {
+        Client clt = this.clientFacade.findbyEmail(email);
+        List<Long> listeIdPanier = null;
+        for(Panier p : clt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),listeIdPanier);
+        return clte;        
     }
 }
