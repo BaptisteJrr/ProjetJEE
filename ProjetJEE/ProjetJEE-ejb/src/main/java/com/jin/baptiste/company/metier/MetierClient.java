@@ -8,8 +8,6 @@ package com.jin.baptiste.company.metier;
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
-import com.jin.baptiste.company.facade.PanierFacadeLocal;
-import com.jin.baptiste.company.projetjeeshared.Exception.ClientNonTrouveException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import java.util.List;
 import javax.ejb.EJB;
@@ -28,12 +26,15 @@ public class MetierClient implements MetierClientLocal {
 
     @Override
     public void creerClient(String nom, String prenom, String email, String adresse) {
-        Client c = new Client();
-        c.setNom(nom);
-        c.setEmail(email);
-        c.setPrenom(prenom);
-        c.setAdresse(adresse);
-        this.clientFacade.create(c);
+        //Verification du Mail soit unique
+        if (this.clientFacade.findbyEmail(email) == null){
+            Client c = new Client();
+            c.setNom(nom);
+            c.setEmail(email);
+            c.setPrenom(prenom);
+            c.setAdresse(adresse);
+            this.clientFacade.create(c);
+        }
     }
 
     @Override
@@ -43,7 +44,7 @@ public class MetierClient implements MetierClientLocal {
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
         }
-        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),listeIdPanier);
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
         return clte;
     }  
 
@@ -75,7 +76,7 @@ public class MetierClient implements MetierClientLocal {
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
         }
-        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),listeIdPanier);
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
         return clte;        
     }
 }

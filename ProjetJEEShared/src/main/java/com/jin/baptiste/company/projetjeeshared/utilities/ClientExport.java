@@ -18,17 +18,20 @@ public class ClientExport implements Serializable{
     private String nom;
     private String prenom;
     private String email; 
-    private Long idCompte;   
+    private Long idCompte;
+    private String adresse;
     private Collection<Long> listeIdPanier;
 
-    public ClientExport(Long id, String nom, String prenom, String email, Long idCompte, Collection<Long> listeIdPanier) {
+    public ClientExport(Long id, String nom, String prenom, String email, Long idCompte, String adresse, Collection<Long> listeIdPanier) {
         this.id = id;
         this.nom = nom;
         this.prenom = prenom;
         this.email = email;
         this.idCompte = idCompte;
+        this.adresse = adresse;
         this.listeIdPanier = listeIdPanier;
     }
+
 
     public Long getId() {
         return id;
@@ -77,10 +80,17 @@ public class ClientExport implements Serializable{
     public void setListeIdPanier(Collection<Long> listeIdPanier) {
         this.listeIdPanier = listeIdPanier;
     }
-    
-    
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
     
+    
+      
     
     
     

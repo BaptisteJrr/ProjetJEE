@@ -5,6 +5,7 @@
  */
 package com.jin.baptiste.company.metier;
 
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
 import javax.ejb.Local;
 
@@ -22,7 +23,7 @@ public interface MetierCompteLocal {
     public CompteExport getComptebyidClient(long idClient);
     
     public void crediter(long idCompte, double somme);
-    
+    // throws CompteSoldeNegaException
     public void debiter(long idCompte, double somme);
     
 }

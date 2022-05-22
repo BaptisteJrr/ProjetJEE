@@ -10,6 +10,7 @@ import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientNonTrouveException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
@@ -32,12 +33,26 @@ public class MetierCompte implements MetierCompteLocal {
     
   
     @Override
-    public void creerCompte(double solde, String email) {
-        Compte c = new Compte();
-        c.setSolde(solde);
-        Client cl = this.clientFacade.findbyEmail(email);
-        c.setClient(cl);        
-        this.compteFacade.create(c);
+    public void creerCompte(double solde, String email){
+        //Verification email existe dans la BD  
+
+            List<Client> findAllClient = this.clientFacade.findAll();
+        
+            boolean auth = false;
+            for(Client c : findAllClient){       
+                if (c.getEmail().equals(email))
+                    auth = true;
+            }
+            if (auth) {
+                 Compte cpt = new Compte();      
+                 cpt.setSolde(solde);
+                 Client clt = this.clientFacade.findbyEmail(email);
+                 cpt.setClient(clt);
+                 clt.setCompte(cpt);
+                 this.compteFacade.create(cpt); 
+            } else {
+                System.out.println("Client non existe");
+       }
     }
 
     @Override

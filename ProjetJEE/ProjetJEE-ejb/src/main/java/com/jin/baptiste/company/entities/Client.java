@@ -27,6 +27,7 @@ public class Client implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    //contraint Unique fait par verification
     private String email;
     private String adresse;
     
