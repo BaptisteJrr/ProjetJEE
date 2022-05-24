@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
@@ -15,6 +16,7 @@ import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.Date;
 
 /**
  *
@@ -81,6 +83,10 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public Position getCompte(Long idCompte) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Compte cpt = this.metierCompte.getComptebyidCompte(idCompte);
+        
+        Position p = new Position(cpt.getSolde(), new Date(), idCompte);
+        return p;
+        
     }
 }

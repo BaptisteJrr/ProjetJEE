@@ -8,6 +8,7 @@ package com.jin.baptiste.company.exposition;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
@@ -25,10 +26,15 @@ import javax.ejb.Stateless;
 public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @EJB
+    private ProduitFacadeLocal produitFacade;
+
+    @EJB
     private MetierProduitLocal metierProduit;
 
     @EJB
     private MetierPanierLocal metierPanier;
+    
+    
 
     
     @Override
@@ -77,10 +83,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     public void supprimerPanier(Long idPanier) {
         this.metierPanier.supprimerPanier(idPanier);
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-
+    
     @Override
     public ProduitExport getProduit(Long idProduit) {
         Produit p = this.metierProduit.getProduit(idProduit);
@@ -95,11 +98,41 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @Override
     public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<ProduitExport> resList = null;
+        List<Produit> allProduit = this.produitFacade.findAll();
+        for(Produit p : allProduit){
+            if(p.getType() == type){
+                List<Panier> lp = p.getListePanier();
+                List<Long> listeIdPanier = null;
+                for( Panier panier : lp){
+                    listeIdPanier.add(panier.getId());
+                }
+                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock(),listeIdPanier );
+                resList.add(produitExport);
+            }
+        }
+        return resList;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<ProduitExport> searchProduitByName(String nom) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<ProduitExport> resList = null;
+        List<Produit> allProduit = this.produitFacade.findAll();
+        for(Produit p : allProduit){
+            if(p.getNom().contains(nom)){
+                List<Panier> lp = p.getListePanier();
+                List<Long> listeIdPanier = null;
+                for( Panier panier : lp){
+                    listeIdPanier.add(panier.getId());
+                }
+                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock(),listeIdPanier );
+                resList.add(produitExport);
+            }
+        }
+        return resList;
+
+
+//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

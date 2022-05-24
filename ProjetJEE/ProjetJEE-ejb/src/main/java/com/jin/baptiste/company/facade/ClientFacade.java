@@ -34,7 +34,7 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
     public Client findbyEmail(String email) {
         List<Client> listeClt = findAll();
         for (Client c : listeClt){
-            if(c.getEmail().equals(email)){
+            if(c.getEmail().contains(email)){
                 return c;
             }
         }
