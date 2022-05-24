@@ -77,7 +77,13 @@ public class ExpoLeg implements ExpoLegLocal {
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
         }
-        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
+        Long idCompte = null;
+        try{
+            idCompte = clt.getCompte().getId();
+        }catch(Exception e){
+            
+        }
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),idCompte,clt.getAdresse(),listeIdPanier);
         return clte;
     }    
 
