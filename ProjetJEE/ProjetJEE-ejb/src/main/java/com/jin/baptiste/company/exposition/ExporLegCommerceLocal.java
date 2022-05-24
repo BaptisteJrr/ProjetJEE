@@ -23,6 +23,7 @@ public interface ExporLegCommerceLocal {
     public void modifierProduit(Long idProduit, String nom, String description, double prixHT, TypeProduitEnum type);
     public void vendreProduit(Long idProduit, int quantite);
     public void supprimerProduit(Long idProduit);
+    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock);
     
     public List<ProduitExport> getListProduit();
     public List<ProduitExport> getProduitByType(TypeProduitEnum type);

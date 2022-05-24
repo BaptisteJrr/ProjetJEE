@@ -35,8 +35,8 @@ public class WebServiceServiceCommercial {
     @WebMethod(operationName = "stockerProduit")
     @Oneway
     public void stockerProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "nombre") String n) {
-        int nI = Integer.parseInt(n);
         Long idProduitL = Long.parseLong(idProduit);
+        int nI = Integer.parseInt(n);
         ejbRef.stockerProduit(idProduitL, nI);
     }
 
@@ -62,6 +62,15 @@ public class WebServiceServiceCommercial {
     public void supprimerProduit(@WebParam(name = "idProduit") String idProduit) {
         Long idProduitL = Long.parseLong(idProduit);
         ejbRef.supprimerProduit(idProduitL);
+    }
+
+    @WebMethod(operationName = "creerProduit")
+    @Oneway
+    public void creerProduit(@WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") String prixHT, @WebParam(name = "type") String type, @WebParam(name = "stock") String stock) {
+        Double prixHTD = Double.parseDouble(prixHT);
+        TypeProduitEnum typeT = TypeProduitEnum.valueOf(type);
+        int stockI = Integer.parseInt(stock);
+        ejbRef.creerProduit(nom, description, prixHTD, typeT, stockI);
     }
 
     @WebMethod(operationName = "getListProduit")

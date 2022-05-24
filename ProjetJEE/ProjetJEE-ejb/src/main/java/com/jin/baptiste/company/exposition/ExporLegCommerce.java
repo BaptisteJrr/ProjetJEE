@@ -135,4 +135,11 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {
+        this.metierProduit.creerProduit(nom, description, prixHT, type, stock);
+        
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }
