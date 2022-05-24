@@ -19,7 +19,7 @@ public interface MetierClientLocal {
     
     public void creerClient(String nom, String prenom, String email, String adresse);
     
-    public ClientExport getClient(long idClient);
+    public Client getClient(long idClient);
     
     public boolean authentification(String email);
     

@@ -8,7 +8,6 @@ package com.jin.baptiste.company.metier;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
-import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacade;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
@@ -26,9 +25,6 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class MetierProduit implements MetierProduitLocal {
-
-    @EJB
-    private PanierFacadeLocal panierFacade;
 
     @EJB
     private ProduitFacadeLocal produitFacade;

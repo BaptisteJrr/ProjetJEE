@@ -5,10 +5,13 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -37,7 +40,13 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public ClientExport getClient(Long id) {
-        return this.metierClient.getClient(id);
+        Client clt = this.metierClient.getClient(id);
+        List<Long> listeIdPanier = null;
+        for(Panier p : clt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
+        return clte;
     }
 
     @Override
