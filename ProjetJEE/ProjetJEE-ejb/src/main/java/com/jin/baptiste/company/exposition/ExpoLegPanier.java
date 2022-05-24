@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.entities.exposition;
+package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
@@ -36,13 +36,19 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         this.metierPanier.payer(idPanier);
     }
 
-    @Override
-    public void livrerPaier(Long idPanier) {
-        this.metierPanier.livrer(idPanier);
-    }
 
     @Override
     public void ajouterProduit(Long idProduit, Long idPanier) {
+       
+        /*
+         1.autehtification
+        --> oui : 1. verifier panier existe 
+        
+        
+        --> non : 
+        
+        
+        */
         this.metierPanier.ajouterProduit(idProduit, idPanier);
     }
 
