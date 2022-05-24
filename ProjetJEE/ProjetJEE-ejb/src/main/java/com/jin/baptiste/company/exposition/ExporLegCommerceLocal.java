@@ -7,6 +7,7 @@ package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -17,9 +18,15 @@ import javax.ejb.Local;
 public interface ExporLegCommerceLocal {
     
     public ProduitExport getProduit(Long idProduit);
+    
     public void stockerProduit(Long idProduit, int n);
-    public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type);
-    public void vendreProduit(long idProduit, int quantite);
-    public void supprimerProduit(long idProduit);
+    public void modifierProduit(Long idProduit, String nom, String description, double prixHT, TypeProduitEnum type);
+    public void vendreProduit(Long idProduit, int quantite);
+    public void supprimerProduit(Long idProduit);
+    
+    public List<ProduitExport> getListProduit();
+    public List<ProduitExport> getProduitByType(TypeProduitEnum type);
+    
+    public List<ProduitExport> searchProduitByName(String nom);
         
 }

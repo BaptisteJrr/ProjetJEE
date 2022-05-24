@@ -5,15 +5,12 @@
  */
 package com.jin.baptiste.company.metier;
 
-import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.facade.ProduitFacade;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
-import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -101,15 +98,16 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     @Override
-    public ProduitExport getProduit(Long idProduit) {
+    public Produit getProduit(Long idProduit) {
         Produit p = this.produitFacade.find(idProduit);
-        List<Long> listeIdPanier = null;
-        List<Panier> listePanier = p.getListePanier();
-        for(Panier pan : listePanier){
-              listeIdPanier.add(pan.getId());
-        }
-        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
-        return pe;
+//        List<Long> listeIdPanier = null;
+//        List<Panier> listePanier = p.getListePanier();
+//        for(Panier pan : listePanier){
+//              listeIdPanier.add(pan.getId());
+//        }
+//        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
+//        return pe;
+          return p;
         
     }
 }

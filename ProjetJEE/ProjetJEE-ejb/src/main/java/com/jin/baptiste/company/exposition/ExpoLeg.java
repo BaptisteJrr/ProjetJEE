@@ -11,6 +11,7 @@ import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -38,16 +39,16 @@ public class ExpoLeg implements ExpoLegLocal {
         this.metierClient.creerClient(nom, prenom, mail, adresse);
     }
 
-    @Override
-    public ClientExport getClient(Long id) {
-        Client clt = this.metierClient.getClient(id);
-        List<Long> listeIdPanier = null;
-        for(Panier p : clt.getListePanier()){
-            listeIdPanier.add(p.getId());
-        }
-        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
-        return clte;
-    }
+//    @Override
+//    public ClientExport getClient(Long id) {
+//        Client clt = this.metierClient.getClient(id);
+//        List<Long> listeIdPanier = null;
+//        for(Panier p : clt.getListePanier()){
+//            listeIdPanier.add(p.getId());
+//        }
+//        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
+//        return clte;
+//    }
 
     @Override
     public void creerCompte(Double solde, String mail) {
@@ -66,4 +67,20 @@ public class ExpoLeg implements ExpoLegLocal {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
+
+    @Override
+    public ClientExport getClientByMail(String mail) {
+        Client clt = this.metierClient.getClientparMail(mail);
+        List<Long> listeIdPanier = null;
+        for(Panier p : clt.getListePanier()){
+            listeIdPanier.add(p.getId());
+        }
+        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
+        return clte;
+    }    
+
+    @Override
+    public Position getCompte(Long idCompte) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

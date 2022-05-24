@@ -5,7 +5,8 @@
  */
 package com.jin.baptiste.company.metier;
 
-import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import com.jin.baptiste.company.entities.Panier;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -27,6 +28,14 @@ public interface MetierPanierLocal {
         
         public void supprimerPanier(long idPanier);
         
-        public PanierExport getPanier(long idPanier);
-    
+        public Panier getPanier(long idPanier);
+        
+        public List getPanier();    
+        public List getPanierNonPaye();       
+        public List getPanierPaye();
+        public List getPanierNonLivre();
+        public List getPanierLivre();
+        
+        
+
 }

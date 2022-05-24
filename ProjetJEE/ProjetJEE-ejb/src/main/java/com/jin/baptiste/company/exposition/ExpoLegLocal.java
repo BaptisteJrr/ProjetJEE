@@ -7,6 +7,7 @@ package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import javax.ejb.Local;
 
 /**
@@ -15,12 +16,15 @@ import javax.ejb.Local;
  */
 @Local
 public interface ExpoLegLocal {
-    
+    // Action du Client sur le Compte 
     public void creerClient(String nom, String prenom, String mail, String adresse);
-    public ClientExport getClient(Long id);
+//    public ClientExport getClient(Long id);
+    public ClientExport getClientByMail(String mail);
     public void creerCompte(Double solde, String mail);
     public void crediter(Long id, Double somme);
     public void debiter(Long id, Double somme);
-//    public Postion getCompte(Long idCompte);
+    public Position getCompte(Long idCompte);
+    
+    
     
 }

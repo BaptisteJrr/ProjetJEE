@@ -5,6 +5,8 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,5 +17,7 @@ import javax.ejb.Local;
 public interface ExporLegLivrerLocal {
     
     public void livrerPaier(Long idPanier);
+    public List<PanierExport> getListPanierNonLivre();
+    public List<PanierExport> getListPanierLivre();
     
 }

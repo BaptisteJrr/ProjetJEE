@@ -5,8 +5,8 @@
  */
 package com.jin.baptiste.company.metier;
 
-import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
-import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
+
+import com.jin.baptiste.company.entities.Compte;
 import javax.ejb.Local;
 
 /**
@@ -18,9 +18,9 @@ public interface MetierCompteLocal {
     
     public void creerCompte (double solde, String email);
     
-    public CompteExport getComptebyidCompte(long idCompte);
+    public Compte getComptebyidCompte(long idCompte);
     
-    public CompteExport getComptebyidClient(long idClient);
+    public Compte getComptebyidClient(long idClient);
     
     public void crediter(long idCompte, double somme);
     // throws CompteSoldeNegaException

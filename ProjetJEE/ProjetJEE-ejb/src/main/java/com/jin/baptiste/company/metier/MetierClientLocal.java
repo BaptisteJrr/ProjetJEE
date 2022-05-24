@@ -25,5 +25,5 @@ public interface MetierClientLocal {
     
     public void ajouterPanier(Panier panier, long idCLient);
     
-    public ClientExport getClientparMail(String email);
+    public Client getClientparMail(String email);
 }

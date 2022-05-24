@@ -5,10 +5,15 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.entities.Produit;
+import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -28,7 +33,13 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     
     @Override
     public PanierExport getPanier(Long idPanier) {
-           return this.metierPanier.getPanier(idPanier);
+        Panier p = this.metierPanier.getPanier(idPanier);
+        Collection<Long> listeIdProduit = null;
+        for( Produit prod : p.getListeProduit()){
+            listeIdProduit.add(prod.getId());
+        }
+        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
+        return pe;
     }
 
     @Override
@@ -72,6 +83,23 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @Override
     public ProduitExport getProduit(Long idProduit) {
-        return this.metierProduit.getProduit(idProduit);
+        Produit p = this.metierProduit.getProduit(idProduit);
+        List<Long> listeIdPanier = null;
+        List<Panier> listePanier = p.getListePanier();
+        for(Panier pan : listePanier){
+              listeIdPanier.add(pan.getId());
+        }
+        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
+        return pe;
+    }
+
+    @Override
+    public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<ProduitExport> searchProduitByName(String nom) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

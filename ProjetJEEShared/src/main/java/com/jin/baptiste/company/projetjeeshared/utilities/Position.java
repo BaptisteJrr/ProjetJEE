@@ -17,11 +17,22 @@ public class Position implements Serializable{
     private static final long serialVersionUID = 1L;
     private double solde;
     private Date date;
+    private Long idCompte;
 
-    public Position(double solde, Date date) {
+    public Position(double solde, Date date, Long idCompte) {
         this.solde = solde;
         this.date = date;
+        this.idCompte = idCompte;
     }
+
+    public Long getIdCompte() {
+        return idCompte;
+    }
+
+    public void setIdCompte(Long idCompte) {
+        this.idCompte = idCompte;
+    }
+
 
     public double getSolde() {
         return solde;

@@ -70,13 +70,13 @@ public class MetierClient implements MetierClientLocal {
     
     //Error a traiter
     @Override
-    public ClientExport getClientparMail(String email) {
+    public Client getClientparMail(String email) {
         Client clt = this.clientFacade.findbyEmail(email);
-        List<Long> listeIdPanier = null;
-        for(Panier p : clt.getListePanier()){
-            listeIdPanier.add(p.getId());
-        }
-        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
-        return clte;        
+//        List<Long> listeIdPanier = null;
+//        for(Panier p : clt.getListePanier()){
+//            listeIdPanier.add(p.getId());
+//        }
+//        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
+        return clt;        
     }
 }

@@ -11,6 +11,7 @@ import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.Collection;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -26,9 +27,6 @@ public class MetierPanier implements MetierPanierLocal {
 
     @EJB
     private PanierFacadeLocal panierFacade;
-    
-    
-    
     
 
     @Override
@@ -89,14 +87,64 @@ public class MetierPanier implements MetierPanierLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public PanierExport getPanier(long idPanier) {
+    public Panier getPanier(long idPanier) {
         Panier p = this.panierFacade.find(idPanier);
-        Collection<Long> listeIdProduit = null;
-        for( Produit prod : p.getListeProduit()){
-            listeIdProduit.add(prod.getId());
+//        Collection<Long> listeIdProduit = null;
+//        for( Produit prod : p.getListeProduit()){
+//            listeIdProduit.add(prod.getId());
+//        }
+//        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
+//        return pe;
+        return p;
+    }
+
+    @Override
+    public List getPanier() {
+        return this.panierFacade.findAll();
+    }
+
+    @Override
+    public List getPanierNonPaye() {
+        List lNP = null;
+        for (Panier p : this.panierFacade.findAll()){
+            if (!p.isFlagRegle()){
+                lNP.add(p);
+            }
         }
-        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
-        return pe;
+        return lNP;
+    }
+
+    @Override
+    public List getPanierPaye() {
+        List lP = null;
+        for (Panier p : this.panierFacade.findAll()){
+            if (p.isFlagRegle()){
+                lP.add(p);
+            }
+        }
+        return lP;    
+    }
+
+    @Override
+    public List getPanierNonLivre() {
+        List lNL = null;
+        for (Panier p : this.panierFacade.findAll()){
+            if (p.isFlagLivre()){
+                lNL.add(p);
+            }
+        }
+        return lNL; 
+    }
+
+    @Override
+    public List getPanierLivre() {
+        List lL = null;
+        for (Panier p : this.panierFacade.findAll()){
+            if (p.isFlagLivre()){
+                lL.add(p);
+            }
+        }
+        return lL; 
     }
     
 }

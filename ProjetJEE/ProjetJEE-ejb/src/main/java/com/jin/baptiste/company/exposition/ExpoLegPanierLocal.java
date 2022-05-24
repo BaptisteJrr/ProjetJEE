@@ -5,8 +5,10 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,8 +17,12 @@ import javax.ejb.Local;
  */
 @Local
 public interface ExpoLegPanierLocal {
-    
+    // Action du Client sur Panier
     public ProduitExport getProduit(Long idProduit);
+    
+    public List<ProduitExport> getProduitByType(TypeProduitEnum type);
+    // algo LIKE %%....
+    public List<ProduitExport> searchProduitByName(String nom);
         
     public PanierExport getPanier(Long idPanier);
     public void payerPanier(Long idPanier);

@@ -31,6 +31,8 @@ public class Client implements Serializable {
     private String email;
     private String adresse;
     
+    
+    // private String codeP;
     // les info bouclent pas
     @OneToOne
     private Compte compte;

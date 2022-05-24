@@ -6,6 +6,8 @@
 package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.metier.MetierPanierLocal;
+import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -28,4 +30,17 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     public void livrerPaier(Long idPanier) {
         this.metierPanier.livrer(idPanier);
     }   
+
+    //on doit faire une algotithemique pour lister les panier avec leur adresse ou code postal asc ou decs 
+    @Override
+    public List<PanierExport> getListPanierNonLivre() {
+        //une list export?
+        //algo a faire
+        return this.metierPanier.getPanierNonLivre();
+    }
+
+    @Override
+    public List<PanierExport> getListPanierLivre() {
+        return this.metierPanier.getPanierLivre();
+    }
 }

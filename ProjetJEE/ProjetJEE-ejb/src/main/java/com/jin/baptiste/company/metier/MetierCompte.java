@@ -7,13 +7,10 @@ package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
-import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
-import com.jin.baptiste.company.projetjeeshared.Exception.ClientNonTrouveException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
-import com.jin.baptiste.company.projetjeeshared.utilities.CompteExport;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -37,13 +34,18 @@ public class MetierCompte implements MetierCompteLocal {
         //Verification email existe dans la BD  
 
             List<Client> findAllClient = this.clientFacade.findAll();
-        
             boolean auth = false;
+            boolean compteFlg = false;
             for(Client c : findAllClient){       
-                if (c.getEmail().equals(email))
+                if (c.getEmail().equals(email)){
                     auth = true;
+                    // Client a pas de Compte
+                    if (c.getCompte()!= null) {
+                        compteFlg = true;
+                    } 
+                }
             }
-            if (auth) {
+            if (auth && !compteFlg) {
                  Compte cpt = new Compte();      
                  cpt.setSolde(solde);
                  Client clt = this.clientFacade.findbyEmail(email);
@@ -51,7 +53,10 @@ public class MetierCompte implements MetierCompteLocal {
                  clt.setCompte(cpt);
                  this.compteFacade.create(cpt); 
             } else {
-                System.out.println("Client non existe");
+                if (!auth)
+                    System.out.println("Client non existe");
+                if (compteFlg)
+                    System.out.println("Client a déjà un compte");
        }
     }
 
@@ -85,25 +90,25 @@ public class MetierCompte implements MetierCompteLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public CompteExport getComptebyidCompte(long idCompte) {        
+    public Compte getComptebyidCompte(long idCompte) {        
         Compte cpt =  this.compteFacade.find(idCompte);
-        List<Long> listeIdPanier = null;
-        for(Panier p : cpt.getListePanier()){
-            listeIdPanier.add(p.getId());
-        }
-        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),cpt.getClient().getId(),listeIdPanier);
-        return cpte;
+//        List<Long> listeIdPanier = null;
+//        for(Panier p : cpt.getListePanier()){
+//            listeIdPanier.add(p.getId());
+//        }
+//        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),cpt.getClient().getId(),listeIdPanier);
+        return cpt;
     }
 
     @Override
-    public CompteExport getComptebyidClient(long idClient) {
+    public Compte getComptebyidClient(long idClient) {
         Client clt = this.clientFacade.find(idClient);
         Compte cpt = this.compteFacade.find(clt.getCompte());
-        List<Long> listeIdPanier = null;
-        for(Panier p : cpt.getListePanier()){
-            listeIdPanier.add(p.getId());
-        }
-        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),idClient,listeIdPanier);
-        return cpte;
+//        List<Long> listeIdPanier = null;
+//        for(Panier p : cpt.getListePanier()){
+//            listeIdPanier.add(p.getId());
+//        }
+//        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),idClient,listeIdPanier);
+        return cpt;
     }
 }
