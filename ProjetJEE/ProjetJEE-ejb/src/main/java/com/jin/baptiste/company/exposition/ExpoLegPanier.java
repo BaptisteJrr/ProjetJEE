@@ -5,15 +5,19 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
+import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -26,6 +30,9 @@ import javax.ejb.Stateless;
 public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @EJB
+    private MetierClientLocal metierClient;
+
+    @EJB
     private ProduitFacadeLocal produitFacade;
 
     @EJB
@@ -35,16 +42,31 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     private MetierPanierLocal metierPanier;
     
     
+    
 
     
     @Override
     public PanierExport getPanier(Long idPanier) {
         Panier p = this.metierPanier.getPanier(idPanier);
-        Collection<Long> listeIdProduit = null;
-        for( Produit prod : p.getListeProduit()){
+        Collection<Long> listeIdProduit = new ArrayList<Long>();
+        Collection<Produit> listeProduit = p.getListeProduit();
+        for( Produit prod : listeProduit){
             listeIdProduit.add(prod.getId());
         }
-        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
+        Long idClient = null;
+        Long idCompte = null;
+        try{
+            idClient = p.getClient().getId();
+        }catch(Exception e){    
+        }
+        try{
+            idCompte = p.getCompte().getId();
+        }catch(Exception e){
+            
+        }
+        PanierExport pe;
+        pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,idClient, idCompte, p.getPrixTTC(), new Date());
+        
         return pe;
     }
 
@@ -119,5 +141,16 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
 
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void ajouterProduitToAClient(Long idProduit, String mail) {
+        this.metierPanier.ajouterProduitByClient(idProduit, mail);
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public PanierExport getPanierActif(String mail) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

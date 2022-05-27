@@ -27,13 +27,15 @@ public interface ExpoLegPanierLocal {
     public PanierExport getPanier(Long idPanier);
     public void payerPanier(Long idPanier);
    
-    
+    public void ajouterProduitToAClient(Long idProduit, String mail);
     public void ajouterProduit(Long idProduit, Long idPanier);
     public void retirerProduit(Long idProduit, Long idPanier);
     
     //Nessecaire?
     public void retirerAllProduit(Long idProduit, Long idPanier);
     public void supprimerPanier(Long idPanier);
+    
+    public PanierExport getPanierActif(String mail);
     
 
 }

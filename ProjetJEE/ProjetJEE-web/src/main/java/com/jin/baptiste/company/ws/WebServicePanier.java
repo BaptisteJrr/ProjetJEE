@@ -34,9 +34,8 @@ public class WebServicePanier {
     }
 
     @WebMethod(operationName = "getProduitByType")
-    public List<ProduitExport> getProduitByType(@WebParam(name = "type") String type) {
-        TypeProduitEnum typeT = TypeProduitEnum.valueOf(type);
-        return ejbRef.getProduitByType(typeT);
+    public List<ProduitExport> getProduitByType(@WebParam(name = "type") TypeProduitEnum type) {
+        return ejbRef.getProduitByType(type);
     }
 
     @WebMethod(operationName = "searchProduitByName")
@@ -52,40 +51,39 @@ public class WebServicePanier {
 
     @WebMethod(operationName = "payerPanier")
     @Oneway
-    public void payerPanier(@WebParam(name = "idPanier") String idPanier) {
-        Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.payerPanier(idPanierL);
+    public void payerPanier(@WebParam(name = "idPanier") Long idPanier) {
+        ejbRef.payerPanier(idPanier);
+    }
+
+    @WebMethod(operationName = "ajouterProduitToAClient")
+    @Oneway
+    public void ajouterProduitToAClient(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "mail") String mail) {
+        Long idProduitL = Long.parseLong(idProduit);
+        ejbRef.ajouterProduitToAClient(idProduitL, mail);
     }
 
     @WebMethod(operationName = "ajouterProduit")
     @Oneway
-    public void ajouterProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idPanier") String idPanier) {
-        Long idPanierL = Long.parseLong(idPanier);
-        Long idProduitL = Long.parseLong(idProduit);
-        ejbRef.ajouterProduit(idProduitL, idPanierL);
+    public void ajouterProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idPanier") Long idPanier) {
+        ejbRef.ajouterProduit(idProduit, idPanier);
     }
 
     @WebMethod(operationName = "retirerProduit")
     @Oneway
-    public void retirerProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idPanier") String idPanier) {
-        Long idProduitL = Long.parseLong(idProduit);
-        Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.retirerProduit(idProduitL, idPanierL);
+    public void retirerProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idPanier") Long idPanier) {
+        ejbRef.retirerProduit(idProduit, idPanier);
     }
 
     @WebMethod(operationName = "retirerAllProduit")
     @Oneway
-    public void retirerAllProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idPanier") String idPanier) {
-        Long idProduitL = Long.parseLong(idProduit);
-        Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.retirerAllProduit(idProduitL, idPanierL);
+    public void retirerAllProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idPanier") Long idPanier) {
+        ejbRef.retirerAllProduit(idProduit, idPanier);
     }
 
     @WebMethod(operationName = "supprimerPanier")
     @Oneway
-    public void supprimerPanier(@WebParam(name = "idPanier") String idPanier) {
-        Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.supprimerPanier(idPanierL);
+    public void supprimerPanier(@WebParam(name = "idPanier") Long idPanier) {
+        ejbRef.supprimerPanier(idPanier);
     }
     
 }

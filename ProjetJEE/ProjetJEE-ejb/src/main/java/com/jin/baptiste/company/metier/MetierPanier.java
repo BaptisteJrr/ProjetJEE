@@ -5,11 +5,14 @@
  */
 package com.jin.baptiste.company.metier;
 
+import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
+import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,10 +26,20 @@ import javax.ejb.Stateless;
 public class MetierPanier implements MetierPanierLocal {
 
     @EJB
+    private ClientFacadeLocal clientFacade;
+
+    @EJB
+    private MetierClientLocal metierClient;
+
+    @EJB
     private ProduitFacadeLocal produitFacade;
 
     @EJB
     private PanierFacadeLocal panierFacade;
+    
+    
+    
+    
     
 
     @Override
@@ -145,6 +158,50 @@ public class MetierPanier implements MetierPanierLocal {
             }
         }
         return lL; 
+    }
+
+    @Override
+    public void ajouterProduitByClient(long idProduit, String mail) {
+        Client clt = this.metierClient.getClientparMail(mail);
+        Collection<Panier> listePanier = clt.getListePanier();
+        if(listePanier.isEmpty()){
+            Panier p = new Panier();
+            Collection<Produit> listeProduit = new ArrayList<Produit>();
+            Produit produit = this.produitFacade.find(idProduit);
+            listeProduit.add(produit);
+            p.setListeProduit(listeProduit);
+            p.setClient(clt);
+            this.panierFacade.create(p);
+            listePanier.add(p);
+            clt.setListePanier(listePanier);
+            this.clientFacade.edit(clt);
+        }else{
+            //On cherche si il y a un panier actif 
+            boolean trouve = false;
+            for(Panier p : listePanier){
+                if(!p.isFlagLivre() && !p.isFlagRegle() && !trouve){
+                    trouve = true;
+                    Collection<Produit> listeProduit = p.getListeProduit();
+                    listeProduit.add(this.produitFacade.find(idProduit));
+                    p.setListeProduit(listeProduit);
+                    this.panierFacade.edit(p);
+                    
+                }
+            }
+            if(!trouve){
+                Panier p = new Panier();
+                Collection<Produit> listeProduit = new ArrayList<Produit>();
+                Produit produit = this.produitFacade.find(idProduit);
+                listeProduit.add(produit);
+                p.setListeProduit(listeProduit);
+                p.setClient(clt);
+                this.panierFacade.create(p);
+                listePanier.add(p);
+                clt.setListePanier(listePanier);
+                this.clientFacade.edit(clt);
+            }
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

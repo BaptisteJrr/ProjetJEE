@@ -21,7 +21,7 @@ public interface MetierPanierLocal {
         public void livrer(long idPanier);
         
         public void ajouterProduit(long idProduit,long idPanier);
-    
+        public void ajouterProduitByClient(long idProduit, String mail);
         public void retirerProduit(long idProduit, long idPanier);
     
         public void retirerAllProduit(long idProduit, long idPanier);
