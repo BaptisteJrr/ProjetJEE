@@ -87,12 +87,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     @Override
     public ProduitExport getProduit(Long idProduit) {
         Produit p = this.metierProduit.getProduit(idProduit);
-        List<Long> listeIdPanier = null;
-        List<Panier> listePanier = p.getListePanier();
-        for(Panier pan : listePanier){
-              listeIdPanier.add(pan.getId());
-        }
-        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
+        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock() );
         return pe;
     }
 
@@ -102,12 +97,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         List<Produit> allProduit = this.produitFacade.findAll();
         for(Produit p : allProduit){
             if(p.getType() == type){
-                List<Panier> lp = p.getListePanier();
-                List<Long> listeIdPanier = null;
-                for( Panier panier : lp){
-                    listeIdPanier.add(panier.getId());
-                }
-                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock(),listeIdPanier );
+                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock() );
                 resList.add(produitExport);
             }
         }
@@ -121,12 +111,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         List<Produit> allProduit = this.produitFacade.findAll();
         for(Produit p : allProduit){
             if(p.getNom().contains(nom)){
-                List<Panier> lp = p.getListePanier();
-                List<Long> listeIdPanier = null;
-                for( Panier panier : lp){
-                    listeIdPanier.add(panier.getId());
-                }
-                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock(),listeIdPanier );
+                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock() );
                 resList.add(produitExport);
             }
         }

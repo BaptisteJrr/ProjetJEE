@@ -20,16 +20,16 @@ public class ProduitExport implements Serializable{
     private double prixHT;
     private String description;
     private int stock;
-    private List<Long> listIdPaniers;
+    //private List<Long> listIdPaniers;
 
-    public ProduitExport(Long id, String nom, String type, double prixHT, String description, int stock, List<Long> listIdPaniers) {
+    public ProduitExport(Long id, String nom, String type, double prixHT, String description, int stock) {
         this.id = id;
         this.nom = nom;
         this.type = type;
         this.prixHT = prixHT;
         this.description = description;
         this.stock = stock;
-        this.listIdPaniers = listIdPaniers;
+       // this.listIdPaniers = listIdPaniers;
     }
 
     public Long getId() {
@@ -81,13 +81,13 @@ public class ProduitExport implements Serializable{
         this.stock = stock;
     }
 
-    public List<Long> getListIdPaniers() {
+    /*public List<Long> getListIdPaniers() {
         return listIdPaniers;
     }
 
     public void setListIdPaniers(List<Long> listIdPaniers) {
         this.listIdPaniers = listIdPaniers;
-    }
+    }*/
     
     
 }
