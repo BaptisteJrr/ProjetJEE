@@ -5,8 +5,12 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -27,7 +31,7 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     // "Insert Code > Add Business Method")
 
     @Override
-    public void livrerPaier(Long idPanier) {
+    public void livrerPanier(Long idPanier) {
         this.metierPanier.livrer(idPanier);
     }   
 
@@ -36,11 +40,68 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     public List<PanierExport> getListPanierNonLivre() {
         //une list export?
         //algo a faire
-        return this.metierPanier.getPanierNonLivre();
+        List<Panier> listePanier = this.metierPanier.getPanierNonLivre();
+        if(!listePanier.isEmpty()){
+            List<PanierExport> listePanierExport = new ArrayList<PanierExport>();
+            for( Panier p : listePanier){
+                Long idP = p.getId();
+                Collection<Long> listeIdProduit = new ArrayList<Long>();
+                Collection<Produit> listeProduit = p.getListeProduit();
+                for( Produit prod : listeProduit){
+                    listeIdProduit.add(prod.getId());
+                }
+                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+                Long idClient = null;
+                Long idCompte = null;
+                try{
+                    idClient = p.getClient().getId();
+                    pe.setIdClient(idClient);
+                }catch(Exception e){    
+                }
+                try{
+                    idCompte = p.getCompte().getId();
+                    pe.setIdCompte(idCompte);
+                }catch(Exception e){
+
+                }
+                listePanierExport.add(pe);
+            }
+
+            return listePanierExport;
+        }else{
+            return new ArrayList<PanierExport>();
+        }
+        
     }
 
     @Override
     public List<PanierExport> getListPanierLivre() {
-        return this.metierPanier.getPanierLivre();
+        List<Panier> listePanier = this.metierPanier.getPanierLivre();
+        List<PanierExport> listePanierExport = new ArrayList<PanierExport>();
+        for( Panier p : listePanier){
+            Long idP = p.getId();
+            Collection<Long> listeIdProduit = new ArrayList<Long>();
+            Collection<Produit> listeProduit = p.getListeProduit();
+            for( Produit prod : listeProduit){
+                listeIdProduit.add(prod.getId());
+            }
+            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+            Long idClient = null;
+            Long idCompte = null;
+            try{
+                idClient = p.getClient().getId();
+                pe.setIdClient(idClient);
+            }catch(Exception e){    
+            }
+            try{
+                idCompte = p.getCompte().getId();
+                pe.setIdCompte(idCompte);
+            }catch(Exception e){
+
+            }
+            listePanierExport.add(pe);
+        }
+        
+        return listePanierExport;
     }
 }

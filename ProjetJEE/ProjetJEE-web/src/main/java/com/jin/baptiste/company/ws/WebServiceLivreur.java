@@ -29,7 +29,7 @@ public class WebServiceLivreur {
     @Oneway
     public void livrerPaier(@WebParam(name = "idPanier") String idPanier) {
         Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.livrerPaier(idPanierL);
+        ejbRef.livrerPanier(idPanierL);
     }
 
     @WebMethod(operationName = "getListPanierNonLivre")

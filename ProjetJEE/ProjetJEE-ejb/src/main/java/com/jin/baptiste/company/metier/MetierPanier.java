@@ -53,7 +53,9 @@ public class MetierPanier implements MetierPanierLocal {
     @Override
     public void livrer(long idPanier) {
         Panier p = this.panierFacade.find(idPanier);
-        p.setFlagLivre(true);
+        if(p.isFlagRegle()){
+            p.setFlagLivre(true);
+        }
         this.panierFacade.edit(p);
     }
 
@@ -117,8 +119,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public List getPanierNonPaye() {
-        List lNP = null;
+    public List<Panier> getPanierNonPaye() {
+        List<Panier> lNP = null;
         for (Panier p : this.panierFacade.findAll()){
             if (!p.isFlagRegle()){
                 lNP.add(p);
@@ -128,8 +130,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public List getPanierPaye() {
-        List lP = null;
+    public List<Panier> getPanierPaye() {
+        List<Panier> lP = null;
         for (Panier p : this.panierFacade.findAll()){
             if (p.isFlagRegle()){
                 lP.add(p);
@@ -139,10 +141,11 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public List getPanierNonLivre() {
-        List lNL = null;
-        for (Panier p : this.panierFacade.findAll()){
-            if (p.isFlagLivre()){
+    public List<Panier> getPanierNonLivre() {
+        List<Panier> lNL = new ArrayList<Panier>(); 
+        List<Panier> allPanier = this.panierFacade.findAll();
+        for (Panier p : allPanier){
+            if (!p.isFlagLivre() && p.isFlagRegle()){
                 lNL.add(p);
             }
         }
@@ -150,8 +153,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public List getPanierLivre() {
-        List lL = null;
+    public List<Panier> getPanierLivre() {
+        List<Panier> lL = new ArrayList<Panier>();
         for (Panier p : this.panierFacade.findAll()){
             if (p.isFlagLivre()){
                 lL.add(p);
@@ -161,8 +164,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public void ajouterProduitByClient(long idProduit, String mail) {
-        Client clt = this.metierClient.getClientparMail(mail);
+    public void ajouterProduitByClient(long idProduit, Long idClient) {
+        Client clt = this.metierClient.getClient(idClient);
         Collection<Panier> listePanier = clt.getListePanier();
         if(listePanier.isEmpty()){
             Panier p = new Panier();
@@ -201,6 +204,18 @@ public class MetierPanier implements MetierPanierLocal {
                 this.clientFacade.edit(clt);
             }
         }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Panier getPanierActif(Long idClient) {
+        List<Panier> listePanier = this.panierFacade.findAll();
+        for(Panier p : listePanier){
+            if(p.getClient().getId() == idClient && !p.isFlagLivre() && !p.isFlagRegle()){
+                return p;
+            }
+        }
+        return null;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

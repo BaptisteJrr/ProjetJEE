@@ -48,49 +48,39 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     @Override
     public PanierExport getPanier(Long idPanier) {
         Panier p = this.metierPanier.getPanier(idPanier);
-        Collection<Long> listeIdProduit = new ArrayList<Long>();
-        Collection<Produit> listeProduit = p.getListeProduit();
-        for( Produit prod : listeProduit){
-            listeIdProduit.add(prod.getId());
+        if(p != null){
+            Long idP = p.getId();
+            Collection<Long> listeIdProduit = new ArrayList<Long>();
+            Collection<Produit> listeProduit = p.getListeProduit();
+            for( Produit prod : listeProduit){
+                listeIdProduit.add(prod.getId());
+            }
+            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+            Long idClient = null;
+            Long idCompte = null;
+            try{
+                idClient = p.getClient().getId();
+                pe.setIdClient(idClient);
+            }catch(Exception e){    
+            }
+            try{
+                idCompte = p.getCompte().getId();
+                pe.setIdCompte(idCompte);
+            }catch(Exception e){
+
+            }
+            return pe;
+        }else{
+            return null;
         }
-        Long idClient = null;
-        Long idCompte = null;
-        try{
-            idClient = p.getClient().getId();
-        }catch(Exception e){    
-        }
-        try{
-            idCompte = p.getCompte().getId();
-        }catch(Exception e){
-            
-        }
-        PanierExport pe;
-        pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,idClient, idCompte, p.getPrixTTC(), new Date());
         
-        return pe;
     }
 
     @Override
     public void payerPanier(Long idPanier) {
         this.metierPanier.payer(idPanier);
     }
-
-
-    @Override
-    public void ajouterProduit(Long idProduit, Long idPanier) {
-       
-        /*
-         1.autehtification
-        --> oui : 1. verifier panier existe 
-        
-        
-        --> non : 
-        
-        
-        */
-        this.metierPanier.ajouterProduit(idProduit, idPanier);
-    }
-
+    
     @Override
     public void retirerProduit(Long idProduit, Long idPanier) {
         this.metierPanier.retirerProduit(idProduit, idPanier);
@@ -115,7 +105,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @Override
     public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
-        List<ProduitExport> resList = null;
+        List<ProduitExport> resList = new ArrayList<ProduitExport>();
         List<Produit> allProduit = this.produitFacade.findAll();
         for(Produit p : allProduit){
             if(p.getType() == type){
@@ -129,7 +119,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @Override
     public List<ProduitExport> searchProduitByName(String nom) {
-        List<ProduitExport> resList = null;
+        List<ProduitExport> resList = new ArrayList<ProduitExport>();
         List<Produit> allProduit = this.produitFacade.findAll();
         for(Produit p : allProduit){
             if(p.getNom().contains(nom)){
@@ -139,18 +129,43 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         }
         return resList;
 
-
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void ajouterProduitToAClient(Long idProduit, String mail) {
-        this.metierPanier.ajouterProduitByClient(idProduit, mail);
+    public void ajouterProduitToAClient(Long idProduit, Long idClient) {
+        this.metierPanier.ajouterProduitByClient(idProduit,idClient);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public PanierExport getPanierActif(String mail) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public PanierExport getPanierActif(Long idClient) {
+        Panier p = this.metierPanier.getPanierActif(idClient);
+        if(p != null){
+            Long idP = p.getId();
+            Collection<Long> listeIdProduit = new ArrayList<Long>();
+            Collection<Produit> listeProduit = p.getListeProduit();
+            for( Produit prod : listeProduit){
+                listeIdProduit.add(prod.getId());
+            }
+            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+            Long idClientLocal = null;
+            Long idCompte = null;
+            try{
+                idClientLocal = p.getClient().getId();
+                pe.setIdClient(idClientLocal);
+            }catch(Exception e){    
+            }
+            try{
+                idCompte = p.getCompte().getId();
+                pe.setIdCompte(idCompte);
+            }catch(Exception e){
+
+            }
+            return pe;
+        }else{
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

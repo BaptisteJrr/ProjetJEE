@@ -65,6 +65,19 @@ public class Panier implements Serializable {
 
     public void setListeProduit(Collection<Produit> listeProduit) {
         this.listeProduit = listeProduit;
+        this.updatePrixTTC();
+        
+    }
+    
+    public Double totalHT(){
+        Double total = 0.0;
+        for(Produit p : this.listeProduit){
+            total = total + p.getPrixHT();
+        }
+        return total;
+    }
+    public void updatePrixTTC(){
+        this.setPrixTTC(this.totalHT() * 1.2);
     }
 
     public Client getClient() {

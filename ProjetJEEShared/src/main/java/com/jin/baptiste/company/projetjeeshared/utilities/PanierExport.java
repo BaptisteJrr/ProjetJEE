@@ -25,13 +25,11 @@ public class PanierExport implements Serializable{
     private double prixTTC;
     private Date date;
 
-    public PanierExport(Long id, boolean flagLivre, boolean flagRegle, Collection<Long> listeIdProduit, long idClient, long idCompte, double prixTTC, Date date) {
+    public PanierExport(Long id, boolean flagLivre, boolean flagRegle, Collection<Long> listeIdProduit, double prixTTC, Date date) {
         this.id = id;
         this.flagLivre = flagLivre;
         this.flagRegle = flagRegle;
         this.listeIdProduit = listeIdProduit;
-        this.idClient = idClient;
-        this.idCompte = idCompte;
         this.prixTTC = prixTTC;
         this.date = date;
     }

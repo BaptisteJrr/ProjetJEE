@@ -21,7 +21,7 @@ public interface MetierPanierLocal {
         public void livrer(long idPanier);
         
         public void ajouterProduit(long idProduit,long idPanier);
-        public void ajouterProduitByClient(long idProduit, String mail);
+        public void ajouterProduitByClient(long idProduit, Long idClient);
         public void retirerProduit(long idProduit, long idPanier);
     
         public void retirerAllProduit(long idProduit, long idPanier);
@@ -30,11 +30,12 @@ public interface MetierPanierLocal {
         
         public Panier getPanier(long idPanier);
         
-        public List getPanier();    
-        public List getPanierNonPaye();       
-        public List getPanierPaye();
-        public List getPanierNonLivre();
-        public List getPanierLivre();
+        public List<Panier> getPanier();    
+        public List<Panier> getPanierNonPaye();       
+        public List<Panier> getPanierPaye();
+        public List<Panier> getPanierNonLivre();
+        public List<Panier> getPanierLivre();
+        public Panier getPanierActif(Long idClient);
         
         
 
