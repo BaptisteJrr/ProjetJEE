@@ -14,6 +14,7 @@ import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -55,6 +56,7 @@ public class MetierPanier implements MetierPanierLocal {
         Panier p = this.panierFacade.find(idPanier);
         if(p.isFlagRegle()){
             p.setFlagLivre(true);
+            p.setDate(new Date());
         }
         this.panierFacade.edit(p);
     }
