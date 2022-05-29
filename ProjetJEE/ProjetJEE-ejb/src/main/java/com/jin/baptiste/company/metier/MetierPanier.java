@@ -100,18 +100,10 @@ public class MetierPanier implements MetierPanierLocal {
         this.panierFacade.remove(p);
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     @Override
     public Panier getPanier(long idPanier) {
         Panier p = this.panierFacade.find(idPanier);
-//        Collection<Long> listeIdProduit = null;
-//        for( Produit prod : p.getListeProduit()){
-//            listeIdProduit.add(prod.getId());
-//        }
-//        PanierExport pe = new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(),listeIdProduit,p.getClient().getId(), p.getCompte().getId(), p.getPrixTTC(), p.getDate() );
-//        return pe;
         return p;
     }
 
@@ -176,6 +168,11 @@ public class MetierPanier implements MetierPanierLocal {
             listeProduit.add(produit);
             p.setListeProduit(listeProduit);
             p.setClient(clt);
+            try{
+               p.setCompte(clt.getCompte()); 
+            }catch(Exception e){
+                
+            }
             this.panierFacade.create(p);
             listePanier.add(p);
             clt.setListePanier(listePanier);
@@ -200,13 +197,16 @@ public class MetierPanier implements MetierPanierLocal {
                 listeProduit.add(produit);
                 p.setListeProduit(listeProduit);
                 p.setClient(clt);
+                try{
+                    p.setCompte(clt.getCompte()); 
+                }catch(Exception e){
+                }
                 this.panierFacade.create(p);
                 listePanier.add(p);
                 clt.setListePanier(listePanier);
                 this.clientFacade.edit(clt);
             }
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -218,7 +218,6 @@ public class MetierPanier implements MetierPanierLocal {
             }
         }
         return null;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
