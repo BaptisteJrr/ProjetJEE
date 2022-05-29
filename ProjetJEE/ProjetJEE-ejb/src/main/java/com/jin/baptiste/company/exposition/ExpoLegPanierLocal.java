@@ -27,7 +27,7 @@ public interface ExpoLegPanierLocal {
     public PanierExport getPanier(Long idPanier);
     public void payerPanier(Long idPanier);
    
-    public void ajouterProduitToAClient(Long idProduit, Long idClient);
+    public void ajouterProduitToClient(Long idProduit, Long idClient);
     public void retirerProduit(Long idProduit, Long idPanier);
     
     //Nessecaire?

@@ -55,8 +55,8 @@ public class WebServicePanier {
 
     @WebMethod(operationName = "ajouterProduitToAClient")
     @Oneway
-    public void ajouterProduitToAClient(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idClient") Long idClient) {
-        ejbRef.ajouterProduitToAClient(idProduit, idClient);
+    public void ajouterProduitToClient(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idClient") Long idClient) {
+        ejbRef.ajouterProduitToClient(idProduit, idClient);
     }
 
     @WebMethod(operationName = "retirerProduit")

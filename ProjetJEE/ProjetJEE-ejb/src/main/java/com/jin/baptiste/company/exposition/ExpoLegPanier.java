@@ -133,7 +133,7 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     }
 
     @Override
-    public void ajouterProduitToAClient(Long idProduit, Long idClient) {
+    public void ajouterProduitToClient(Long idProduit, Long idClient) {
         this.metierPanier.ajouterProduitByClient(idProduit,idClient);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -166,6 +166,5 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         }else{
             return null;
         }
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
