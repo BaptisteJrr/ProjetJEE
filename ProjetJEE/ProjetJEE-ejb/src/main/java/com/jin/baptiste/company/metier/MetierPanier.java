@@ -6,9 +6,11 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
+import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
+import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
@@ -27,6 +29,12 @@ import javax.ejb.Stateless;
 public class MetierPanier implements MetierPanierLocal {
 
     @EJB
+    private CompteFacadeLocal compteFacade;
+
+    @EJB
+    private MetierCompteLocal metierCompte;
+
+    @EJB
     private ClientFacadeLocal clientFacade;
 
     @EJB
@@ -42,13 +50,22 @@ public class MetierPanier implements MetierPanierLocal {
     
     
     
+    
+    
+    
 
     @Override
     public void payer(long idPanier) {
         
         Panier p = this.panierFacade.find(idPanier);
-        p.setFlagRegle(true);
-        this.panierFacade.edit(p);
+        Compte cpt = p.getCompte();
+        if(cpt != null ){
+            p.setFlagRegle(true);
+            this.metierCompte.debiter(cpt.getId(), p.getPrixTTC());
+            this.panierFacade.edit(p);
+            this.compteFacade.edit(cpt);
+        }
+        
     }
 
     @Override
