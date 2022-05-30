@@ -9,7 +9,7 @@ import com.jin.baptiste.company.entities.TypeProduitEnum;
 import com.jin.baptiste.company.exposition.ExpoLegPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
-import java.util.List;
+import java.util.List; 
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;

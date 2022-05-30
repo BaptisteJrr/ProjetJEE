@@ -228,12 +228,21 @@ public class MetierPanier implements MetierPanierLocal {
 
     @Override
     public Panier getPanierActif(Long idClient) {
-        List<Panier> listePanier = this.panierFacade.findAll();
-        for(Panier p : listePanier){
-            if(p.getClient().getId() == idClient && !p.isFlagLivre() && !p.isFlagRegle()){
-                return p;
+        Client clt = this.clientFacade.find(idClient);
+        Collection<Panier> listePanier = clt.getListePanier();
+        if(!listePanier.isEmpty()){
+            for(Panier p : listePanier){
+                if(!p.isFlagLivre() && !p.isFlagRegle()){
+                    return p;
+                }
             }
         }
+//        List<Panier> listePanier = this.panierFacade.findAll();;
+//        for(Panier p : listePanier){
+//            if(p.getClient().getId() == idClient && !p.isFlagLivre() && !p.isFlagRegle()){
+//                return p;
+//            }
+//        }
         return null;
     }
 
