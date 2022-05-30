@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.exposition;
 
-import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.entities.TypeProduitEnum;
@@ -17,7 +16,6 @@ import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -166,5 +164,37 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         }else{
             return null;
         }
+    }
+
+    @Override
+    public List<PanierExport> getAllPanierHisto(Long idClient) {
+        List<PanierExport> ListPanierHistoExp = new ArrayList<PanierExport>();
+        Collection<Panier> ListPanierHisto = this.metierPanier.getAllPanierbyClient(idClient);
+        for (Panier p : ListPanierHisto){
+            if(p != null){
+                Long idP = p.getId();
+                Collection<Long> listeIdProduit = new ArrayList<Long>();
+                Collection<Produit> listeProduit = p.getListeProduit();
+                for( Produit prod : listeProduit){
+                    listeIdProduit.add(prod.getId());
+                }
+                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+                Long idClientLocal = null;
+                Long idCompte = null;
+                try{
+                    idClientLocal = p.getClient().getId();
+                    pe.setIdClient(idClientLocal);
+                }catch(Exception e){    
+                }
+                try{
+                    idCompte = p.getCompte().getId();
+                    pe.setIdCompte(idCompte);
+                }catch(Exception e){
+
+                }
+                ListPanierHistoExp.add(pe);
+            }             
+        }
+        return ListPanierHistoExp;
     }
 }

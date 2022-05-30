@@ -6,6 +6,7 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Panier;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -37,6 +38,6 @@ public interface MetierPanierLocal {
         public List<Panier> getPanierLivre();
         public Panier getPanierActif(Long idClient);
         
-        
+        public Collection<Panier> getAllPanierbyClient(Long idClient);
 
 }

@@ -236,5 +236,15 @@ public class MetierPanier implements MetierPanierLocal {
         }
         return null;
     }
+
+    @Override
+    public Collection<Panier> getAllPanierbyClient(Long idClient) {
+        Client clt = this.clientFacade.find(idClient);
+        if(clt != null){
+            return clt.getListePanier();
+            
+        }
+        return null;       
+    }
     
 }

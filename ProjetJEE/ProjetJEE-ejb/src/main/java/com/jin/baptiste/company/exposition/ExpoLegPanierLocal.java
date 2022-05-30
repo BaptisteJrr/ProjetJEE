@@ -36,5 +36,8 @@ public interface ExpoLegPanierLocal {
     
     public PanierExport getPanierActif(Long idClient);
     
+    //Suivie du Panier (tous les Panier)
+    public List<PanierExport> getAllPanierHisto (Long idClient);
+    
 
 }
