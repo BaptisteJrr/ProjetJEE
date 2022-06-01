@@ -5,7 +5,7 @@
  */
 package com.jin.baptiste.company.exposition;
 
-import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.List;
 import javax.ejb.Local;

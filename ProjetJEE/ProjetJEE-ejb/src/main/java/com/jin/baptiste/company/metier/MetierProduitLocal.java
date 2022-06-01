@@ -6,7 +6,7 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Produit;
-import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import javax.ejb.Local;
 

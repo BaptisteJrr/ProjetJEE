@@ -6,7 +6,7 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Produit;
-import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.facade.ProduitFacade;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;

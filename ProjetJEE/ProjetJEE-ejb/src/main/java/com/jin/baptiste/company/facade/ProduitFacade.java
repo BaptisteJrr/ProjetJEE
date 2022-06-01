@@ -6,7 +6,7 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
-import com.jin.baptiste.company.entities.TypeProduitEnum;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import java.util.logging.Level;

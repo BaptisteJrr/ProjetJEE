@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.projetjeeshared.utilities;
 
-import com.jin.baptiste.company.entities.TypeProduitEnum;
 import java.io.Serializable;
 import java.util.List;
 
