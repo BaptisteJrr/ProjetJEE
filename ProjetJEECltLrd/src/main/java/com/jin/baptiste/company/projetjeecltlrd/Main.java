@@ -17,35 +17,14 @@ import javax.naming.NamingException;
  */
 public class Main {
     public static void main(String[] args) throws NamingException{
-        // 1 : lookup objet
-        Context ctx = new InitialContext();
-        ExpoLrdRemote banque = (ExpoLrdRemote) ctx.lookup("com.jin.baptiste.company.exposition.ExpoLrdRemote");
-        
-        
-        // 2 : metier 
-        Double solde = 1000.0;
-        banque.creerCompte(solde, "abc");
-        Position cpt = banque.getCompte(51L);
-        if(cpt != null){
-            System.out.println(cpt.getDate() + " " + cpt.getIdCompte() + " " + cpt.getSolde());
+        try{
+            RMIDABServiceManager rmiMgr = new RMIDABServiceManager();
+            DABCLI cli = new DABCLI(rmiMgr.getdabRemoteSvc());
+            cli.run();
+        }catch(NamingException ex){
+            System.err.println("Erreur d'initialisation RMI : " + ex.getMessage());
+            System.err.println(ex.getExplanation());
         }
         
-        Position cpt2 = banque.getCompteByMail("abc");
-        if(cpt2 == null){
-            System.out.println("ok");
-        }else{
-            System.out.println(cpt2.getDate() + " " + cpt2.getIdCompte() + " " + cpt2.getSolde());
-        }
-//        String testMail = "wj19930703@mail.com";
-//        Position cltExp = banque.getCompteByMail("wj19930703@mail.com");
-//        if(cltExp != null){
-//            System.out.println(cltExp.getSolde() + " " + cltExp.getIdCompte() + " " + cltExp.getDate());
-//        }
-        //Position p1 = banque.getCompteByMail("abc");
-        /*if(p1 != null){
-            System.out.println(p1.getDate() + " " + p1.getIdCompte() + " " + p1.getSolde());
-        }else{
-            System.out.println("compte non trouvé");
-        }*/
     }
 }
