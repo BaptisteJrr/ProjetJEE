@@ -59,7 +59,9 @@ public class ExpoLrd implements ExpoLrdRemote {
 
     @Override
     public Position getCompteByMail(String mail) {
+//        Compte cpt = this.metierCompte.getComptebyMail(mail);
         Compte cpt = this.metierCompte.getComptebyMail(mail);
+//        return new Position(1000,new Date(), 123L);
         if(cpt == null){
             return null;
         }

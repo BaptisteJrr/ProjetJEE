@@ -115,7 +115,11 @@ public class MetierCompte implements MetierCompteLocal {
     @Override
     public Compte getComptebyMail(String mail) {
         Client clt = this.clientFacade.findbyEmail(mail);
-        Compte cpt = this.compteFacade.find(clt.getCompte());
-        return cpt;
+        if(clt != null){
+            System.out.println("$$$$$$$$$$$$$ test $$$$$$$$$$$$$$$$");
+            return clt.getCompte();
+        }
+        return null;
+        
     }
 }
