@@ -5,6 +5,7 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import javax.ejb.Remote;
 
@@ -14,8 +15,13 @@ import javax.ejb.Remote;
  */
 @Remote
 public interface ExpoLrdRemote {
+    
     public void creerCompte(Double solde, String mail);
     public void crediter(Long id, Double somme);
     public void debiter(Long id, Double somme);
     public Position getCompte(Long idCompte);
+    //Get Client??
+    // by mail ou by idClient??
+    public Position getCompteByMail(String mail);
+    
 }

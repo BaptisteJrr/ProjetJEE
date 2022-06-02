@@ -111,4 +111,11 @@ public class MetierCompte implements MetierCompteLocal {
 //        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),idClient,listeIdPanier);
         return cpt;
     }
+
+    @Override
+    public Compte getComptebyMail(String mail) {
+        Client clt = this.clientFacade.findbyEmail(mail);
+        Compte cpt = this.compteFacade.find(clt.getCompte());
+        return cpt;
+    }
 }

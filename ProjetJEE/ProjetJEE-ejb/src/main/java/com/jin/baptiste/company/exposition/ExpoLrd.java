@@ -8,6 +8,7 @@ package com.jin.baptiste.company.exposition;
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
@@ -24,11 +25,10 @@ import javax.ejb.Stateless;
 public class ExpoLrd implements ExpoLrdRemote {
 
     @EJB
-    private MetierCompteLocal metierCompte;
+    private MetierClientLocal metierClient;
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
-    
+    @EJB
+    private MetierCompteLocal metierCompte;
     
     
     @Override
@@ -55,5 +55,15 @@ public class ExpoLrd implements ExpoLrdRemote {
         Position p = new Position(cpt.getSolde(), new Date(), idCompte);
         return p;
         
+    }
+
+    @Override
+    public Position getCompteByMail(String mail) {
+        Compte cpt = this.metierCompte.getComptebyMail(mail);
+        if(cpt == null){
+            return null;
+        }
+        Position p = new Position(cpt.getSolde(), new Date(), cpt.getId());
+        return p;
     }
 }

@@ -26,4 +26,6 @@ public interface MetierCompteLocal {
     // throws CompteSoldeNegaException
     public void debiter(long idCompte, double somme);
     
+    //Pour ClientLrd
+    public Compte getComptebyMail(String mail);
 }
