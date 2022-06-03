@@ -18,7 +18,6 @@ import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaExcepti
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import java.util.Collection;
-import java.util.List;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;

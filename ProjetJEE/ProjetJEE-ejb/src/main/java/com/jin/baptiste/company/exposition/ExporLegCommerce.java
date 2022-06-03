@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.exposition;
 
-import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
