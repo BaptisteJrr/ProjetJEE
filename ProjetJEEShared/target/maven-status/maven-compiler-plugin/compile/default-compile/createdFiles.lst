@@ -1,11 +1,13 @@
-com\jin\baptiste\company\projetjeeshared\utilities\PanierExport.class
 com\jin\baptiste\company\projetjeeshared\utilities\TypeProduitEnum.class
 com\jin\baptiste\company\projetjeeshared\Exception\ProduitStockInsuffisantException.class
-com\jin\baptiste\company\projetjeeshared\utilities\CompteExport.class
 com\jin\baptiste\company\projetjeeshared\utilities\ProduitExport.class
-com\jin\baptiste\company\exposition\ExpoLrdRemote.class
-com\jin\baptiste\company\projetjeeshared\Exception\ClientNonTrouveException.class
+com\jin\baptiste\company\projetjeeshared\Exception\ClientInconnuException.class
 com\jin\baptiste\company\projetjeeshared\Exception\CompteSoldeNegaException.class
+com\jin\baptiste\company\projetjeeshared\Exception\FormatInvalideException.class
+com\jin\baptiste\company\projetjeeshared\utilities\PanierExport.class
+com\jin\baptiste\company\projetjeeshared\utilities\CompteExport.class
+com\jin\baptiste\company\exposition\ExpoLrdRemote.class
+com\jin\baptiste\company\projetjeeshared\Exception\CompteInconnuException.class
 com\jin\baptiste\company\projetjeeshared\Exception\ProduitQuantiteNegativeException.class
 com\jin\baptiste\company\projetjeeshared\utilities\ClientExport.class
 com\jin\baptiste\company\projetjeeshared\utilities\Position.class

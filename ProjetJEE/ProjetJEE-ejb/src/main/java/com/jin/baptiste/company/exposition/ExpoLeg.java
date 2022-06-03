@@ -11,12 +11,18 @@ import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +44,11 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public void creerClient(String nom, String prenom, String mail, String adresse) {
-        this.metierClient.creerClient(nom, prenom, mail, adresse);
+        try {
+            this.metierClient.creerClient(nom, prenom, mail, adresse);
+        } catch (FormatInvalideException ex) {
+            System.out.println("Le Format est Invalide.");
+        }
     }
 
 //    @Override
@@ -64,15 +74,23 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public void debiter(Long id, Double somme){
-        this.metierCompte.debiter(id, somme);
+        try {
+            this.metierCompte.debiter(id, somme);
+        } catch (CompteSoldeNegaException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     @Override
     public ClientExport getClientByMail(String mail) {
-        Client clt = this.metierClient.getClientparMail(mail);
+        Client clt = null;
+        try {
+            clt = this.metierClient.getClientparMail(mail);
+        } catch (FormatInvalideException ex) {
+            System.out.println("Le Format est Invalide.");
+        } catch (ClientInconnuException ex) {
+            System.out.println("Client Inconnu.");;
+        }
         List<Long> listeIdPanier = null;
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
@@ -89,7 +107,12 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public Position getCompte(Long idCompte) {
-        Compte cpt = this.metierCompte.getComptebyidCompte(idCompte);
+        Compte cpt = null;
+        try {
+            cpt = this.metierCompte.getComptebyidCompte(idCompte);
+        } catch (CompteInconnuException ex) {
+            System.out.println("Compte Inconnu.");
+        }
         
         Position p = new Position(cpt.getSolde(), new Date(), idCompte);
         return p;

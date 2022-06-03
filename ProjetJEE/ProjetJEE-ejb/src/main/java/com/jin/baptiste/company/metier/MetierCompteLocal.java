@@ -7,6 +7,10 @@ package com.jin.baptiste.company.metier;
 
 
 import com.jin.baptiste.company.entities.Compte;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import javax.ejb.Local;
 
 /**
@@ -18,14 +22,14 @@ public interface MetierCompteLocal {
     
     public void creerCompte (double solde, String email);
     
-    public Compte getComptebyidCompte(long idCompte);
+    public Compte getComptebyidCompte(long idCompte) throws CompteInconnuException;
     
-    public Compte getComptebyidClient(long idClient);
+    public Compte getComptebyidClient(long idClient) throws ClientInconnuException;
     
     public void crediter(long idCompte, double somme);
     // throws CompteSoldeNegaException
-    public void debiter(long idCompte, double somme);
+    public void debiter(long idCompte, double somme) throws CompteSoldeNegaException;
     
     //Pour ClientLrd
-    public Compte getComptebyMail(String mail);
+    public Compte getComptebyMail(String mail)throws FormatInvalideException;
 }

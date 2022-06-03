@@ -10,10 +10,14 @@ import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -43,12 +47,21 @@ public class ExpoLrd implements ExpoLrdRemote {
 
     @Override
     public void debiter(Long id, Double somme){
-        this.metierCompte.debiter(id, somme);
+        try {
+            this.metierCompte.debiter(id, somme);
+        } catch (CompteSoldeNegaException ex) {
+            System.out.println("Le solde n'est pas suffisant.");;
+        }
     }
 
     @Override
     public Position getCompte(Long idCompte) {
-        Compte cpt = this.metierCompte.getComptebyidCompte(idCompte);
+        Compte cpt = null;
+        try {
+            cpt = this.metierCompte.getComptebyidCompte(idCompte);
+        } catch (CompteInconnuException ex) {
+            System.out.println("Compte Inconnu.");;
+        }
         if(cpt == null){
             return null;
         }
@@ -59,9 +72,7 @@ public class ExpoLrd implements ExpoLrdRemote {
 
     @Override
     public Position getCompteByMail(String mail) {
-//        Compte cpt = this.metierCompte.getComptebyMail(mail);
         Compte cpt = this.metierCompte.getComptebyMail(mail);
-//        return new Position(1000,new Date(), 123L);
         if(cpt == null){
             return null;
         }

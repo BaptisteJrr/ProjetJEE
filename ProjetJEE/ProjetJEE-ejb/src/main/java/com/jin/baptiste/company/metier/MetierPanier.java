@@ -13,11 +13,15 @@ import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -61,7 +65,11 @@ public class MetierPanier implements MetierPanierLocal {
         Compte cpt = p.getCompte();
         if(cpt != null ){
             p.setFlagRegle(true);
-            this.metierCompte.debiter(cpt.getId(), p.getPrixTTC());
+            try {
+                this.metierCompte.debiter(cpt.getId(), p.getPrixTTC());
+            } catch (CompteSoldeNegaException ex) {
+                System.out.println("Le solde n'est pas suffisant.");
+            }
             this.panierFacade.edit(p);
             this.compteFacade.edit(cpt);
         }
@@ -176,7 +184,12 @@ public class MetierPanier implements MetierPanierLocal {
 
     @Override
     public void ajouterProduitByClient(long idProduit, Long idClient) {
-        Client clt = this.metierClient.getClient(idClient);
+        Client clt = null;
+        try {
+            clt = this.metierClient.getClient(idClient);
+        } catch (ClientInconnuException ex) {
+            System.out.println("Client Inconnu.");
+        }
         Collection<Panier> listePanier = clt.getListePanier();
         if(listePanier.isEmpty()){
             Panier p = new Panier();

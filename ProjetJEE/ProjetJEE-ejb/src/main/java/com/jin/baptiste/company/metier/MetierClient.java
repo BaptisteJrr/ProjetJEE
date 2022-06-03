@@ -8,7 +8,7 @@ package com.jin.baptiste.company.metier;
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
-import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -25,7 +25,9 @@ public class MetierClient implements MetierClientLocal {
     
 
     @Override
-    public void creerClient(String nom, String prenom, String email, String adresse) {
+    public void creerClient(String nom, String prenom, String email, String adresse) throws FormatInvalideException {
+        //Verifier le formal du Mail @
+        if(!email.contains("@")) throw new FormatInvalideException();
         //Verification du Mail soit unique
         if (this.clientFacade.findbyEmail(email) == null){
             Client c = new Client();
@@ -40,16 +42,9 @@ public class MetierClient implements MetierClientLocal {
     @Override
     public Client getClient(long idClient) {
         Client clt = this.clientFacade.find(idClient);
-//        List<Long> listeIdPanier = null;
-//        for(Panier p : clt.getListePanier()){
-//            listeIdPanier.add(p.getId());
-//        }
-//        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
         return clt;
     }  
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     @Override
     public boolean authentification(String email) {
@@ -72,11 +67,6 @@ public class MetierClient implements MetierClientLocal {
     @Override
     public Client getClientparMail(String email) {
         Client clt = this.clientFacade.findbyEmail(email);
-//        List<Long> listeIdPanier = null;
-//        for(Panier p : clt.getListePanier()){
-//            listeIdPanier.add(p.getId());
-//        }
-//        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
         return clt;        
     }
 }

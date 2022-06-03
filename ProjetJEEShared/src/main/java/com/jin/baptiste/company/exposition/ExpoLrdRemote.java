@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.exposition;
 
-import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import javax.ejb.Remote;
 

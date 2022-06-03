@@ -9,9 +9,9 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  *
  * @author Wang
  */
-public class ClientNonTrouveException extends Exception{
+public class ClientInconnuException extends Exception{
 
-    public ClientNonTrouveException() {
+    public ClientInconnuException() {
         super("Aucun client trouvé dans le site.");
     }
     

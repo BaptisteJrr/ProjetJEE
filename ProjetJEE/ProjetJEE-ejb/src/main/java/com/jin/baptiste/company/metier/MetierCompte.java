@@ -11,7 +11,9 @@ import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -33,31 +35,31 @@ public class MetierCompte implements MetierCompteLocal {
     public void creerCompte(double solde, String email){
         //Verification email existe dans la BD  
 
-            List<Client> findAllClient = this.clientFacade.findAll();
-            boolean auth = false;
-            boolean compteFlg = false;
-            for(Client c : findAllClient){       
-                if (c.getEmail().equals(email)){
-                    auth = true;
-                    // Client a pas de Compte
-                    if (c.getCompte()!= null) {
-                        compteFlg = true;
-                    } 
-                }
+        List<Client> findAllClient = this.clientFacade.findAll();
+        boolean auth = false;
+        boolean compteFlg = false;
+        for(Client c : findAllClient){       
+            if (c.getEmail().equals(email)){
+                auth = true;
+                // Client a pas de Compte
+                if (c.getCompte()!= null) {
+                    compteFlg = true;
+                } 
             }
-            if (auth && !compteFlg) {
-                 Compte cpt = new Compte();      
-                 cpt.setSolde(solde);
-                 Client clt = this.clientFacade.findbyEmail(email);
-                 cpt.setClient(clt);
-                 clt.setCompte(cpt);
-                 this.compteFacade.create(cpt); 
-            } else {
-                if (!auth)
-                    System.out.println("Client non existe");
-                if (compteFlg)
-                    System.out.println("Client a déjà un compte");
-       }
+        }
+        if (auth && !compteFlg) {
+             Compte cpt = new Compte();      
+             cpt.setSolde(solde);
+             Client clt = this.clientFacade.findbyEmail(email);
+             cpt.setClient(clt);
+             clt.setCompte(cpt);
+             this.compteFacade.create(cpt); 
+        } else {
+            if (!auth)
+                System.out.println("Client non existe");
+            if (compteFlg)
+                System.out.println("Client a déjà un compte");
+        }
     }
 
     @Override
@@ -92,11 +94,7 @@ public class MetierCompte implements MetierCompteLocal {
     @Override
     public Compte getComptebyidCompte(long idCompte) {        
         Compte cpt =  this.compteFacade.find(idCompte);
-//        List<Long> listeIdPanier = null;
-//        for(Panier p : cpt.getListePanier()){
-//            listeIdPanier.add(p.getId());
-//        }
-//        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),cpt.getClient().getId(),listeIdPanier);
+
         return cpt;
     }
 
@@ -104,19 +102,15 @@ public class MetierCompte implements MetierCompteLocal {
     public Compte getComptebyidClient(long idClient) {
         Client clt = this.clientFacade.find(idClient);
         Compte cpt = this.compteFacade.find(clt.getCompte());
-//        List<Long> listeIdPanier = null;
-//        for(Panier p : cpt.getListePanier()){
-//            listeIdPanier.add(p.getId());
-//        }
-//        CompteExport cpte = new CompteExport(cpt.getId(),cpt.getSolde(),idClient,listeIdPanier);
+
         return cpt;
     }
 
     @Override
-    public Compte getComptebyMail(String mail) {
+    public Compte getComptebyMail(String mail) throws FormatInvalideException {
+        if(!Pattern.compile("^(.+)@(\\S+)$").matcher(mail).matches())throw new FormatInvalideException();
         Client clt = this.clientFacade.findbyEmail(mail);
         if(clt != null){
-            System.out.println("$$$$$$$$$$$$$ test $$$$$$$$$$$$$$$$");
             return clt.getCompte();
         }
         return null;
