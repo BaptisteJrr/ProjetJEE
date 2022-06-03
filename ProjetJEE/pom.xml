@@ -17,11 +17,5 @@
             <version>${project.version}</version>
 
         </dependency>
-        <dependency>
-            <groupId>com.jin.baptiste.miage.company</groupId>
-            <artifactId>ProjetJEEClientLourdBank</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
     </dependencies>
 </project>

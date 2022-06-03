@@ -11,8 +11,15 @@ import com.jin.baptiste.company.metier.MetierProduitLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitPrixNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -33,32 +40,55 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
 
     @Override
     public ProduitExport getProduit(Long idProduit) {
-        Produit p = this.metierProduit.getProduit(idProduit);
-        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock() );
-        return pe;
+        try {
+            Produit p = this.metierProduit.getProduit(idProduit);
+            ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock() );
+            return pe;
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
 
     }
 
     @Override
     public void stockerProduit(Long idProduit, int n) {
         
-        this.metierProduit.stockerProduit(idProduit, n);
-        
-       // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.metierProduit.stockerProduit(idProduit, n);
+            
+            // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitQuantiteNegativeException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void modifierProduit(Long idProduit, String nom, String description, double prixHT, TypeProduitEnum type) {
-        this.metierProduit.modifierProduit(idProduit, nom, description, prixHT, type);
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.metierProduit.modifierProduit(idProduit, nom, description, prixHT, type);
+            
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void vendreProduit(Long idProduit, int quantite) {
-        this.metierProduit.vendreProduit(idProduit, quantite);
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.metierProduit.vendreProduit(idProduit, quantite);
+            
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitStockInsuffisantException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitQuantiteNegativeException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -118,9 +148,17 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
 
     @Override
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) {
-        this.metierProduit.creerProduit(nom, description, prixHT, type, stock);
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.metierProduit.creerProduit(nom, description, prixHT, type, stock);
+            
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (EmptyFieldException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitQuantiteNegativeException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitPrixNegativeException ex) {
+            Logger.getLogger(ExporLegCommerce.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

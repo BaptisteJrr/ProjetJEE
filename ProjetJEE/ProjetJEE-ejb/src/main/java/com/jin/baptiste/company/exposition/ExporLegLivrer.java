@@ -8,10 +8,14 @@ package com.jin.baptiste.company.exposition;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -32,7 +36,13 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
 
     @Override
     public void livrerPanier(Long idPanier) {
-        this.metierPanier.livrer(idPanier);
+        try {
+            this.metierPanier.livrer(idPanier);
+        } catch (PanierNonPayeException ex) {
+            Logger.getLogger(ExporLegLivrer.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExporLegLivrer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }   
 
     //on doit faire une algotithemique pour lister les panier avec leur adresse ou code postal asc ou decs 

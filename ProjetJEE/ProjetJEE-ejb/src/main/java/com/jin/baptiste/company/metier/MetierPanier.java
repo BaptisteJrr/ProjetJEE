@@ -14,7 +14,16 @@ import com.jin.baptiste.company.facade.CompteFacadeLocal;
 import com.jin.baptiste.company.facade.PanierFacadeLocal;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyLivreException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyPayeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierEmptyException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,34 +68,52 @@ public class MetierPanier implements MetierPanierLocal {
     
 
     @Override
-    public void payer(long idPanier) {
+    public void payer(long idPanier) throws PanierInconnuException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, PanierEmptyException {
         
         Panier p = this.panierFacade.find(idPanier);
-        Compte cpt = p.getCompte();
-        if(cpt != null ){
-            p.setFlagRegle(true);
-            try {
+        if(p == null){
+            throw new PanierInconnuException();
+        }else{
+            Collection<Produit> listeProduit = p.getListeProduit();
+
+            if(listeProduit != null){
+                if(listeProduit.isEmpty()){
+                    throw new PanierEmptyException();
+                }
+            }
+            Compte cpt = p.getCompte();
+            if(cpt != null ){
+                p.setFlagRegle(true);
                 this.metierCompte.debiter(cpt.getId(), p.getPrixTTC());
-            } catch (CompteSoldeNegaException ex) {
-                System.out.println("Le solde n'est pas suffisant.");
+                this.panierFacade.edit(p);
+                this.compteFacade.edit(cpt);
+            }else{
+                throw new PanierNoAccountLinkedToClientException();
+            }
+        }
+        
+        
+    }
+
+    @Override
+    public void livrer(long idPanier) throws PanierInconnuException, PanierNonPayeException {
+        Panier p = this.panierFacade.find(idPanier);
+        if(p == null){
+            throw new PanierInconnuException();
+        }
+        else{
+            if(p.isFlagRegle()){
+                p.setFlagLivre(true);
+                p.setDate(new Date());
+            }else{
+                throw new PanierNonPayeException();
             }
             this.panierFacade.edit(p);
-            this.compteFacade.edit(cpt);
         }
         
     }
 
-    @Override
-    public void livrer(long idPanier) {
-        Panier p = this.panierFacade.find(idPanier);
-        if(p.isFlagRegle()){
-            p.setFlagLivre(true);
-            p.setDate(new Date());
-        }
-        this.panierFacade.edit(p);
-    }
-
-    @Override
+    /*@Override
     public void ajouterProduit(long idProduit, long idPanier) {
         Panier p = this.panierFacade.find(idPanier);
         Produit pro = this.produitFacade.find(idProduit);
@@ -95,11 +122,23 @@ public class MetierPanier implements MetierPanierLocal {
         p.setListeProduit(liste);
         this.panierFacade.edit(p);
     }
-
+*/
     @Override
-    public void retirerProduit(long idProduit, long idPanier) {
+    public void retirerProduit(long idProduit, long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         Panier p = this.panierFacade.find(idPanier);
+        if(p == null){
+            throw new PanierInconnuException();
+        }
+        if(p.isFlagLivre()){
+            throw new PanierAlreadyLivreException();
+        }
+        if(p.isFlagRegle()){
+            throw new PanierAlreadyPayeException();
+        }
         Produit pro = this.produitFacade.find(idProduit);
+        if(pro == null){
+            throw new ProduitInconnuException();
+        }
         Collection<Produit> liste = p.getListeProduit();
         liste.remove(pro);
         p.setListeProduit(liste);
@@ -107,9 +146,21 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public void retirerAllProduit(long idProduit, long idPanier) {
+    public void retirerAllProduit(long idProduit, long idPanier) throws PanierAlreadyPayeException, PanierAlreadyLivreException, PanierInconnuException, ProduitInconnuException {
         Panier p = this.panierFacade.find(idPanier);
+        if(p == null){
+            throw new PanierInconnuException();
+        }
+        if(p.isFlagLivre()){
+            throw new PanierAlreadyLivreException();
+        }
+        if(p.isFlagRegle()){
+            throw new PanierAlreadyPayeException();
+        }
         Produit pro = this.produitFacade.find(idProduit);
+        if(pro == null){
+            throw new ProduitInconnuException();
+        }
         Collection<Produit> liste = p.getListeProduit();
         while(liste.contains(pro)){
             liste.remove(pro);
@@ -120,22 +171,34 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public void supprimerPanier(long idPanier) {
+    public void supprimerPanier(long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         Panier p = this.panierFacade.find(idPanier);
+        if(p == null){
+            throw new PanierInconnuException();
+        }
+        if(p.isFlagLivre()){
+            throw new PanierAlreadyLivreException();
+        }
+        if(p.isFlagRegle()){
+            throw new PanierAlreadyPayeException();
+        }
         this.panierFacade.remove(p);
     }
 
 
     @Override
-    public Panier getPanier(long idPanier) {
+    public Panier getPanier(long idPanier) throws PanierInconnuException {
         Panier p = this.panierFacade.find(idPanier);
+        if(p == null){
+            throw new PanierInconnuException();
+        }
         return p;
     }
-
+/*
     @Override
     public List getPanier() {
         return this.panierFacade.findAll();
-    }
+    }*/
 
     @Override
     public List<Panier> getPanierNonPaye() {
@@ -183,18 +246,22 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public void ajouterProduitByClient(long idProduit, Long idClient) {
-        Client clt = null;
+    public void ajouterProduitByClient(long idProduit, Long idClient) throws ClientInconnuException, ProduitInconnuException {
+        Client clt;
         try {
             clt = this.metierClient.getClient(idClient);
         } catch (ClientInconnuException ex) {
-            System.out.println("Client Inconnu.");
+            throw ex;
         }
+
         Collection<Panier> listePanier = clt.getListePanier();
         if(listePanier.isEmpty()){
             Panier p = new Panier();
             Collection<Produit> listeProduit = new ArrayList<Produit>();
             Produit produit = this.produitFacade.find(idProduit);
+            if(produit == null){
+                throw new ProduitInconnuException();
+            }
             listeProduit.add(produit);
             p.setListeProduit(listeProduit);
             p.setClient(clt);
@@ -214,8 +281,17 @@ public class MetierPanier implements MetierPanierLocal {
                 if(!p.isFlagLivre() && !p.isFlagRegle() && !trouve){
                     trouve = true;
                     Collection<Produit> listeProduit = p.getListeProduit();
-                    listeProduit.add(this.produitFacade.find(idProduit));
+                    Produit produit = this.produitFacade.find(idProduit);
+                    if(produit == null){
+                        throw new ProduitInconnuException();
+                    }
+                    
+                    listeProduit.add(produit);
                     p.setListeProduit(listeProduit);
+                    try{
+                        p.setCompte(clt.getCompte()); 
+                    }catch(Exception e){
+                    }
                     this.panierFacade.edit(p);
                     
                 }
@@ -224,6 +300,9 @@ public class MetierPanier implements MetierPanierLocal {
                 Panier p = new Panier();
                 Collection<Produit> listeProduit = new ArrayList<Produit>();
                 Produit produit = this.produitFacade.find(idProduit);
+                if(produit == null){
+                    throw new ProduitInconnuException();
+                }
                 listeProduit.add(produit);
                 p.setListeProduit(listeProduit);
                 p.setClient(clt);
@@ -240,8 +319,11 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     @Override
-    public Panier getPanierActif(Long idClient) {
+    public Panier getPanierActif(Long idClient) throws ClientInconnuException {
         Client clt = this.clientFacade.find(idClient);
+        if(clt == null){
+            throw new ClientInconnuException();
+        }
         Collection<Panier> listePanier = clt.getListePanier();
         if(!listePanier.isEmpty()){
             for(Panier p : listePanier){
@@ -250,23 +332,18 @@ public class MetierPanier implements MetierPanierLocal {
                 }
             }
         }
-//        List<Panier> listePanier = this.panierFacade.findAll();;
-//        for(Panier p : listePanier){
-//            if(p.getClient().getId() == idClient && !p.isFlagLivre() && !p.isFlagRegle()){
-//                return p;
-//            }
-//        }
         return null;
     }
 
     @Override
-    public Collection<Panier> getAllPanierbyClient(Long idClient) {
+    public Collection<Panier> getAllPanierbyClient(Long idClient) throws ClientInconnuException {
         Client clt = this.clientFacade.find(idClient);
         if(clt != null){
             return clt.getListePanier();
             
-        }
-        return null;       
+        }else{
+            throw new ClientInconnuException();
+        }    
     }
     
 }

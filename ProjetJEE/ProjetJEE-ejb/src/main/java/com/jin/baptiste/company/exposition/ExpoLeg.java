@@ -11,9 +11,13 @@ import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientAlreadyExistException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
@@ -48,6 +52,10 @@ public class ExpoLeg implements ExpoLegLocal {
             this.metierClient.creerClient(nom, prenom, mail, adresse);
         } catch (FormatInvalideException ex) {
             System.out.println("Le Format est Invalide.");
+        } catch (EmptyFieldException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientAlreadyExistException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -64,12 +72,28 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @Override
     public void creerCompte(Double solde, String mail) {
-        this.metierCompte.creerCompte(solde, mail);
+        try {
+            this.metierCompte.creerCompte(solde, mail);
+        } catch (EmptyFieldException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FormatInvalideException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientCompteAlreadyLinkedException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void crediter(Long id, Double somme) {
-        this.metierCompte.crediter(id, somme);
+        try {
+            this.metierCompte.crediter(id, somme);
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSommeNegaException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -77,6 +101,10 @@ public class ExpoLeg implements ExpoLegLocal {
         try {
             this.metierCompte.debiter(id, somme);
         } catch (CompteSoldeNegaException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSommeNegaException ex) {
             Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

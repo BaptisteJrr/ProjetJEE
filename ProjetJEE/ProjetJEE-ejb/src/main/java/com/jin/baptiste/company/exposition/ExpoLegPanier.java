@@ -12,11 +12,23 @@ import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.metier.MetierProduitLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyLivreException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyPayeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierEmptyException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -45,60 +57,112 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     
     @Override
     public PanierExport getPanier(Long idPanier) {
-        Panier p = this.metierPanier.getPanier(idPanier);
-        if(p != null){
-            Long idP = p.getId();
-            Collection<Long> listeIdProduit = new ArrayList<Long>();
-            Collection<Produit> listeProduit = p.getListeProduit();
-            for( Produit prod : listeProduit){
-                listeIdProduit.add(prod.getId());
+        try {
+            Panier p = this.metierPanier.getPanier(idPanier);
+            if(p != null){
+                Long idP = p.getId();
+                Collection<Long> listeIdProduit = new ArrayList<Long>();
+                Collection<Produit> listeProduit = p.getListeProduit();
+                for( Produit prod : listeProduit){
+                    listeIdProduit.add(prod.getId());
+                }
+                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+                Long idClient = null;
+                Long idCompte = null;
+                try{
+                    idClient = p.getClient().getId();
+                    pe.setIdClient(idClient);
+                }catch(Exception e){
+                }
+                try{
+                    idCompte = p.getCompte().getId();
+                    pe.setIdCompte(idCompte);
+                }catch(Exception e){
+                    
+                }
+                return pe;
+            }else{
+                return null;
             }
-            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
-            Long idClient = null;
-            Long idCompte = null;
-            try{
-                idClient = p.getClient().getId();
-                pe.setIdClient(idClient);
-            }catch(Exception e){    
-            }
-            try{
-                idCompte = p.getCompte().getId();
-                pe.setIdCompte(idCompte);
-            }catch(Exception e){
-
-            }
-            return pe;
-        }else{
-            return null;
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
         
     }
 
     @Override
     public void payerPanier(Long idPanier) {
-        this.metierPanier.payer(idPanier);
+        try {
+            this.metierPanier.payer(idPanier);
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierEmptyException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSoldeNegaException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSommeNegaException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierNoAccountLinkedToClientException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
     public void retirerProduit(Long idProduit, Long idPanier) {
-        this.metierPanier.retirerProduit(idProduit, idPanier);
+        try {
+            this.metierPanier.retirerProduit(idProduit, idPanier);
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyPayeException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyLivreException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void retirerAllProduit(Long idProduit, Long idPanier) {
-        this.metierPanier.retirerAllProduit(idProduit, idPanier);
+        try {
+            this.metierPanier.retirerAllProduit(idProduit, idPanier);
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyLivreException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyPayeException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void supprimerPanier(Long idPanier) {
-        this.metierPanier.supprimerPanier(idPanier);
+        try {
+            this.metierPanier.supprimerPanier(idPanier);
+        } catch (PanierInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyPayeException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (PanierAlreadyLivreException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     @Override
     public ProduitExport getProduit(Long idProduit) {
-        Produit p = this.metierProduit.getProduit(idProduit);
-        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock() );
-        return pe;
+        try {
+            Produit p = this.metierProduit.getProduit(idProduit);
+            ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock() );
+            return pe;
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -132,45 +196,20 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
 
     @Override
     public void ajouterProduitToClient(Long idProduit, Long idClient) {
-        this.metierPanier.ajouterProduitByClient(idProduit,idClient);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public PanierExport getPanierActif(Long idClient) {
-        Panier p = this.metierPanier.getPanierActif(idClient);
-        if(p != null){
-            Long idP = p.getId();
-            Collection<Long> listeIdProduit = new ArrayList<Long>();
-            Collection<Produit> listeProduit = p.getListeProduit();
-            for( Produit prod : listeProduit){
-                listeIdProduit.add(prod.getId());
-            }
-            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
-            Long idClientLocal = null;
-            Long idCompte = null;
-            try{
-                idClientLocal = p.getClient().getId();
-                pe.setIdClient(idClientLocal);
-            }catch(Exception e){    
-            }
-            try{
-                idCompte = p.getCompte().getId();
-                pe.setIdCompte(idCompte);
-            }catch(Exception e){
-
-            }
-            return pe;
-        }else{
-            return null;
+        try {
+            this.metierPanier.ajouterProduitByClient(idProduit,idClient);
+            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
-    public List<PanierExport> getAllPanierHisto(Long idClient) {
-        List<PanierExport> ListPanierHistoExp = new ArrayList<PanierExport>();
-        Collection<Panier> ListPanierHisto = this.metierPanier.getAllPanierbyClient(idClient);
-        for (Panier p : ListPanierHisto){
+    public PanierExport getPanierActif(Long idClient) {
+        try {
+            Panier p = this.metierPanier.getPanierActif(idClient);
             if(p != null){
                 Long idP = p.getId();
                 Collection<Long> listeIdProduit = new ArrayList<Long>();
@@ -184,17 +223,58 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
                 try{
                     idClientLocal = p.getClient().getId();
                     pe.setIdClient(idClientLocal);
-                }catch(Exception e){    
+                }catch(Exception e){
                 }
                 try{
                     idCompte = p.getCompte().getId();
                     pe.setIdCompte(idCompte);
                 }catch(Exception e){
-
+                    
                 }
-                ListPanierHistoExp.add(pe);
-            }             
+                return pe;
+            }else{
+                return null;
+            }
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return ListPanierHistoExp;
+        return null;
+    }
+
+    @Override
+    public List<PanierExport> getAllPanierHisto(Long idClient) {
+        try {
+            List<PanierExport> ListPanierHistoExp = new ArrayList<PanierExport>();
+            Collection<Panier> ListPanierHisto = this.metierPanier.getAllPanierbyClient(idClient);
+            for (Panier p : ListPanierHisto){
+                if(p != null){
+                    Long idP = p.getId();
+                    Collection<Long> listeIdProduit = new ArrayList<Long>();
+                    Collection<Produit> listeProduit = p.getListeProduit();
+                    for( Produit prod : listeProduit){
+                        listeIdProduit.add(prod.getId());
+                    }
+                    PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+                    Long idClientLocal = null;
+                    Long idCompte = null;
+                    try{
+                        idClientLocal = p.getClient().getId();
+                        pe.setIdClient(idClientLocal);
+                    }catch(Exception e){
+                    }
+                    try{
+                        idCompte = p.getCompte().getId();
+                        pe.setIdCompte(idCompte);
+                    }catch(Exception e){
+                        
+                    }
+                    ListPanierHistoExp.add(pe);
+                }
+            }
+            return ListPanierHistoExp;
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);             
+        }
+        return null;
     }
 }

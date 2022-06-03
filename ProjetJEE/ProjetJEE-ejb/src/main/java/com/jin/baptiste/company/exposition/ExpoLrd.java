@@ -10,8 +10,13 @@ import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.Date;
@@ -37,12 +42,28 @@ public class ExpoLrd implements ExpoLrdRemote {
     
     @Override
     public void creerCompte(Double solde, String mail) {
-        this.metierCompte.creerCompte(solde, mail);
+        try {
+            this.metierCompte.creerCompte(solde, mail);
+        } catch (EmptyFieldException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (FormatInvalideException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientCompteAlreadyLinkedException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void crediter(Long id, Double somme) {
-        this.metierCompte.crediter(id, somme);
+        try {
+            this.metierCompte.crediter(id, somme);
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSommeNegaException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -51,6 +72,10 @@ public class ExpoLrd implements ExpoLrdRemote {
             this.metierCompte.debiter(id, somme);
         } catch (CompteSoldeNegaException ex) {
             System.out.println("Le solde n'est pas suffisant.");;
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteSommeNegaException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,7 +97,14 @@ public class ExpoLrd implements ExpoLrdRemote {
 
     @Override
     public Position getCompteByMail(String mail) {
-        Compte cpt = this.metierCompte.getComptebyMail(mail);
+        Compte cpt = null;
+        try {
+            cpt = this.metierCompte.getComptebyMail(mail);
+        } catch (FormatInvalideException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CompteInconnuException ex) {
+            Logger.getLogger(ExpoLrd.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if(cpt == null){
             return null;
         }
