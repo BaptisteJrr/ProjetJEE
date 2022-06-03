@@ -3,24 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.projetjeecltlrd;
+package com.jin.baptiste.miage.company.projetjeecomptable;
 
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import javax.naming.NamingException;
 
 /**
  *
- * @author LeNonGrillePain
+ * @author Wang
  */
 public class Main {
-    public static void main(String[] args) throws NamingException{
+    public static void main(String[] args) throws NamingException, ClientInconnuException{
         try{
-            RMIDABServiceManager rmiMgr = new RMIDABServiceManager();
-            DABCLI cli = new DABCLI(rmiMgr.getdabRemoteSvc());
+            RMICMPTServiceManager rmiMgr = new RMICMPTServiceManager();
+            CMPTACLI cli = new CMPTACLI(rmiMgr.getcomptaRemoteSvc());
             cli.run();
         }catch(NamingException ex){
             System.err.println("Erreur d'initialisation RMI : " + ex.getMessage());
             System.err.println(ex.getExplanation());
         }
-        
     }
 }

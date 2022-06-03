@@ -120,14 +120,7 @@ public class MetierProduit implements MetierProduitLocal {
         if(p == null){
             throw new ProduitInconnuException();
         }
-//        List<Long> listeIdPanier = null;
-//        List<Panier> listePanier = p.getListePanier();
-//        for(Panier pan : listePanier){
-//              listeIdPanier.add(pan.getId());
-//        }
-//        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
-//        return pe;
-          return p;
+        return p;
         
     }
 }

@@ -15,6 +15,7 @@ com\jin\baptiste\company\projetjeeshared\Exception\ProduitInconnuException.class
 com\jin\baptiste\company\projetjeeshared\utilities\Position.class
 com\jin\baptiste\company\projetjeeshared\Exception\CompteSommeNegaException.class
 com\jin\baptiste\company\projetjeeshared\utilities\TypeProduitEnum.class
+com\jin\baptiste\company\exposition\ExpoLrdRemoteCompta.class
 com\jin\baptiste\company\projetjeeshared\Exception\PanierInconnuException.class
 com\jin\baptiste\company\projetjeeshared\Exception\CompteSoldeNegaException.class
 com\jin\baptiste\company\projetjeeshared\Exception\FormatInvalideException.class

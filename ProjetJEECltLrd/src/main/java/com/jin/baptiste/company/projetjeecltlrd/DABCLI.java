@@ -5,9 +5,7 @@
  */
 package com.jin.baptiste.company.projetjeecltlrd;
 
-import com.jin.baptiste.company.exception.CompteClotureException;
 import com.jin.baptiste.company.exception.CompteInconnuException;
-import com.jin.baptiste.company.exception.SoldeInsufisantException;
 import com.jin.baptiste.company.exposition.ExpoLrdRemote;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.text.DateFormat;

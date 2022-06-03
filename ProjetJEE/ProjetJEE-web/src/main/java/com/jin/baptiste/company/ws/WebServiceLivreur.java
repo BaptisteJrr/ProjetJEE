@@ -5,7 +5,7 @@
  */
 package com.jin.baptiste.company.ws;
 
-import com.jin.baptiste.company.exposition.ExporLegLivrerLocal;
+import com.jin.baptiste.company.exposition.leg.ExporLegLivrerLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.List;
 import javax.ejb.EJB;

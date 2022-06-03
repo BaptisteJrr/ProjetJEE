@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.exposition;
+package com.jin.baptiste.company.exposition.lrd;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Panier;
+import com.jin.baptiste.company.exposition.ExpoLrdRemote;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
@@ -32,6 +34,7 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class ExpoLrd implements ExpoLrdRemote {
+
 
     @EJB
     private MetierClientLocal metierClient;
