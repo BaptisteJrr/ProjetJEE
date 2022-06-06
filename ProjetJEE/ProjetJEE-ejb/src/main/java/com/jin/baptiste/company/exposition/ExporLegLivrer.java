@@ -13,7 +13,10 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -60,7 +63,13 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
                 for( Produit prod : listeProduit){
                     listeIdProduit.add(prod.getId());
                 }
-                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+                Map<Produit,Integer> mapProduit = p.getNbProduit();
+                Map<String,Integer> mapIdProduit = new HashMap<String,Integer>();
+                Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
+                for(Map.Entry<Produit,Integer> nbP : nbProduit){
+                    mapIdProduit.put(nbP.getKey().getNom(),nbP.getValue());
+                }
+                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate(),mapIdProduit);
                 Long idClient = null;
                 Long idCompte = null;
                 try{
@@ -95,7 +104,13 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
             for( Produit prod : listeProduit){
                 listeIdProduit.add(prod.getId());
             }
-            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate());
+            Map<Produit,Integer> mapProduit = p.getNbProduit();
+            Map<String,Integer> mapIdProduit = new HashMap<String,Integer>();
+            Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
+            for(Map.Entry<Produit,Integer> nbP : nbProduit){
+                mapIdProduit.put(nbP.getKey().getNom(),nbP.getValue());
+            }
+            PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate(),mapIdProduit);
             Long idClient = null;
             Long idCompte = null;
             try{

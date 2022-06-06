@@ -8,6 +8,8 @@ package com.jin.baptiste.company.entities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,6 +35,8 @@ public class Panier implements Serializable {
 
     @ManyToMany
     private Collection<Produit> listeProduit;
+    
+    private Map<Produit,Integer> nbProduit = new HashMap<Produit,Integer>();
     @ManyToOne
     private Client client;
     @ManyToOne
@@ -42,6 +46,15 @@ public class Panier implements Serializable {
 
     public Panier() {
     }
+
+    public Map<Produit, Integer> getNbProduit() {
+        return nbProduit;
+    }
+
+    public void setNbProduit(Map<Produit, Integer> nbProduit) {
+        this.nbProduit = nbProduit;
+    }
+    
 
     public boolean isFlagLivre() {
         return flagLivre;

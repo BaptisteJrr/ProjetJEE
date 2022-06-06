@@ -8,6 +8,7 @@ package com.jin.baptiste.company.projetjeeshared.utilities;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Map;
 
 /**
  *
@@ -24,15 +25,27 @@ public class PanierExport implements Serializable{
     private long idCompte;
     private double prixTTC;
     private Date date;
+    private Map<String,Integer> nbProduit;
 
-    public PanierExport(Long id, boolean flagLivre, boolean flagRegle, Collection<Long> listeIdProduit, double prixTTC, Date date) {
+    public PanierExport(Long id, boolean flagLivre, boolean flagRegle, Collection<Long> listeIdProduit, double prixTTC, Date date, Map<String,Integer> nbProduit) {
         this.id = id;
         this.flagLivre = flagLivre;
         this.flagRegle = flagRegle;
         this.listeIdProduit = listeIdProduit;
         this.prixTTC = prixTTC;
         this.date = date;
+        this.nbProduit = nbProduit;
     }
+
+    public Map<String, Integer> getNbProduit() {
+        return nbProduit;
+    }
+
+    public void setNbProduit(Map<String, Integer> nbProduit) {
+        this.nbProduit = nbProduit;
+    }
+    
+    
 
     public Long getId() {
         return id;

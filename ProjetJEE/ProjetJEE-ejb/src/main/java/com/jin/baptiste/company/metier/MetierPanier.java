@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -68,6 +69,7 @@ public class MetierPanier implements MetierPanierLocal {
     
 
     @Override
+    //penser à réduire le stock
     public void payer(long idPanier) throws PanierInconnuException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, PanierEmptyException {
         
         Panier p = this.panierFacade.find(idPanier);
@@ -140,7 +142,18 @@ public class MetierPanier implements MetierPanierLocal {
             throw new ProduitInconnuException();
         }
         Collection<Produit> liste = p.getListeProduit();
-        liste.remove(pro);
+        Map<Produit,Integer> nbProduit = p.getNbProduit();
+        if(nbProduit.containsKey(pro)){
+            int nb = nbProduit.get(pro);
+            if(nb > 1){
+                nbProduit.replace(pro, nb-1);
+            }else{
+                nbProduit.remove(pro);
+                liste.remove(pro);
+            }
+        }
+        
+        p.setNbProduit(nbProduit);
         p.setListeProduit(liste);
         this.panierFacade.edit(p);
     }
@@ -162,9 +175,14 @@ public class MetierPanier implements MetierPanierLocal {
             throw new ProduitInconnuException();
         }
         Collection<Produit> liste = p.getListeProduit();
-        while(liste.contains(pro)){
+        Map<Produit,Integer> nbProduit = p.getNbProduit();
+        if(nbProduit.containsKey(pro)){
+            nbProduit.remove(pro);
+        }
+        if(liste.contains(pro)){
             liste.remove(pro);
         }
+        p.setNbProduit(nbProduit);
         p.setListeProduit(liste);
         this.panierFacade.edit(p);
         
@@ -258,18 +276,19 @@ public class MetierPanier implements MetierPanierLocal {
         if(listePanier.isEmpty()){
             Panier p = new Panier();
             Collection<Produit> listeProduit = new ArrayList<Produit>();
+            Map<Produit,Integer> listeNbProduit = p.getNbProduit();
             Produit produit = this.produitFacade.find(idProduit);
             if(produit == null){
                 throw new ProduitInconnuException();
             }
             listeProduit.add(produit);
+            listeNbProduit.put(produit, 1);
             p.setListeProduit(listeProduit);
+            p.setNbProduit(listeNbProduit);
             p.setClient(clt);
             try{
                p.setCompte(clt.getCompte()); 
-            }catch(Exception e){
-                
-            }
+            }catch(Exception e){}
             this.panierFacade.create(p);
             listePanier.add(p);
             clt.setListePanier(listePanier);
@@ -281,12 +300,18 @@ public class MetierPanier implements MetierPanierLocal {
                 if(!p.isFlagLivre() && !p.isFlagRegle() && !trouve){
                     trouve = true;
                     Collection<Produit> listeProduit = p.getListeProduit();
+                    Map<Produit,Integer> listeNbProduit = p.getNbProduit();
                     Produit produit = this.produitFacade.find(idProduit);
                     if(produit == null){
                         throw new ProduitInconnuException();
                     }
-                    
-                    listeProduit.add(produit);
+                    if(listeProduit.contains(produit)){
+                        listeNbProduit.put(produit, listeNbProduit.get(produit) + 1);
+                    }else{
+                        listeProduit.add(produit);
+                        listeNbProduit.put(produit, 1);
+                    }
+                    p.setNbProduit(listeNbProduit);
                     p.setListeProduit(listeProduit);
                     try{
                         p.setCompte(clt.getCompte()); 
@@ -299,11 +324,14 @@ public class MetierPanier implements MetierPanierLocal {
             if(!trouve){
                 Panier p = new Panier();
                 Collection<Produit> listeProduit = new ArrayList<Produit>();
+                Map<Produit,Integer> listeNbProduit = p.getNbProduit();
                 Produit produit = this.produitFacade.find(idProduit);
                 if(produit == null){
                     throw new ProduitInconnuException();
                 }
+                listeNbProduit.put(produit, 1);
                 listeProduit.add(produit);
+                p.setNbProduit(listeNbProduit);
                 p.setListeProduit(listeProduit);
                 p.setClient(clt);
                 try{
