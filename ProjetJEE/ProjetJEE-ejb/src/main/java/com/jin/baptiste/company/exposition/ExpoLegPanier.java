@@ -22,6 +22,8 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierEmptyException;
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.ArrayList;
@@ -115,6 +117,12 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         } catch (CompteSommeNegaException ex) {
             Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
         } catch (PanierNoAccountLinkedToClientException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitInconnuException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitQuantiteNegativeException ex) {
+            Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ProduitStockInsuffisantException ex) {
             Logger.getLogger(ExpoLegPanier.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
