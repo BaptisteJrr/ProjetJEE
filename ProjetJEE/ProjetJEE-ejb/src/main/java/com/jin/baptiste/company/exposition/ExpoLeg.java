@@ -7,9 +7,11 @@ package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
+import com.jin.baptiste.company.entities.Facture;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
+import com.jin.baptiste.company.metier.MetierFactureLocal;
 import com.jin.baptiste.company.metier.MetierPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientAlreadyExistException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
@@ -20,7 +22,9 @@ import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaExcepti
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -36,6 +40,9 @@ import java.util.logging.Logger;
 public class ExpoLeg implements ExpoLegLocal {
 
     @EJB
+    private MetierFactureLocal metierFacture;
+
+    @EJB
     private MetierPanierLocal metierPanier;
 
     @EJB
@@ -43,6 +50,10 @@ public class ExpoLeg implements ExpoLegLocal {
 
     @EJB
     private MetierClientLocal metierClient;
+    
+    
+    
+    
     
     //les autentifications c'est a ce niveau-la a faire pas dans le metier
 
@@ -119,7 +130,7 @@ public class ExpoLeg implements ExpoLegLocal {
         } catch (ClientInconnuException ex) {
             System.out.println("Client Inconnu.");;
         }
-        List<Long> listeIdPanier = null;
+        List<Long> listeIdPanier = new ArrayList<Long>();
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
         }
@@ -145,5 +156,16 @@ public class ExpoLeg implements ExpoLegLocal {
         Position p = new Position(cpt.getSolde(), new Date(), idCompte);
         return p;
         
+    }
+
+    @Override
+    public List<FactureExport> getFacture(String email) {
+        List<FactureExport> listeFactureExport = new ArrayList<FactureExport>();
+        List<Facture> listeFacture = this.metierFacture.getFactureByClient(email);
+        for(Facture f : listeFacture){
+            listeFactureExport.add(new FactureExport(f.getNom(), f.getPrenom(), f.getMail(), f.getAdresse(), f.getPrixHT(), f.getDate(), f.getNbProduit()));
+        }
+        
+        return listeFactureExport;
     }
 }

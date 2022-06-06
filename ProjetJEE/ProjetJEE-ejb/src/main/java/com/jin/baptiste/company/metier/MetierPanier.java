@@ -24,12 +24,16 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -41,6 +45,12 @@ import javax.ejb.Stateless;
  */
 @Stateless
 public class MetierPanier implements MetierPanierLocal {
+
+    @EJB
+    private MetierProduitLocal metierProduit;
+
+    @EJB
+    private MetierFactureLocal metierFacture;
 
     @EJB
     private CompteFacadeLocal compteFacade;
@@ -67,10 +77,11 @@ public class MetierPanier implements MetierPanierLocal {
     
     
     
+    
 
     @Override
     //penser à réduire le stock
-    public void payer(long idPanier) throws PanierInconnuException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, PanierEmptyException {
+    public void payer(long idPanier) throws PanierInconnuException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, PanierEmptyException, ProduitInconnuException, ProduitStockInsuffisantException, ProduitQuantiteNegativeException {
         
         Panier p = this.panierFacade.find(idPanier);
         if(p == null){
@@ -85,10 +96,36 @@ public class MetierPanier implements MetierPanierLocal {
             }
             Compte cpt = p.getCompte();
             if(cpt != null ){
-                p.setFlagRegle(true);
                 this.metierCompte.debiter(cpt.getId(), p.getPrixTTC());
+                Map<Produit,Integer> mapProduit = p.getNbProduit();
+                Map<Produit,Integer> mapProduitRollBack = new HashMap<Produit,Integer>();
+                Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
+                for(Map.Entry<Produit,Integer> nbP : nbProduit){
+                    try {
+                        Produit prod = nbP.getKey();
+                        this.metierProduit.vendreProduit(prod.getId(), nbP.getValue());
+                        mapProduitRollBack.put(prod, nbP.getValue());
+                    } catch (ProduitStockInsuffisantException | ProduitQuantiteNegativeException ex) {
+                        Set<Map.Entry<Produit,Integer>> nbProduitRollBack = mapProduitRollBack.entrySet();
+                        for(Map.Entry<Produit,Integer> nbPRollBack : nbProduitRollBack){
+                            try {
+                                this.metierProduit.stockerProduit(nbPRollBack.getKey().getId(), nbPRollBack.getValue());
+                                throw ex;
+                            } catch (ProduitQuantiteNegativeException ex1) {
+                                throw ex1;
+                                //Logger.getLogger(MetierPanier.class.getName()).log(Level.SEVERE, null, ex1);
+                            }
+                        }
+                    }
+                    
+                }
+                
+                p.setFlagRegle(true);
+                this.metierFacture.CreerFacture(p);
+                
                 this.panierFacade.edit(p);
                 this.compteFacade.edit(cpt);
+
             }else{
                 throw new PanierNoAccountLinkedToClientException();
             }

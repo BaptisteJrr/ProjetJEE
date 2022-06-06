@@ -3,27 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.entities;
+package com.jin.baptiste.company.projetjeeshared.utilities;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 /**
  *
  * @author Baptiste
  */
-@Entity
-public class Facture implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class FactureExport {
     private String nom;
     private String prenom;
     private String mail;
@@ -32,11 +21,8 @@ public class Facture implements Serializable {
     private Double prixTTC;
     private Date date;
     private Map<String, Integer> NbProduit; //nom, quantite
-
-    public Facture(){
-    }
     
-    public Facture(String nom, String prenom, String mail, String adresse, Double prixHT, Date date, Map<String, Integer> NbProduit) {
+    public FactureExport(String nom, String prenom, String mail, String adresse, Double prixHT, Date date, Map<String, Integer> NbProduit) {
         this.nom = nom;
         this.prenom = prenom;
         this.mail = mail;
@@ -47,16 +33,6 @@ public class Facture implements Serializable {
         this.prixTTC = 1.2 * prixHT;
     }
 
-    public String getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
-    }
-    
-    
-    
     public String getNom() {
         return nom;
     }
@@ -81,12 +57,28 @@ public class Facture implements Serializable {
         this.mail = mail;
     }
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
     public Double getPrixHT() {
         return prixHT;
     }
 
     public void setPrixHT(Double prixHT) {
         this.prixHT = prixHT;
+    }
+
+    public Double getPrixTTC() {
+        return prixTTC;
+    }
+
+    public void setPrixTTC(Double prixTTC) {
+        this.prixTTC = prixTTC;
     }
 
     public Date getDate() {
@@ -106,41 +98,5 @@ public class Facture implements Serializable {
     }
     
     
-    
-    
-    
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Facture)) {
-            return false;
-        }
-        Facture other = (Facture) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.jin.baptiste.company.entities.Facture[ id=" + id + " ]";
-    }
-    
+ 
 }

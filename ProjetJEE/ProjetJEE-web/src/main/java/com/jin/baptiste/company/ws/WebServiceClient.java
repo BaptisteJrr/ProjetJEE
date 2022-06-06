@@ -5,9 +5,12 @@
  */
 package com.jin.baptiste.company.ws;
 
+import com.jin.baptiste.company.entities.Facture;
 import com.jin.baptiste.company.exposition.ExpoLegLocal;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.jws.Oneway;
 import javax.jws.WebMethod;
@@ -16,11 +19,11 @@ import javax.jws.WebService;
 
 /**
  *
- * @author LeNonGrillePain
+ * @author Baptiste
  */
 @WebService(serviceName = "WebServiceClient")
 public class WebServiceClient {
-    
+
     @EJB
     private ExpoLegLocal ejbRef;// Add business logic below. (Right-click in editor and choose
     // "Web Service > Add Operation"
@@ -38,31 +41,30 @@ public class WebServiceClient {
 
     @WebMethod(operationName = "creerCompte")
     @Oneway
-    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) {
-        Double soldeD = Double.parseDouble(solde);
-        ejbRef.creerCompte(soldeD, mail);
+    public void creerCompte(@WebParam(name = "solde") Double solde, @WebParam(name = "mail") String mail) {
+        ejbRef.creerCompte(solde, mail);
     }
 
     @WebMethod(operationName = "crediter")
     @Oneway
-    public void crediter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
-        Long idL = Long.parseLong(id);
-        Double sommeD = Double.parseDouble(somme);
-        ejbRef.crediter(idL, sommeD);
+    public void crediter(@WebParam(name = "id") Long id, @WebParam(name = "somme") Double somme) {
+        ejbRef.crediter(id, somme);
     }
 
     @WebMethod(operationName = "debiter")
     @Oneway
-    public void debiter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
-        Long idL = Long.parseLong(id);
-        Double sommeD = Double.parseDouble(somme);
-        ejbRef.debiter(idL, sommeD);
+    public void debiter(@WebParam(name = "id") Long id, @WebParam(name = "somme") Double somme) {
+        ejbRef.debiter(id, somme);
     }
 
     @WebMethod(operationName = "getCompte")
-    public Position getCompte(@WebParam(name = "idCompte") String idCompte) {
-        Long idCompteL = Long.parseLong(idCompte);
-        return ejbRef.getCompte(idCompteL);
+    public Position getCompte(@WebParam(name = "idCompte") Long idCompte) {
+        return ejbRef.getCompte(idCompte);
+    }
+
+    @WebMethod(operationName = "getFacture")
+    public List<FactureExport> getFacture(@WebParam(name = "email") String email) {
+        return ejbRef.getFacture(email);
     }
     
 }

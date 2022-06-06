@@ -17,6 +17,8 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
 import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
@@ -28,7 +30,7 @@ import javax.ejb.Local;
 @Local
 public interface MetierPanierLocal {
     
-        public void payer(long idPanier) throws PanierInconnuException,PanierEmptyException,CompteSoldeNegaException,CompteInconnuException,CompteSommeNegaException,PanierNoAccountLinkedToClientException;
+        public void payer(long idPanier) throws PanierInconnuException,PanierEmptyException,CompteSoldeNegaException,CompteInconnuException,CompteSommeNegaException,PanierNoAccountLinkedToClientException,ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException ;
         
         public void livrer(long idPanier) throws PanierNonPayeException, PanierInconnuException;
         

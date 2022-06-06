@@ -5,9 +5,12 @@
  */
 package com.jin.baptiste.company.exposition;
 
+import com.jin.baptiste.company.entities.Facture;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -24,6 +27,7 @@ public interface ExpoLegLocal {
     public void crediter(Long id, Double somme);
     public void debiter(Long id, Double somme);
     public Position getCompte(Long idCompte);
+    public List<FactureExport> getFacture(String email);
     
     
     

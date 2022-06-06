@@ -85,7 +85,8 @@ public class Panier implements Serializable {
     public Double totalHT(){
         Double total = 0.0;
         for(Produit p : this.listeProduit){
-            total = total + p.getPrixHT();
+            int nb = this.nbProduit.get(p);
+            total = total + p.getPrixHT() * nb;
         }
         return total;
     }
