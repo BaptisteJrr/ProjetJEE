@@ -60,31 +60,26 @@ public class WebServicePanier {
     }
 
     @WebMethod(operationName = "payerPanier")
-    @Oneway
     public void payerPanier(@WebParam(name = "idPanier") Long idPanier) throws PanierInconnuException, PanierEmptyException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException {
         ejbRef.payerPanier(idPanier);
     }
 
     @WebMethod(operationName = "ajouterProduitToAClient")
-    @Oneway
     public void ajouterProduitToClient(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idClient") Long idClient) throws ClientInconnuException, ProduitInconnuException {
         ejbRef.ajouterProduitToClient(idProduit, idClient);
     }
 
     @WebMethod(operationName = "retirerProduit")
-    @Oneway
     public void retirerProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idPanier") Long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         ejbRef.retirerProduit(idProduit, idPanier);
     }
 
     @WebMethod(operationName = "retirerAllProduit")
-    @Oneway
     public void retirerAllProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idPanier") Long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         ejbRef.retirerAllProduit(idProduit, idPanier);
     }
 
     @WebMethod(operationName = "supprimerPanier")
-    @Oneway
     public void supprimerPanier(@WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         Long idPanierL = Long.parseLong(idPanier);
         ejbRef.supprimerPanier(idPanierL);
