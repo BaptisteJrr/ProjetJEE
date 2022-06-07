@@ -6,6 +6,11 @@
 package com.jin.baptiste.company.ws;
 
 import com.jin.baptiste.company.exposition.ExporLegCommerceLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitPrixNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import java.util.List;
@@ -27,25 +32,22 @@ public class WebServiceCommercial {
     // "Web Service > Add Operation"
 
     @WebMethod(operationName = "getProduit")
-    public ProduitExport getProduit(@WebParam(name = "idProduit") Long idProduit) {
+    public ProduitExport getProduit(@WebParam(name = "idProduit") Long idProduit) throws ProduitInconnuException {
         return ejbRef.getProduit(idProduit);
     }
 
     @WebMethod(operationName = "stockerProduit")
-    @Oneway
-    public void stockerProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "n") int n) {
+    public void stockerProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "n") int n) throws ProduitInconnuException, ProduitQuantiteNegativeException {
         ejbRef.stockerProduit(idProduit, n);
     }
 
     @WebMethod(operationName = "modifierProduit")
-    @Oneway
-    public void modifierProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") double prixHT, @WebParam(name = "type") TypeProduitEnum type) {
+    public void modifierProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") double prixHT, @WebParam(name = "type") TypeProduitEnum type) throws ProduitInconnuException {
         ejbRef.modifierProduit(idProduit, nom, description, prixHT, type);
     }
 
     @WebMethod(operationName = "vendreProduit")
-    @Oneway
-    public void vendreProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "quantite") int quantite) {
+    public void vendreProduit(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "quantite") int quantite) throws ProduitInconnuException, ProduitStockInsuffisantException, ProduitQuantiteNegativeException {
         ejbRef.vendreProduit(idProduit, quantite);
     }
 
@@ -56,13 +58,10 @@ public class WebServiceCommercial {
     }
 
     @WebMethod(operationName = "creerProduit")
-    @Oneway
-    public void creerProduit(@WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") String prixHT, @WebParam(name = "type") String type, @WebParam(name = "stock") String stock) {
+    public void creerProduit(@WebParam(name = "nom") String nom, @WebParam(name = "description") String description, @WebParam(name = "prixHT") String prixHT, @WebParam(name = "type") String type, @WebParam(name = "stock") String stock) throws EmptyFieldException, ProduitQuantiteNegativeException, ProduitPrixNegativeException {
         Double prixHTD = Double.parseDouble(prixHT);
         TypeProduitEnum typeT = TypeProduitEnum.valueOf(type);
-        int stockI = Integer.parseInt(stock);
-        
-        
+        int stockI = Integer.parseInt(stock);            
         ejbRef.creerProduit(nom, description, prixHTD, typeT, stockI);
     }
 
