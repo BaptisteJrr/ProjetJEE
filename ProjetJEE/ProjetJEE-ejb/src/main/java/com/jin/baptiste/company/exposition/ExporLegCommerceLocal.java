@@ -29,5 +29,7 @@ public interface ExporLegCommerceLocal {
     public List<ProduitExport> getProduitByType(TypeProduitEnum type);
     
     public List<ProduitExport> searchProduitByName(String nom);
+    
+    public List<TypeProduitEnum> getAllType();
         
 }

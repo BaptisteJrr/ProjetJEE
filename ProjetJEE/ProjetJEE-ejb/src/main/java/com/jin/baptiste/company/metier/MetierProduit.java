@@ -14,6 +14,8 @@ import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuExceptio
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitPrixNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -129,5 +131,13 @@ public class MetierProduit implements MetierProduitLocal {
 //        return pe;
           return p;
         
+    }
+
+    @Override
+    public List<TypeProduitEnum> getAllType() {
+        List<TypeProduitEnum> listType = new ArrayList<TypeProduitEnum>();
+        for(TypeProduitEnum t : TypeProduitEnum.values())
+            listType.add(t);
+        return listType;
     }
 }

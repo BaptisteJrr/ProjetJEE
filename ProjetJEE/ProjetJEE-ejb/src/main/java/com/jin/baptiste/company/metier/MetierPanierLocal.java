@@ -19,6 +19,7 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
@@ -52,5 +53,6 @@ public interface MetierPanierLocal {
         public Panier getPanierActif(Long idClient) throws ClientInconnuException;
         
         public Collection<Panier> getAllPanierbyClient(Long idClient)throws ClientInconnuException;
+        
 
 }

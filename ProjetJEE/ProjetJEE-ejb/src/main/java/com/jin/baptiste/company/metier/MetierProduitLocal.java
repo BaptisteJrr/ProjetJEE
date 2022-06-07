@@ -13,6 +13,7 @@ import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativ
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -33,4 +34,6 @@ public interface MetierProduitLocal {
     public void supprimerProduit(long idProduit);
     
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) throws EmptyFieldException,ProduitQuantiteNegativeException, ProduitPrixNegativeException;
+    
+    public List<TypeProduitEnum> getAllType();
 }

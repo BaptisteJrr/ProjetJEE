@@ -160,4 +160,9 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
         }
     }
 
+    @Override
+    public List<TypeProduitEnum> getAllType() {
+        return this.metierProduit.getAllType();
+    }
+
 }
