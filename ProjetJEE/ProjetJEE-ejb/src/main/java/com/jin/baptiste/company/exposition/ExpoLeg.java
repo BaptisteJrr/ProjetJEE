@@ -58,16 +58,9 @@ public class ExpoLeg implements ExpoLegLocal {
     //les autentifications c'est a ce niveau-la a faire pas dans le metier
 
     @Override
-    public void creerClient(String nom, String prenom, String mail, String adresse) {
-        try {
+    public void creerClient(String nom, String prenom, String mail, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException {
             this.metierClient.creerClient(nom, prenom, mail, adresse);
-        } catch (FormatInvalideException ex) {
-            System.out.println("Le Format est Invalide.");
-        } catch (EmptyFieldException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClientAlreadyExistException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }
 
 //    @Override
@@ -82,54 +75,26 @@ public class ExpoLeg implements ExpoLegLocal {
 //    }
 
     @Override
-    public void creerCompte(Double solde, String mail) {
-        try {
+    public void creerCompte(Double solde, String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException {
             this.metierCompte.creerCompte(solde, mail);
-        } catch (EmptyFieldException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FormatInvalideException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClientInconnuException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClientCompteAlreadyLinkedException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
     }
 
     @Override
-    public void crediter(Long id, Double somme) {
-        try {
-            this.metierCompte.crediter(id, somme);
-        } catch (CompteInconnuException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CompteSommeNegaException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void crediter(Long id, Double somme) throws CompteInconnuException, CompteSommeNegaException {
+            this.metierCompte.crediter(id, somme);   
     }
 
     @Override
-    public void debiter(Long id, Double somme){
-        try {
-            this.metierCompte.debiter(id, somme);
-        } catch (CompteSoldeNegaException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CompteInconnuException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (CompteSommeNegaException ex) {
-            Logger.getLogger(ExpoLeg.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void debiter(Long id, Double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException{
+        this.metierCompte.debiter(id, somme);
+
     }
 
     @Override
-    public ClientExport getClientByMail(String mail) {
+    public ClientExport getClientByMail(String mail) throws FormatInvalideException, ClientInconnuException {
         Client clt = null;
-        try {
-            clt = this.metierClient.getClientparMail(mail);
-        } catch (FormatInvalideException ex) {
-            System.out.println("Le Format est Invalide.");
-        } catch (ClientInconnuException ex) {
-            System.out.println("Client Inconnu.");;
-        }
+        clt = this.metierClient.getClientparMail(mail);
         List<Long> listeIdPanier = new ArrayList<Long>();
         for(Panier p : clt.getListePanier()){
             listeIdPanier.add(p.getId());
@@ -145,13 +110,9 @@ public class ExpoLeg implements ExpoLegLocal {
     }    
 
     @Override
-    public Position getCompte(Long idCompte) {
+    public Position getCompte(Long idCompte) throws CompteInconnuException {
         Compte cpt = null;
-        try {
-            cpt = this.metierCompte.getComptebyidCompte(idCompte);
-        } catch (CompteInconnuException ex) {
-            System.out.println("Compte Inconnu.");
-        }
+        cpt = this.metierCompte.getComptebyidCompte(idCompte);
         
         Position p = new Position(cpt.getSolde(), new Date(), idCompte);
         return p;

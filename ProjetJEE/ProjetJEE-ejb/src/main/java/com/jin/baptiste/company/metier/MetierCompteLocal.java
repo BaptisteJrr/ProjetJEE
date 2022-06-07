@@ -24,7 +24,7 @@ import javax.ejb.Local;
 public interface MetierCompteLocal {
     
     public void creerCompte (double solde, String email) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException ;
-    
+    // au choix entre les deux
     public Compte getComptebyidCompte(long idCompte) throws CompteInconnuException;
     
     public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException;

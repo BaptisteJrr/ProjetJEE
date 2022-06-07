@@ -5,8 +5,15 @@
  */
 package com.jin.baptiste.company.ws;
 
-import com.jin.baptiste.company.entities.Facture;
 import com.jin.baptiste.company.exposition.ExpoLegLocal;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientAlreadyExistException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
+import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
@@ -29,41 +36,37 @@ public class WebServiceClient {
     // "Web Service > Add Operation"
 
     @WebMethod(operationName = "creerClient")
-    @Oneway
-    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "mail") String mail, @WebParam(name = "adresse") String adresse) {
+    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "mail") String mail, @WebParam(name = "adresse") String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException {
         ejbRef.creerClient(nom, prenom, mail, adresse);
     }
 
     @WebMethod(operationName = "getClientByMail")
-    public ClientExport getClientByMail(@WebParam(name = "mail") String mail) {
+    public ClientExport getClientByMail(@WebParam(name = "mail") String mail) throws FormatInvalideException, ClientInconnuException {
         return ejbRef.getClientByMail(mail);
     }
 
     @WebMethod(operationName = "creerCompte")
-    @Oneway
-    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) {
+    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException {
         Double soldeD = Double.parseDouble(solde);
         ejbRef.creerCompte(soldeD, mail);
     }
 
     @WebMethod(operationName = "crediter")
-    @Oneway
-    public void crediter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
+    public void crediter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) throws CompteInconnuException, CompteSommeNegaException {
         Long idL = Long.parseLong(id);
         Double sommeD = Double.parseDouble(somme);
         ejbRef.crediter(idL, sommeD);
     }
 
     @WebMethod(operationName = "debiter")
-    @Oneway
-    public void debiter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
+    public void debiter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException {
         Long idL = Long.parseLong(id);
         Double sommeD = Double.parseDouble(somme);
         ejbRef.debiter(idL, sommeD);
     }
 
     @WebMethod(operationName = "getCompte")
-    public Position getCompte(@WebParam(name = "idCompte") String idCompte) {
+    public Position getCompte(@WebParam(name = "idCompte") String idCompte) throws CompteInconnuException {
         Long idCompteL = Long.parseLong(idCompte);
         return ejbRef.getCompte(idCompteL);
     }
