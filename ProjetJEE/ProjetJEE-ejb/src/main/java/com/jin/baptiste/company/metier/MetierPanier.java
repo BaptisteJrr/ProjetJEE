@@ -110,6 +110,7 @@ public class MetierPanier implements MetierPanierLocal {
                         for(Map.Entry<Produit,Integer> nbPRollBack : nbProduitRollBack){
                             try {
                                 this.metierProduit.stockerProduit(nbPRollBack.getKey().getId(), nbPRollBack.getValue());
+                                this.metierCompte.crediter(cpt.getId(), p.getPrixTTC());
                                 throw ex;
                             } catch (ProduitQuantiteNegativeException ex1) {
                                 throw ex1;
