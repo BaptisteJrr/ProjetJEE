@@ -46,13 +46,14 @@ public interface MetierPanierLocal {
         public Panier getPanier(long idPanier) throws PanierInconnuException;
         
         //public List<Panier> getPanier();    
-        public List<Panier> getPanierNonPaye();       
+//        public List<Panier> getPanierNonPaye();       
         public List<Panier> getPanierPaye();
+        //suivre la livraison par client?   public List<Panier> getPanierNonLivrebyClient(long idClient);
         public List<Panier> getPanierNonLivre();
         public List<Panier> getPanierLivre();
         public Panier getPanierActif(Long idClient) throws ClientInconnuException;
         
-        public Collection<Panier> getAllPanierbyClient(Long idClient)throws ClientInconnuException;
+//        public Collection<Panier> getAllPanierbyClient(Long idClient)throws ClientInconnuException;
         
 
 }

@@ -195,41 +195,41 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
         }
     }
 
-    @Override
-    public List<PanierExport> getAllPanierHisto(Long idClient) throws ClientInconnuException {
-        List<PanierExport> ListPanierHistoExp = new ArrayList<PanierExport>();
-        Collection<Panier> ListPanierHisto = this.metierPanier.getAllPanierbyClient(idClient);
-        for (Panier p : ListPanierHisto){
-            if(p != null){
-                Long idP = p.getId();
-                Collection<Long> listeIdProduit = new ArrayList<Long>();
-                Collection<Produit> listeProduit = p.getListeProduit();
-                for( Produit prod : listeProduit){
-                    listeIdProduit.add(prod.getId());
-                }
-                Map<Produit,Integer> mapProduit = p.getNbProduit();
-                Map<String,Integer> mapIdProduit = new HashMap<String,Integer>();
-                Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
-                for(Map.Entry<Produit,Integer> nbP : nbProduit){
-                    mapIdProduit.put(nbP.getKey().getNom(),nbP.getValue());
-                }
-                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate(),mapIdProduit);
-                Long idClientLocal = null;
-                Long idCompte = null;
-                try{
-                    idClientLocal = p.getClient().getId();
-                    pe.setIdClient(idClientLocal);
-                }catch(Exception e){
-                }
-                try{
-                    idCompte = p.getCompte().getId();
-                    pe.setIdCompte(idCompte);
-                }catch(Exception e){
-
-                }
-                ListPanierHistoExp.add(pe);
-            }
-        }
-        return ListPanierHistoExp;
-    }
+//    @Override
+//    public List<PanierExport> getAllPanierHisto(Long idClient) throws ClientInconnuException {
+//        List<PanierExport> ListPanierHistoExp = new ArrayList<PanierExport>();
+//        Collection<Panier> ListPanierHisto = this.metierPanier.getAllPanierbyClient(idClient);
+//        for (Panier p : ListPanierHisto){
+//            if(p != null){
+//                Long idP = p.getId();
+//                Collection<Long> listeIdProduit = new ArrayList<Long>();
+//                Collection<Produit> listeProduit = p.getListeProduit();
+//                for( Produit prod : listeProduit){
+//                    listeIdProduit.add(prod.getId());
+//                }
+//                Map<Produit,Integer> mapProduit = p.getNbProduit();
+//                Map<String,Integer> mapIdProduit = new HashMap<String,Integer>();
+//                Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
+//                for(Map.Entry<Produit,Integer> nbP : nbProduit){
+//                    mapIdProduit.put(nbP.getKey().getNom(),nbP.getValue());
+//                }
+//                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate(),mapIdProduit);
+//                Long idClientLocal = null;
+//                Long idCompte = null;
+//                try{
+//                    idClientLocal = p.getClient().getId();
+//                    pe.setIdClient(idClientLocal);
+//                }catch(Exception e){
+//                }
+//                try{
+//                    idCompte = p.getCompte().getId();
+//                    pe.setIdCompte(idCompte);
+//                }catch(Exception e){
+//
+//                }
+//                ListPanierHistoExp.add(pe);
+//            }
+//        }
+//        return ListPanierHistoExp;
+//    }
 }

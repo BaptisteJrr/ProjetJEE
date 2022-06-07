@@ -254,16 +254,16 @@ public class MetierPanier implements MetierPanierLocal {
         return this.panierFacade.findAll();
     }*/
 
-    @Override
-    public List<Panier> getPanierNonPaye() {
-        List<Panier> lNP = null;
-        for (Panier p : this.panierFacade.findAll()){
-            if (!p.isFlagRegle()){
-                lNP.add(p);
-            }
-        }
-        return lNP;
-    }
+//    @Override
+//    public List<Panier> getPanierNonPaye() {
+//        List<Panier> lNP = null;
+//        for (Panier p : this.panierFacade.findAll()){
+//            if (!p.isFlagRegle()){
+//                lNP.add(p);
+//            }
+//        }
+//        return lNP;
+//    }
 
     @Override
     public List<Panier> getPanierPaye() {
@@ -399,16 +399,16 @@ public class MetierPanier implements MetierPanierLocal {
         return null;
     }
 
-    @Override
-    public Collection<Panier> getAllPanierbyClient(Long idClient) throws ClientInconnuException {
-        Client clt = this.clientFacade.find(idClient);
-        if(clt != null){
-            return clt.getListePanier();
-            
-        }else{
-            throw new ClientInconnuException();
-        }    
-    }
+//    @Override
+//    public Collection<Panier> getAllPanierbyClient(Long idClient) throws ClientInconnuException {
+//        Client clt = this.clientFacade.find(idClient);
+//        if(clt != null){
+//            return clt.getListePanier();
+//            
+//        }else{
+//            throw new ClientInconnuException();
+//        }    
+//    }
 
 
 }

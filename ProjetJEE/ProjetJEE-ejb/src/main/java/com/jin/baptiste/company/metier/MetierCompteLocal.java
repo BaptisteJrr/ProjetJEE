@@ -27,7 +27,7 @@ public interface MetierCompteLocal {
     // au choix entre les deux
     public Compte getComptebyidCompte(long idCompte) throws CompteInconnuException;
     
-    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException;
+//    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException;
     
     public void crediter(long idCompte, double somme) throws CompteInconnuException, CompteSommeNegaException;
     // throws CompteSoldeNegaException

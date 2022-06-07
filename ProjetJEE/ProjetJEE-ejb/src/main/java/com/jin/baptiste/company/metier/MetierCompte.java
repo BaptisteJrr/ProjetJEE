@@ -143,19 +143,19 @@ public class MetierCompte implements MetierCompteLocal {
         return cpt;
     }
 
-    @Override
-    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException {
-        Client clt = this.clientFacade.find(idClient);
-        if(clt == null){
-            throw new ClientInconnuException();
-        }
-        Compte cpt = this.compteFacade.find(clt.getCompte());
-        if(cpt == null){
-            throw new CompteInconnuException();
-        }
-
-        return cpt;
-    }
+//    @Override
+//    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException {
+//        Client clt = this.clientFacade.find(idClient);
+//        if(clt == null){
+//            throw new ClientInconnuException();
+//        }
+//        Compte cpt = this.compteFacade.find(clt.getCompte());
+//        if(cpt == null){
+//            throw new CompteInconnuException();
+//        }
+//
+//        return cpt;
+//    }
 
     @Override
     public Compte getComptebyMail(String mail) throws FormatInvalideException, CompteInconnuException {
