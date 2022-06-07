@@ -41,25 +41,31 @@ public class WebServiceClient {
 
     @WebMethod(operationName = "creerCompte")
     @Oneway
-    public void creerCompte(@WebParam(name = "solde") Double solde, @WebParam(name = "mail") String mail) {
-        ejbRef.creerCompte(solde, mail);
+    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) {
+        Double soldeD = Double.parseDouble(solde);
+        ejbRef.creerCompte(soldeD, mail);
     }
 
     @WebMethod(operationName = "crediter")
     @Oneway
-    public void crediter(@WebParam(name = "id") Long id, @WebParam(name = "somme") Double somme) {
-        ejbRef.crediter(id, somme);
+    public void crediter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
+        Long idL = Long.parseLong(id);
+        Double sommeD = Double.parseDouble(somme);
+        ejbRef.crediter(idL, sommeD);
     }
 
     @WebMethod(operationName = "debiter")
     @Oneway
-    public void debiter(@WebParam(name = "id") Long id, @WebParam(name = "somme") Double somme) {
-        ejbRef.debiter(id, somme);
+    public void debiter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) {
+        Long idL = Long.parseLong(id);
+        Double sommeD = Double.parseDouble(somme);
+        ejbRef.debiter(idL, sommeD);
     }
 
     @WebMethod(operationName = "getCompte")
-    public Position getCompte(@WebParam(name = "idCompte") Long idCompte) {
-        return ejbRef.getCompte(idCompte);
+    public Position getCompte(@WebParam(name = "idCompte") String idCompte) {
+        Long idCompteL = Long.parseLong(idCompte);
+        return ejbRef.getCompte(idCompteL);
     }
 
     @WebMethod(operationName = "getFacture")
