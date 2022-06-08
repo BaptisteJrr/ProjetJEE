@@ -47,6 +47,7 @@ public interface ExpoLegPanierLocal {
     public void supprimerPanier(Long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException;
     
     public PanierExport getPanierActif(Long idClient) throws ClientInconnuException;
+    public List<PanierExport> getPanierNonLivreByClient(Long idClient) throws ClientInconnuException;
     
     //Suivie du Panier (tous les Panier)
 //    public List<PanierExport> getAllPanierHisto (Long idClient) throws ClientInconnuException;

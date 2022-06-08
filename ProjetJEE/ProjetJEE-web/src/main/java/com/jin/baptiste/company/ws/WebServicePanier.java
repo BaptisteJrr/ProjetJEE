@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.ws;
 
-import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import com.jin.baptiste.company.exposition.ExpoLegPanierLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
@@ -21,16 +20,16 @@ import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativ
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
-import java.util.List; 
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
+import java.util.List;
 import javax.ejb.EJB;
-import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
 /**
  *
- * @author LeNonGrillePain
+ * @author Baptiste
  */
 @WebService(serviceName = "WebServicePanier")
 public class WebServicePanier {
@@ -64,7 +63,7 @@ public class WebServicePanier {
         ejbRef.payerPanier(idPanier);
     }
 
-    @WebMethod(operationName = "ajouterProduitToAClient")
+    @WebMethod(operationName = "ajouterProduitToClient")
     public void ajouterProduitToClient(@WebParam(name = "idProduit") Long idProduit, @WebParam(name = "idClient") Long idClient) throws ClientInconnuException, ProduitInconnuException {
         ejbRef.ajouterProduitToClient(idProduit, idClient);
     }
@@ -80,15 +79,18 @@ public class WebServicePanier {
     }
 
     @WebMethod(operationName = "supprimerPanier")
-    public void supprimerPanier(@WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
-        Long idPanierL = Long.parseLong(idPanier);
-        ejbRef.supprimerPanier(idPanierL);
+    public void supprimerPanier(@WebParam(name = "idPanier") Long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
+        ejbRef.supprimerPanier(idPanier);
     }
 
     @WebMethod(operationName = "getPanierActif")
-    public PanierExport getPanierActif(@WebParam(name = "idClient") String idClient) throws ClientInconnuException {
-        Long idClientL = Long.parseLong(idClient);
-        return ejbRef.getPanierActif(idClientL);
+    public PanierExport getPanierActif(@WebParam(name = "idClient") Long idClient) throws ClientInconnuException {
+        return ejbRef.getPanierActif(idClient);
+    }
+
+    @WebMethod(operationName = "getPanierNonLivreByClient")
+    public List<PanierExport> getPanierNonLivreByClient(@WebParam(name = "idClient") Long idClient) throws ClientInconnuException {
+        return ejbRef.getPanierNonLivreByClient(idClient);
     }
     
 }

@@ -410,5 +410,21 @@ public class MetierPanier implements MetierPanierLocal {
 //        }    
 //    }
 
+    @Override
+    public List<Panier> getPanierNonLivreByClient(long idClient) throws ClientInconnuException {
+        Client clt = this.clientFacade.find(idClient);
+        List<Panier> listePanierRes = new ArrayList<Panier>();
+        if(clt == null){
+            throw new ClientInconnuException();
+        }
+        Collection<Panier> listePanier = clt.getListePanier();
+        for( Panier p : listePanier){
+            if(p.isFlagRegle() && !p.isFlagLivre()){
+                listePanierRes.add(p);
+            }
+        }
+        return listePanierRes;
+    }
+
 
 }
