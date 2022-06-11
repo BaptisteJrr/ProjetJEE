@@ -48,9 +48,6 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     private MetierClientLocal metierClient;
 
     @EJB
-    private ProduitFacadeLocal produitFacade;
-
-    @EJB
     private MetierProduitLocal metierProduit;
 
     @EJB
@@ -128,12 +125,10 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     @Override
     public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
-        List<Produit> allProduit = this.produitFacade.findAll();
+        List<Produit> allProduit = this.metierProduit.getProduitByType(type);
         for(Produit p : allProduit){
-            if(p.getType() == type){
-                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock() );
-                resList.add(produitExport);
-            }
+            ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock() );
+            resList.add(produitExport);
         }
         return resList;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -142,12 +137,10 @@ public class ExpoLegPanier implements ExpoLegPanierLocal {
     @Override
     public List<ProduitExport> searchProduitByName(String nom) {
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
-        List<Produit> allProduit = this.produitFacade.findAll();
+        List<Produit> allProduit = this.metierProduit.searchProduitByName(nom);
         for(Produit p : allProduit){
-            if(p.getNom().contains(nom)){
-                ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock() );
-                resList.add(produitExport);
-            }
+            ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock() );
+            resList.add(produitExport);
         }
         return resList;
 

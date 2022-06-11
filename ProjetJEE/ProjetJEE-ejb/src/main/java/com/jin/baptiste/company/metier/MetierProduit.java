@@ -14,6 +14,7 @@ import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuExceptio
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitPrixNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
+import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -139,5 +140,34 @@ public class MetierProduit implements MetierProduitLocal {
         for(TypeProduitEnum t : TypeProduitEnum.values())
             listType.add(t);
         return listType;
+    }
+
+    @Override
+    public List<Produit> getProduitByType(TypeProduitEnum type) {
+        List<Produit> listeProduitRes = new ArrayList<Produit>();
+        List<Produit> allProduit = this.produitFacade.findAll();
+        for(Produit p : allProduit){
+            if(p.getType() == type){
+                listeProduitRes.add(p);
+            }
+        }
+        return listeProduitRes;
+    }
+
+    @Override
+    public List<Produit> searchProduitByName(String nom) {
+        List<Produit> listeProduitRes = new ArrayList<Produit>();
+        List<Produit> allProduit = this.produitFacade.findAll();
+        for(Produit p : allProduit){
+            if(p.getNom().contains(nom)){
+                listeProduitRes.add(p);
+            }
+        }
+        return listeProduitRes;
+    }
+
+    @Override
+    public List<Produit> getAllProduit() {
+        return this.produitFacade.findAll();
     }
 }

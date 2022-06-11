@@ -36,4 +36,10 @@ public interface MetierProduitLocal {
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) throws EmptyFieldException,ProduitQuantiteNegativeException, ProduitPrixNegativeException;
     
     public List<TypeProduitEnum> getAllType();
+    
+    public List<Produit> getProduitByType(TypeProduitEnum type);
+    
+    public List<Produit> searchProduitByName(String nom);
+    
+    public List<Produit> getAllProduit();
 }

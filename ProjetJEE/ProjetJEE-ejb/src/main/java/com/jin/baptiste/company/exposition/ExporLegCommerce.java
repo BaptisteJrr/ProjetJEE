@@ -29,8 +29,6 @@ import javax.ejb.Stateless;
 @Stateless
 public class ExporLegCommerce implements ExporLegCommerceLocal {
 
-    @EJB
-    private ProduitFacadeLocal produitFacade;
 
     @EJB
     private MetierProduitLocal metierProduit;
@@ -69,7 +67,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     @Override
     public List<ProduitExport> getListProduit() {
         List<ProduitExport> listProduitExport = new ArrayList<ProduitExport>();
-        List<Produit> listProduit = this.produitFacade.findAll();
+        List<Produit> listProduit = this.metierProduit.getAllProduit();
         for( Produit p : listProduit){
             ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock());
             listProduitExport.add(produitExport);
@@ -83,7 +81,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     @Override
     public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
-        List<Produit> allProduit = this.produitFacade.findAll();
+        List<Produit> allProduit = this.metierProduit.getProduitByType(type);
         for(Produit p : allProduit){
             if(p.getType() == type){
                 ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), type.name(), p.getPrixHT(), p.getDescription(), p.getStock() );
@@ -97,7 +95,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     public List<ProduitExport> searchProduitByName(String nom) {
         
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
-        List<Produit> allProduit = this.produitFacade.findAll();
+        List<Produit> allProduit = this.metierProduit.searchProduitByName(nom);
         for(Produit p : allProduit){
             if(p.getNom().contains(nom)){
                 ProduitExport produitExport = new ProduitExport(p.getId(), p.getNom(), p.getType().name(), p.getPrixHT(), p.getDescription(), p.getStock() );
