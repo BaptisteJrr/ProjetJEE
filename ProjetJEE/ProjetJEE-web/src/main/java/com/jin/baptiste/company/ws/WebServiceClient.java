@@ -14,12 +14,21 @@ import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaExcepti
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyLivreException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierAlreadyPayeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierEmptyException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.PanierNoAccountLinkedToClientException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
-import com.jin.baptiste.company.projetjeeshared.utilities.Position;
+import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
+import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.jws.Oneway;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -36,7 +45,7 @@ public class WebServiceClient {
     // "Web Service > Add Operation"
 
     @WebMethod(operationName = "creerClient")
-    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "mail") String mail, @WebParam(name = "adresse") String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException {
+    public void creerClient(@WebParam(name = "nom") String nom, @WebParam(name = "prenom") String prenom, @WebParam(name = "mail") String mail, @WebParam(name = "adresse") String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientInconnuException, ClientCompteAlreadyLinkedException {
         ejbRef.creerClient(nom, prenom, mail, adresse);
     }
 
@@ -45,35 +54,87 @@ public class WebServiceClient {
         return ejbRef.getClientByMail(mail);
     }
 
-    @WebMethod(operationName = "creerCompte")
-    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException {
-        Double soldeD = Double.parseDouble(solde);
-        ejbRef.creerCompte(soldeD, mail);
-    }
-
-    @WebMethod(operationName = "crediter")
-    public void crediter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) throws CompteInconnuException, CompteSommeNegaException {
-        Long idL = Long.parseLong(id);
-        Double sommeD = Double.parseDouble(somme);
-        ejbRef.crediter(idL, sommeD);
-    }
-
-    @WebMethod(operationName = "debiter")
-    public void debiter(@WebParam(name = "id") String id, @WebParam(name = "somme") String somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException {
-        Long idL = Long.parseLong(id);
-        Double sommeD = Double.parseDouble(somme);
-        ejbRef.debiter(idL, sommeD);
-    }
-
-    @WebMethod(operationName = "getCompte")
-    public Position getCompte(@WebParam(name = "idCompte") String idCompte) throws CompteInconnuException {
-        Long idCompteL = Long.parseLong(idCompte);
-        return ejbRef.getCompte(idCompteL);
-    }
+//    @WebMethod(operationName = "creerCompte")
+//    public void creerCompte(@WebParam(name = "solde") String solde, @WebParam(name = "mail") String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException {
+//        Double soldeD = Double.parseDouble(solde);
+//        ejbRef.creerCompte(soldeD, mail);
+//    }
 
     @WebMethod(operationName = "getFacture")
     public List<FactureExport> getFacture(@WebParam(name = "email") String email) {
         return ejbRef.getFacture(email);
+    }
+
+    @WebMethod(operationName = "getProduit")
+    public ProduitExport getProduit(@WebParam(name = "idProduit") String idProduit) throws ProduitInconnuException {
+        Long idProduitL = Long.parseLong(idProduit);
+        return ejbRef.getProduit(idProduitL);
+    }
+
+    @WebMethod(operationName = "getProduitByType")
+    public List<ProduitExport> getProduitByType(@WebParam(name = "type") TypeProduitEnum type) {
+        return ejbRef.getProduitByType(type);
+    }
+
+    @WebMethod(operationName = "searchProduitByName")
+    public List<ProduitExport> searchProduitByName(@WebParam(name = "nom") String nom) {
+        return ejbRef.searchProduitByName(nom);
+    }
+
+    @WebMethod(operationName = "getPanier")
+    public PanierExport getPanier(@WebParam(name = "idPanier") String idPanier) throws PanierInconnuException {
+        Long idPanierL = Long.parseLong(idPanier);
+        return ejbRef.getPanier(idPanierL);
+    }
+
+    @WebMethod(operationName = "payerPanier")
+    public void payerPanier(@WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, PanierEmptyException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException {
+        Long idPanierL = Long.parseLong(idPanier);
+        ejbRef.payerPanier(idPanierL);
+    }
+
+    @WebMethod(operationName = "ajouterProduitToClient")
+    public void ajouterProduitToClient(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idClient") String idClient) throws ClientInconnuException, ProduitInconnuException {
+        Long idProduitL = Long.parseLong(idProduit);
+        Long idClientL = Long.parseLong(idClient);
+        ejbRef.ajouterProduitToClient(idProduitL, idClientL);
+    }
+
+    @WebMethod(operationName = "retirerProduit")
+    public void retirerProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
+        Long idProduitL = Long.parseLong(idProduit);
+        Long idPanierL = Long.parseLong(idPanier);
+        ejbRef.retirerProduit(idProduitL, idPanierL);
+    }
+
+    @WebMethod(operationName = "retirerAllProduit")
+    public void retirerAllProduit(@WebParam(name = "idProduit") String idProduit, @WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
+        Long idProduitL = Long.parseLong(idProduit);
+        Long idPanierL = Long.parseLong(idPanier);
+        ejbRef.retirerAllProduit(idProduitL, idPanierL);
+    }
+
+    @WebMethod(operationName = "supprimerPanier")
+    public void supprimerPanier(@WebParam(name = "idPanier") String idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
+        Long idPanierL = Long.parseLong(idPanier);
+        ejbRef.supprimerPanier(idPanierL);
+    }
+
+    @WebMethod(operationName = "getPanierActif")
+    public PanierExport getPanierActif(@WebParam(name = "idClient") String idClient) throws ClientInconnuException {
+        Long idClientL = Long.parseLong(idClient);
+        return ejbRef.getPanierActif(idClientL);
+    }
+
+    @WebMethod(operationName = "getPanierNonLivreByClient")
+    public List<PanierExport> getPanierNonLivreByClient(@WebParam(name = "idClient") String idClient) throws ClientInconnuException {
+        Long idClientL = Long.parseLong(idClient);
+        return ejbRef.getPanierNonLivreByClient(idClientL);
+    }
+
+    @WebMethod(operationName = "getListProduit")
+    public List<ProduitExport> getListProduit() {
+        return ejbRef.getListProduit();
     }
     
 }

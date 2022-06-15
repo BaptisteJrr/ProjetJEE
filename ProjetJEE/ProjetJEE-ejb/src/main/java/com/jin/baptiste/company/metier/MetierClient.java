@@ -9,6 +9,7 @@ import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientAlreadyExistException;
+import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
@@ -25,11 +26,16 @@ import javax.ejb.Stateless;
 public class MetierClient implements MetierClientLocal {
 
     @EJB
+    private MetierCompteLocal metierCompte;
+
+    @EJB
     private ClientFacadeLocal clientFacade;
+    
+    
     
 
     @Override
-    public void creerClient(String nom, String prenom, String email, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException {
+    public void creerClient(String nom, String prenom, String email, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientCompteAlreadyLinkedException, ClientInconnuException {
         
         
         //Vérifier si une des entrées est vide
@@ -48,6 +54,8 @@ public class MetierClient implements MetierClientLocal {
             c.setPrenom(prenom);
             c.setAdresse(adresse);
             this.clientFacade.create(c);
+            this.metierCompte.creerCompte(0.0, email);
+            
         }else{
             throw new ClientAlreadyExistException();
         }

@@ -48,6 +48,10 @@ public class StartupSingleton implements StartupSingletonLocal {
             Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClientAlreadyExistException ex) {
             Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientInconnuException ex) {
+            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClientCompteAlreadyLinkedException ex) {
+            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         try {
