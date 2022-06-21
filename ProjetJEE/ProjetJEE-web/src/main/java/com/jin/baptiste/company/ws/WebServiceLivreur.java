@@ -25,9 +25,9 @@ public class WebServiceLivreur {
     private ExporLegLivrerLocal ejbRef;// Add business logic below. (Right-click in editor and choose
     // "Web Service > Add Operation"
 
-    @WebMethod(operationName = "livrerPaier")
+    @WebMethod(operationName = "livrerPanier")
     @Oneway
-    public void livrerPaier(@WebParam(name = "idPanier") String idPanier) {
+    public void livrerPanier(@WebParam(name = "idPanier") String idPanier) {
         Long idPanierL = Long.parseLong(idPanier);
         ejbRef.livrerPanier(idPanierL);
     }

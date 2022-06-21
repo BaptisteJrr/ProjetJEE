@@ -9,6 +9,8 @@ import com.jin.baptiste.company.exception.CompteClotureException;
 import com.jin.baptiste.company.exception.CompteInconnuException;
 import com.jin.baptiste.company.exception.SoldeInsufisantException;
 import com.jin.baptiste.company.exposition.ExpoLrdRemote;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.text.DateFormat;
 import java.text.NumberFormat;
@@ -33,7 +35,7 @@ public class DABCLI {
         this.services = services;
     }
 
-    public void run() {
+    public void run() throws com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSoldeNegaException, CompteSommeNegaException {
         int choix = -1;
         do {
             this.authentifier();
@@ -92,7 +94,7 @@ public class DABCLI {
         return CLIUtils.yesNoQuestion(scanner, "Souhaitez-vous effectuer une autre operation (y|n) ?") ? 1 : 0;
     }
 
-    private void consulterCompte() throws CompteInconnuException{
+    private void consulterCompte() throws CompteInconnuException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException{
         CLIUtils.afficherTitreSection("Consultation de solde");
 //        try {
             Position p = this.services.getCompte(this.idCompte);
@@ -102,7 +104,7 @@ public class DABCLI {
 //        }
     }
 
-    private void debiterCompte() throws CompteInconnuException{
+    private void debiterCompte() throws CompteInconnuException, CompteSoldeNegaException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSommeNegaException{
         CLIUtils.afficherTitreSection("Opération de Debit");
         final double montant = CLIUtils.saisirDouble(scanner, "Montant à débiter : ", 0, Double.POSITIVE_INFINITY);
 //        try {
@@ -113,7 +115,7 @@ public class DABCLI {
 //        }
     }
 
-    private void crediterCompte() throws CompteInconnuException{
+    private void crediterCompte() throws CompteInconnuException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSommeNegaException{
         CLIUtils.afficherTitreSection("Opération de Crédit");
         final double montant = CLIUtils.saisirDouble(scanner, "Montant à créditer : ", 0, Double.POSITIVE_INFINITY);
 //        try {

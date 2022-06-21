@@ -6,6 +6,9 @@
 package com.jin.baptiste.company.projetjeecltlrd;
 
 import com.jin.baptiste.company.exposition.ExpoLrdRemote;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,7 +19,7 @@ import javax.naming.NamingException;
  * @author LeNonGrillePain
  */
 public class Main {
-    public static void main(String[] args) throws NamingException{
+    public static void main(String[] args) throws NamingException, CompteInconnuException, CompteSoldeNegaException, CompteSommeNegaException{
         try{
             RMIDABServiceManager rmiMgr = new RMIDABServiceManager();
             DABCLI cli = new DABCLI(rmiMgr.getdabRemoteSvc());

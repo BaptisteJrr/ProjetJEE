@@ -72,8 +72,9 @@ public class WebServiceClient {
     }
 
     @WebMethod(operationName = "getProduitByType")
-    public List<ProduitExport> getProduitByType(@WebParam(name = "type") TypeProduitEnum type) {
-        return ejbRef.getProduitByType(type);
+    public List<ProduitExport> getProduitByType(@WebParam(name = "type") String type) {
+        TypeProduitEnum typeT = TypeProduitEnum.valueOf(type);
+        return ejbRef.getProduitByType(typeT);
     }
 
     @WebMethod(operationName = "searchProduitByName")
