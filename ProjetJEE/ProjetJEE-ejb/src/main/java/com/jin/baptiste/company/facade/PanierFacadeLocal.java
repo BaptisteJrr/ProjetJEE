@@ -16,18 +16,48 @@ import javax.ejb.Local;
 @Local
 public interface PanierFacadeLocal {
 
+    /**
+     *
+     * @param panier
+     */
     void create(Panier panier);
 
+    /**
+     *
+     * @param panier
+     */
     void edit(Panier panier);
 
+    /**
+     *
+     * @param panier
+     */
     void remove(Panier panier);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Panier find(Object id);
 
+    /**
+     *
+     * @return
+     */
     List<Panier> findAll();
 
+    /**
+     *
+     * @param range
+     * @return
+     */
     List<Panier> findRange(int[] range);
 
+    /**
+     *
+     * @return
+     */
     int count();
     
 }

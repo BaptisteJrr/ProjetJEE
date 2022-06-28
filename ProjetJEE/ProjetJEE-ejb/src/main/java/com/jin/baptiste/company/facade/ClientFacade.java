@@ -21,15 +21,27 @@ public class ClientFacade extends AbstractFacade<Client> implements ClientFacade
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     *
+     */
     public ClientFacade() {
         super(Client.class);
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @Override
     public Client findbyEmail(String email) {
         List<Client> listeClt = findAll();

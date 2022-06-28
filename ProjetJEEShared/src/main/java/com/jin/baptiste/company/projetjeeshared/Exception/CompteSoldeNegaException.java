@@ -11,6 +11,9 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  */
 public class CompteSoldeNegaException extends Exception{
 
+    /**
+     *
+     */
     public CompteSoldeNegaException() {
         super("Le solde est négatif.");
     }

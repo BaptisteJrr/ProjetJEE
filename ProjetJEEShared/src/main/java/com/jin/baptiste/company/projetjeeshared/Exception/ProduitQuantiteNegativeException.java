@@ -11,6 +11,9 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  */
 public class ProduitQuantiteNegativeException extends Exception{
 
+    /**
+     *
+     */
     public ProduitQuantiteNegativeException() {
         super("Quantité à ajouter négative");
     }

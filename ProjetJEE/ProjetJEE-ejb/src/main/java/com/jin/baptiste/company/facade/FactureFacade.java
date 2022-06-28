@@ -22,15 +22,27 @@ public class FactureFacade extends AbstractFacade<Facture> implements FactureFac
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     *
+     */
     public FactureFacade() {
         super(Facture.class);
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @Override
     public List<Facture> findbyEmail(String email) {
         List<Facture> listeFacture = new ArrayList<Facture>();
@@ -42,7 +54,6 @@ public class FactureFacade extends AbstractFacade<Facture> implements FactureFac
         }
         
         return listeFacture;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

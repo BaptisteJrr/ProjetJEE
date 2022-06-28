@@ -16,8 +16,22 @@ import javax.ejb.Local;
 @Local
 public interface ExporLegLivrerLocal {
     
+    /**
+     *
+     * @param idPanier
+     */
     public void livrerPanier(Long idPanier);
+
+    /**
+     *
+     * @return
+     */
     public List<PanierExport> getListPanierNonLivre();
+
+    /**
+     *
+     * @return
+     */
     public List<PanierExport> getListPanierLivre();
     
 }

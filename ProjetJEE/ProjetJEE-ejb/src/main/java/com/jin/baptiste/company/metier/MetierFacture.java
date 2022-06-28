@@ -29,8 +29,10 @@ public class MetierFacture implements MetierFactureLocal {
     @EJB
     private FactureFacadeLocal factureFacade;
 
-    
-    
+    /**
+     *
+     * @param p
+     */
     @Override
     public void CreerFacture(Panier p) {
         Client clt = p.getClient();
@@ -45,16 +47,18 @@ public class MetierFacture implements MetierFactureLocal {
         Facture facture = new Facture(clt.getNom(), clt.getPrenom(), clt.getEmail(),clt.getAdresse(), p.totalHT(), new Date(), mapIdProduit);
         
         this.factureFacade.create(facture);
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+
+
+    /**
+     *
+     * @param mail
+     * @return
+     */
 
     @Override
     public List<Facture> getFactureByClient(String mail) {
         return this.factureFacade.findbyEmail(mail);
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

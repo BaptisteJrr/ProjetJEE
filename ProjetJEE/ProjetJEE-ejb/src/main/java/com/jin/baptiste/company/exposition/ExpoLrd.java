@@ -5,9 +5,7 @@
  */
 package com.jin.baptiste.company.exposition;
 
-import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
-import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
@@ -17,10 +15,8 @@ import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaExcepti
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
-import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import java.util.Date;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -39,7 +35,11 @@ public class ExpoLrd implements ExpoLrdRemote {
     @EJB
     private MetierCompteLocal metierCompte;
     
-    
+    /**
+     *
+     * @param solde
+     * @param mail
+     */
     @Override
     public void creerCompte(Double solde, String mail) {
         try {
@@ -55,6 +55,11 @@ public class ExpoLrd implements ExpoLrdRemote {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param somme
+     */
     @Override
     public void crediter(Long id, Double somme) {
         try {
@@ -66,6 +71,11 @@ public class ExpoLrd implements ExpoLrdRemote {
         }
     }
 
+    /**
+     *
+     * @param id
+     * @param somme
+     */
     @Override
     public void debiter(Long id, Double somme){
         try {
@@ -79,6 +89,11 @@ public class ExpoLrd implements ExpoLrdRemote {
         }
     }
 
+    /**
+     *
+     * @param idCompte
+     * @return
+     */
     @Override
     public Position getCompte(Long idCompte) {
         Compte cpt = null;
@@ -95,6 +110,11 @@ public class ExpoLrd implements ExpoLrdRemote {
         
     }
 
+    /**
+     *
+     * @param mail
+     * @return
+     */
     @Override
     public Position getCompteByMail(String mail) {
         Compte cpt = null;

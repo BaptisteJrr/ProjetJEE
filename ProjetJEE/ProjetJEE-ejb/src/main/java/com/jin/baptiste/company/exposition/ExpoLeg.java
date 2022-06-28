@@ -6,7 +6,6 @@
 package com.jin.baptiste.company.exposition;
 
 import com.jin.baptiste.company.entities.Client;
-import com.jin.baptiste.company.entities.Compte;
 import com.jin.baptiste.company.entities.Facture;
 import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.entities.Produit;
@@ -34,7 +33,6 @@ import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisan
 import com.jin.baptiste.company.projetjeeshared.utilities.ClientExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.FactureExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.PanierExport;
-import com.jin.baptiste.company.projetjeeshared.utilities.Position;
 import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import java.util.ArrayList;
@@ -42,12 +40,9 @@ import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -78,22 +73,34 @@ public class ExpoLeg implements ExpoLegLocal {
     
     //les autentifications c'est a ce niveau-la a faire pas dans le metier
 
+    /**
+     *
+     * @param nom
+     * @param prenom
+     * @param mail
+     * @param adresse
+     * @throws FormatInvalideException
+     * @throws EmptyFieldException
+     * @throws ClientAlreadyExistException
+     * @throws ClientInconnuException
+     * @throws ClientCompteAlreadyLinkedException
+     */
+
     @Override
     public void creerClient(String nom, String prenom, String mail, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientInconnuException, ClientCompteAlreadyLinkedException {
             this.metierClient.creerClient(nom, prenom, mail, adresse);
        
     }
 
-//    @Override
-//    public ClientExport getClient(Long id) {
-//        Client clt = this.metierClient.getClient(id);
-//        List<Long> listeIdPanier = null;
-//        for(Panier p : clt.getListePanier()){
-//            listeIdPanier.add(p.getId());
-//        }
-//        ClientExport clte = new ClientExport(clt.getId(),clt.getNom(),clt.getPrenom(),clt.getEmail(),clt.getCompte().getId(),clt.getAdresse(),listeIdPanier);
-//        return clte;
-//    }
+    /**
+     *
+     * @param solde
+     * @param mail
+     * @throws EmptyFieldException
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     * @throws ClientCompteAlreadyLinkedException
+     */
 
     @Override
     public void creerCompte(Double solde, String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException {
@@ -101,16 +108,14 @@ public class ExpoLeg implements ExpoLegLocal {
 
     }
 
-//    @Override
-//    public void crediter(Long id, Double somme) throws CompteInconnuException, CompteSommeNegaException {
-//            this.metierCompte.crediter(id, somme);   
-//    }
-//
-//    @Override
-//    public void debiter(Long id, Double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException{
-//        this.metierCompte.debiter(id, somme);
-//
-//    }
+
+    /**
+     *
+     * @param mail
+     * @return
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     */
 
     @Override
     public ClientExport getClientByMail(String mail) throws FormatInvalideException, ClientInconnuException {
@@ -130,15 +135,11 @@ public class ExpoLeg implements ExpoLegLocal {
         return clte;
     }    
 
-//    @Override
-//    public Position getCompte(Long idCompte) throws CompteInconnuException {
-//        Compte cpt = null;
-//        cpt = this.metierCompte.getComptebyidCompte(idCompte);
-//        
-//        Position p = new Position(cpt.getSolde(), new Date(), idCompte);
-//        return p;
-//        
-//    }
+    /**
+     *
+     * @param email
+     * @return
+     */
 
     @Override
     public List<FactureExport> getFacture(String email) {
@@ -151,6 +152,12 @@ public class ExpoLeg implements ExpoLegLocal {
         return listeFactureExport;
     }
     
+    /**
+     *
+     * @param idPanier
+     * @return
+     * @throws PanierInconnuException
+     */
     @Override
     public PanierExport getPanier(Long idPanier) throws PanierInconnuException {
             Panier p = this.metierPanier.getPanier(idPanier);
@@ -187,27 +194,71 @@ public class ExpoLeg implements ExpoLegLocal {
             }
     }
 
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierEmptyException
+     * @throws CompteSoldeNegaException
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     * @throws PanierNoAccountLinkedToClientException
+     * @throws ProduitInconnuException
+     * @throws ProduitQuantiteNegativeException
+     * @throws ProduitStockInsuffisantException
+     */
     @Override
     public void payerPanier(Long idPanier) throws PanierInconnuException, PanierEmptyException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException {
         this.metierPanier.payer(idPanier);
     }
     
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
     @Override
     public void retirerProduit(Long idProduit, Long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         this.metierPanier.retirerProduit(idProduit, idPanier);
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     * @throws PanierAlreadyLivreException
+     * @throws PanierAlreadyPayeException
+     */
     @Override
     public void retirerAllProduit(Long idProduit, Long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyLivreException, PanierAlreadyPayeException {
         this.metierPanier.retirerAllProduit(idProduit, idPanier);
     }
 
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
     @Override
     public void supprimerPanier(Long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         this.metierPanier.supprimerPanier(idPanier);
 
     }
     
+    /**
+     *
+     * @param idProduit
+     * @return
+     * @throws ProduitInconnuException
+     */
     @Override
     public ProduitExport getProduit(Long idProduit) throws ProduitInconnuException {
         
@@ -216,6 +267,11 @@ public class ExpoLeg implements ExpoLegLocal {
         return pe;
     }
 
+    /**
+     *
+     * @param type
+     * @return
+     */
     @Override
     public List<ProduitExport> getProduitByType(TypeProduitEnum type) {
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
@@ -228,6 +284,11 @@ public class ExpoLeg implements ExpoLegLocal {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param nom
+     * @return
+     */
     @Override
     public List<ProduitExport> searchProduitByName(String nom) {
         List<ProduitExport> resList = new ArrayList<ProduitExport>();
@@ -241,11 +302,24 @@ public class ExpoLeg implements ExpoLegLocal {
 //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param idClient
+     * @throws ClientInconnuException
+     * @throws ProduitInconnuException
+     */
     @Override
     public void ajouterProduitToClient(Long idProduit, Long idClient) throws ClientInconnuException, ProduitInconnuException {
         this.metierPanier.ajouterProduitByClient(idProduit,idClient);
     }
 
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
     @Override
     public PanierExport getPanierActif(Long idClient) throws ClientInconnuException {
         Panier p = this.metierPanier.getPanierActif(idClient);
@@ -282,43 +356,13 @@ public class ExpoLeg implements ExpoLegLocal {
         }
     }
 
-//    @Override
-//    public List<PanierExport> getAllPanierHisto(Long idClient) throws ClientInconnuException {
-//        List<PanierExport> listePanierExport = new ArrayList<PanierExport>();
-//        Collection<Panier> listePanier = this.metierPanier.getAllPanierbyClient(idClient);
-//        for (Panier p : listePanier){
-//            if(p != null){
-//                Long idP = p.getId();
-//                Collection<Long> listeIdProduit = new ArrayList<Long>();
-//                Collection<Produit> listeProduit = p.getListeProduit();
-//                for( Produit prod : listeProduit){
-//                    listeIdProduit.add(prod.getId());
-//                }
-//                Map<Produit,Integer> mapProduit = p.getNbProduit();
-//                Map<String,Integer> mapIdProduit = new HashMap<String,Integer>();
-//                Set<Map.Entry<Produit,Integer>> nbProduit = mapProduit.entrySet();
-//                for(Map.Entry<Produit,Integer> nbP : nbProduit){
-//                    mapIdProduit.put(nbP.getKey().getNom(),nbP.getValue());
-//                }
-//                PanierExport pe =new PanierExport(p.getId(), p.isFlagLivre(), p.isFlagRegle(), listeIdProduit, p.getPrixTTC() , p.getDate(),mapIdProduit);
-//                Long idClientLocal = null;
-//                Long idCompte = null;
-//                try{
-//                    idClientLocal = p.getClient().getId();
-//                    pe.setIdClient(idClientLocal);
-//                }catch(Exception e){
-//                }
-//                try{
-//                    idCompte = p.getCompte().getId();
-//                    pe.setIdCompte(idCompte);
-//                }catch(Exception e){
-//
-//                }
-//                listePanierExport.add(pe);
-//            }
-//        }
-//        return listePanierExport;
-//    }
+
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
 
     @Override
     public List<PanierExport> getPanierNonLivreByClient(Long idClient) throws ClientInconnuException {
@@ -358,6 +402,11 @@ public class ExpoLeg implements ExpoLegLocal {
             return new ArrayList<PanierExport>();
         }
     }
+
+    /**
+     *
+     * @return
+     */
     @Override
     public List<ProduitExport> getListProduit() {
         List<ProduitExport> listProduitExport = new ArrayList<ProduitExport>();

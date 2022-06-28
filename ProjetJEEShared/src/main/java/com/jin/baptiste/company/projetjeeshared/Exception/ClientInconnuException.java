@@ -11,6 +11,9 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  */
 public class ClientInconnuException extends Exception{
 
+    /**
+     *
+     */
     public ClientInconnuException() {
         super("Aucun client trouvé dans le site.");
     }

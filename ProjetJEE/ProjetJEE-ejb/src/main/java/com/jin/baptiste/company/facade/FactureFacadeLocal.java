@@ -5,7 +5,6 @@
  */
 package com.jin.baptiste.company.facade;
 
-import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Facture;
 import java.util.List;
 import javax.ejb.Local;
@@ -17,20 +16,55 @@ import javax.ejb.Local;
 @Local
 public interface FactureFacadeLocal {
 
+    /**
+     *
+     * @param facture
+     */
     void create(Facture facture);
 
+    /**
+     *
+     * @param facture
+     */
     void edit(Facture facture);
 
+    /**
+     *
+     * @param facture
+     */
     void remove(Facture facture);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Facture find(Object id);
 
+    /**
+     *
+     * @return
+     */
     List<Facture> findAll();
 
+    /**
+     *
+     * @param range
+     * @return
+     */
     List<Facture> findRange(int[] range);
 
+    /**
+     *
+     * @return
+     */
     int count();
     
+    /**
+     *
+     * @param email
+     * @return
+     */
     List<Facture> findbyEmail(String email);
     
 }

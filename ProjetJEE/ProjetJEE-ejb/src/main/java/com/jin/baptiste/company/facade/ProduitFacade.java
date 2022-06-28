@@ -6,11 +6,6 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Produit;
-import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
-import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
-import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -25,11 +20,18 @@ public class ProduitFacade extends AbstractFacade<Produit> implements ProduitFac
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     *
+     */
     public ProduitFacade() {
         super(Produit.class);
     }

@@ -6,8 +6,6 @@
 package com.jin.baptiste.company.facade;
 
 import com.jin.baptiste.company.entities.Panier;
-import com.jin.baptiste.company.entities.Produit;
-import java.util.Collection;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,13 +24,18 @@ public class PanierFacade extends AbstractFacade<Panier> implements PanierFacade
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
     
-    
-
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     *
+     */
     public PanierFacade() {
         super(Panier.class);
     }

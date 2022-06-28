@@ -22,12 +22,53 @@ import javax.ejb.Remote;
 @Remote
 public interface ExpoLrdRemote {
     
+    /**
+     *
+     * @param solde
+     * @param mail
+     * @throws EmptyFieldException
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     * @throws ClientCompteAlreadyLinkedException
+     */
     public void creerCompte(Double solde, String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException;
+
+    /**
+     *
+     * @param id
+     * @param somme
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     */
     public void crediter(Long id, Double somme) throws CompteInconnuException, CompteSommeNegaException;
+
+    /**
+     *
+     * @param id
+     * @param somme
+     * @throws CompteSoldeNegaException
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     */
     public void debiter(Long id, Double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException;
+
+    /**
+     *
+     * @param idCompte
+     * @return
+     * @throws CompteInconnuException
+     */
     public Position getCompte(Long idCompte) throws CompteInconnuException;
     //Get Client??
     // by mail ou by idClient??
+
+    /**
+     *
+     * @param mail
+     * @return
+     * @throws FormatInvalideException
+     * @throws CompteInconnuException
+     */
     public Position getCompteByMail(String mail) throws FormatInvalideException, CompteInconnuException;
     
 }

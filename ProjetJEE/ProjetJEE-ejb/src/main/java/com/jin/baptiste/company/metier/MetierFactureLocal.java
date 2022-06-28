@@ -17,7 +17,16 @@ import javax.ejb.Local;
 @Local
 public interface MetierFactureLocal {
     
-    
+    /**
+     *
+     * @param p
+     */
     public void CreerFacture(Panier p);
+
+    /**
+     *
+     * @param mail
+     * @return
+     */
     public List<Facture> getFactureByClient(String mail);
 }

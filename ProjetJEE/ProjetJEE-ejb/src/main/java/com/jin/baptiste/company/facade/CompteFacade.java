@@ -5,10 +5,7 @@
  */
 package com.jin.baptiste.company.facade;
 
-import com.jin.baptiste.company.entities.Client;
 import com.jin.baptiste.company.entities.Compte;
-import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
-import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,11 +25,18 @@ public class CompteFacade extends AbstractFacade<Compte> implements CompteFacade
     @PersistenceContext(unitName = "com.jin.baptiste.company_ProjetJEE-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
+    /**
+     *
+     */
     public CompteFacade() {
         super(Compte.class);
     }

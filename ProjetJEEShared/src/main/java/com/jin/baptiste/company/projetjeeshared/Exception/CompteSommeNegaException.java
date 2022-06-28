@@ -11,6 +11,9 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  */
 public class CompteSommeNegaException extends Exception{
 
+    /**
+     *
+     */
     public CompteSommeNegaException() {
         super("La somme est négative.");
     }

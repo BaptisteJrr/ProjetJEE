@@ -19,33 +19,62 @@ public class Position implements Serializable{
     private Date date;
     private Long idCompte;
 
+    /**
+     *
+     * @param solde
+     * @param date
+     * @param idCompte
+     */
     public Position(double solde, Date date, Long idCompte) {
         this.solde = solde;
         this.date = date;
         this.idCompte = idCompte;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getIdCompte() {
         return idCompte;
     }
 
+    /**
+     *
+     * @param idCompte
+     */
     public void setIdCompte(Long idCompte) {
         this.idCompte = idCompte;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public double getSolde() {
         return solde;
     }
 
+    /**
+     *
+     * @param solde
+     */
     public void setSolde(double solde) {
         this.solde = solde;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getDate() {
         return date;
     }
 
+    /**
+     *
+     * @param date
+     */
     public void setDate(Date date) {
         this.date = date;
     }

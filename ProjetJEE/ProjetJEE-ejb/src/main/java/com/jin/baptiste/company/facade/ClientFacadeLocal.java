@@ -16,19 +16,54 @@ import javax.ejb.Local;
 @Local
 public interface ClientFacadeLocal {
 
+    /**
+     *
+     * @param client
+     */
     void create(Client client);
 
+    /**
+     *
+     * @param client
+     */
     void edit(Client client);
 
+    /**
+     *
+     * @param client
+     */
     void remove(Client client);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Client find(Object id);
 
+    /**
+     *
+     * @return
+     */
     List<Client> findAll();
 
+    /**
+     *
+     * @param range
+     * @return
+     */
     List<Client> findRange(int[] range);
 
+    /**
+     *
+     * @return
+     */
     int count();
     
+    /**
+     *
+     * @param email
+     * @return
+     */
     Client findbyEmail(String email);
 }

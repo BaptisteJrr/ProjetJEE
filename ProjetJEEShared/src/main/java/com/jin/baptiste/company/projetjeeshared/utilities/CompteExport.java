@@ -18,6 +18,13 @@ public class CompteExport implements Serializable{
     private long idClient;   
     private Collection<Long> listeIdPanier;
 
+    /**
+     *
+     * @param id
+     * @param solde
+     * @param idClient
+     * @param listeIdPanier
+     */
     public CompteExport(Long id, double solde, long idClient, Collection<Long> listeIdPanier) {
         this.id = id;
         this.solde = solde;
@@ -25,34 +32,66 @@ public class CompteExport implements Serializable{
         this.listeIdPanier = listeIdPanier;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getSolde() {
         return solde;
     }
 
+    /**
+     *
+     * @param solde
+     */
     public void setSolde(double solde) {
         this.solde = solde;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdClient() {
         return idClient;
     }
 
+    /**
+     *
+     * @param idClient
+     */
     public void setIdClient(long idClient) {
         this.idClient = idClient;
     }
 
+    /**
+     *
+     * @return
+     */
     public Collection<Long> getListeIdPanier() {
         return listeIdPanier;
     }
 
+    /**
+     *
+     * @param listeIdPanier
+     */
     public void setListeIdPanier(Collection<Long> listeIdPanier) {
         this.listeIdPanier = listeIdPanier;
     }

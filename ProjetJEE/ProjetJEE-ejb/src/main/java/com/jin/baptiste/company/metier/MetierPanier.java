@@ -27,7 +27,6 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
-import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -35,8 +34,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -71,15 +68,19 @@ public class MetierPanier implements MetierPanierLocal {
     @EJB
     private PanierFacadeLocal panierFacade;
     
-    
-    
-    
-    
-    
-    
-    
-    
-
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws CompteSoldeNegaException
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     * @throws PanierNoAccountLinkedToClientException
+     * @throws PanierEmptyException
+     * @throws ProduitInconnuException
+     * @throws ProduitStockInsuffisantException
+     * @throws ProduitQuantiteNegativeException
+     */
     @Override
     //penser à réduire le stock
     public void payer(long idPanier) throws PanierInconnuException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, PanierEmptyException, ProduitInconnuException, ProduitStockInsuffisantException, ProduitQuantiteNegativeException {
@@ -120,7 +121,6 @@ public class MetierPanier implements MetierPanierLocal {
                                 throw ex;
                             } catch (ProduitQuantiteNegativeException ex1) {
                                 throw ex1;
-                                //Logger.getLogger(MetierPanier.class.getName()).log(Level.SEVERE, null, ex1);
                             } catch (FormatInvalideException ex1) {
                             }
                         }
@@ -142,6 +142,12 @@ public class MetierPanier implements MetierPanierLocal {
         
     }
 
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierNonPayeException
+     */
     @Override
     public void livrer(long idPanier) throws PanierInconnuException, PanierNonPayeException {
         Panier p = this.panierFacade.find(idPanier);
@@ -160,16 +166,16 @@ public class MetierPanier implements MetierPanierLocal {
         
     }
 
-    /*@Override
-    public void ajouterProduit(long idProduit, long idPanier) {
-        Panier p = this.panierFacade.find(idPanier);
-        Produit pro = this.produitFacade.find(idProduit);
-        Collection<Produit> liste = p.getListeProduit();
-        liste.add(pro);
-        p.setListeProduit(liste);
-        this.panierFacade.edit(p);
-    }
-*/
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
+
     @Override
     public void retirerProduit(long idProduit, long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         Panier p = this.panierFacade.find(idPanier);
@@ -203,6 +209,15 @@ public class MetierPanier implements MetierPanierLocal {
         this.panierFacade.edit(p);
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     */
     @Override
     public void retirerAllProduit(long idProduit, long idPanier) throws PanierAlreadyPayeException, PanierAlreadyLivreException, PanierInconnuException, ProduitInconnuException {
         Panier p = this.panierFacade.find(idPanier);
@@ -233,6 +248,13 @@ public class MetierPanier implements MetierPanierLocal {
         
     }
 
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
     @Override
     public void supprimerPanier(long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException {
         Panier p = this.panierFacade.find(idPanier);
@@ -248,7 +270,12 @@ public class MetierPanier implements MetierPanierLocal {
         this.panierFacade.remove(p);
     }
 
-
+    /**
+     *
+     * @param idPanier
+     * @return
+     * @throws PanierInconnuException
+     */
     @Override
     public Panier getPanier(long idPanier) throws PanierInconnuException {
         Panier p = this.panierFacade.find(idPanier);
@@ -257,22 +284,11 @@ public class MetierPanier implements MetierPanierLocal {
         }
         return p;
     }
-/*
-    @Override
-    public List getPanier() {
-        return this.panierFacade.findAll();
-    }*/
-
-//    @Override
-//    public List<Panier> getPanierNonPaye() {
-//        List<Panier> lNP = null;
-//        for (Panier p : this.panierFacade.findAll()){
-//            if (!p.isFlagRegle()){
-//                lNP.add(p);
-//            }
-//        }
-//        return lNP;
-//    }
+    
+    /**
+     *
+     * @return
+     */
 
     @Override
     public List<Panier> getPanierPaye() {
@@ -285,6 +301,10 @@ public class MetierPanier implements MetierPanierLocal {
         return lP;    
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Panier> getPanierNonLivre() {
         List<Panier> lNL = new ArrayList<Panier>(); 
@@ -297,6 +317,10 @@ public class MetierPanier implements MetierPanierLocal {
         return lNL; 
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Panier> getPanierLivre() {
         List<Panier> lL = new ArrayList<Panier>();
@@ -308,6 +332,13 @@ public class MetierPanier implements MetierPanierLocal {
         return lL; 
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param idClient
+     * @throws ClientInconnuException
+     * @throws ProduitInconnuException
+     */
     @Override
     public void ajouterProduitByClient(long idProduit, Long idClient) throws ClientInconnuException, ProduitInconnuException {
         Client clt;
@@ -391,6 +422,12 @@ public class MetierPanier implements MetierPanierLocal {
         }
     }
 
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
     @Override
     public Panier getPanierActif(Long idClient) throws ClientInconnuException {
         Client clt = this.clientFacade.find(idClient);
@@ -408,16 +445,12 @@ public class MetierPanier implements MetierPanierLocal {
         return null;
     }
 
-//    @Override
-//    public Collection<Panier> getAllPanierbyClient(Long idClient) throws ClientInconnuException {
-//        Client clt = this.clientFacade.find(idClient);
-//        if(clt != null){
-//            return clt.getListePanier();
-//            
-//        }else{
-//            throw new ClientInconnuException();
-//        }    
-//    }
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
 
     @Override
     public List<Panier> getPanierNonLivreByClient(long idClient) throws ClientInconnuException {

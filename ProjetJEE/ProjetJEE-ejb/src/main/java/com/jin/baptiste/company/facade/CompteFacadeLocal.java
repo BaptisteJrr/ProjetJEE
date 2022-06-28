@@ -16,17 +16,47 @@ import javax.ejb.Local;
 @Local
 public interface CompteFacadeLocal {
 
+    /**
+     *
+     * @param compte
+     */
     void create(Compte compte);
 
+    /**
+     *
+     * @param compte
+     */
     void edit(Compte compte);
 
+    /**
+     *
+     * @param compte
+     */
     void remove(Compte compte);
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     Compte find(Object id);
 
+    /**
+     *
+     * @return
+     */
     List<Compte> findAll();
 
+    /**
+     *
+     * @param range
+     * @return
+     */
     List<Compte> findRange(int[] range);
 
+    /**
+     *
+     * @return
+     */
     int count();        
 }

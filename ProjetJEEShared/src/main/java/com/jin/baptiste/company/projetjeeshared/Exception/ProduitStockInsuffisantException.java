@@ -11,10 +11,17 @@ package com.jin.baptiste.company.projetjeeshared.Exception;
  */
 public class ProduitStockInsuffisantException extends Exception{
 
+    /**
+     *
+     */
     public ProduitStockInsuffisantException() {
         super("Stock non suffisant");
     }
 
+    /**
+     *
+     * @param message
+     */
     public ProduitStockInsuffisantException(String message) {
         super(message);
     }

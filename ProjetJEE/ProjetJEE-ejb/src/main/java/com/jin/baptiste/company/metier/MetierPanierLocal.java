@@ -19,8 +19,6 @@ import com.jin.baptiste.company.projetjeeshared.Exception.PanierNonPayeException
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
-import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -31,30 +29,116 @@ import javax.ejb.Local;
 @Local
 public interface MetierPanierLocal {
     
-        public void payer(long idPanier) throws PanierInconnuException,PanierEmptyException,CompteSoldeNegaException,CompteInconnuException,CompteSommeNegaException,PanierNoAccountLinkedToClientException,ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException ;
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierEmptyException
+     * @throws CompteSoldeNegaException
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     * @throws PanierNoAccountLinkedToClientException
+     * @throws ProduitInconnuException
+     * @throws ProduitQuantiteNegativeException
+     * @throws ProduitStockInsuffisantException
+     */
+    public void payer(long idPanier) throws PanierInconnuException,PanierEmptyException,CompteSoldeNegaException,CompteInconnuException,CompteSommeNegaException,PanierNoAccountLinkedToClientException,ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException ;
         
-        public void livrer(long idPanier) throws PanierNonPayeException, PanierInconnuException;
+    /**
+     *
+     * @param idPanier
+     * @throws PanierNonPayeException
+     * @throws PanierInconnuException
+     */
+    public void livrer(long idPanier) throws PanierNonPayeException, PanierInconnuException;
         
         //public void ajouterProduit(long idProduit,long idPanier);
+
+    /**
+     *
+     * @param idProduit
+     * @param idClient
+     * @throws ClientInconnuException
+     * @throws ProduitInconnuException
+     */
         public void ajouterProduitByClient(long idProduit, Long idClient)throws ClientInconnuException, ProduitInconnuException;
-        public void retirerProduit(long idProduit, long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException,PanierAlreadyLivreException;
+
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
+    public void retirerProduit(long idProduit, long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException,PanierAlreadyLivreException;
     
-        public void retirerAllProduit(long idProduit, long idPanier)throws PanierInconnuException,ProduitInconnuException, PanierAlreadyLivreException, PanierAlreadyPayeException;
+    /**
+     *
+     * @param idProduit
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws ProduitInconnuException
+     * @throws PanierAlreadyLivreException
+     * @throws PanierAlreadyPayeException
+     */
+    public void retirerAllProduit(long idProduit, long idPanier)throws PanierInconnuException,ProduitInconnuException, PanierAlreadyLivreException, PanierAlreadyPayeException;
         
-        public void supprimerPanier(long idPanier)throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException;
+    /**
+     *
+     * @param idPanier
+     * @throws PanierInconnuException
+     * @throws PanierAlreadyPayeException
+     * @throws PanierAlreadyLivreException
+     */
+    public void supprimerPanier(long idPanier)throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException;
         
-        public Panier getPanier(long idPanier) throws PanierInconnuException;
+    /**
+     *
+     * @param idPanier
+     * @return
+     * @throws PanierInconnuException
+     */
+    public Panier getPanier(long idPanier) throws PanierInconnuException;
         
         //public List<Panier> getPanier();    
 //        public List<Panier> getPanierNonPaye();       
+
+    /**
+     *
+     * @return
+     */
         public List<Panier> getPanierPaye();
         //suivre la livraison par client?   public List<Panier> getPanierNonLivreByClient(long idClient);
+
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
         public List<Panier> getPanierNonLivreByClient(long idClient) throws ClientInconnuException;
-        public List<Panier> getPanierNonLivre();
-        public List<Panier> getPanierLivre();
-        public Panier getPanierActif(Long idClient) throws ClientInconnuException;
-        
-//        public Collection<Panier> getAllPanierbyClient(Long idClient)throws ClientInconnuException;
+
+    /**
+     *
+     * @return
+     */
+    public List<Panier> getPanierNonLivre();
+
+    /**
+     *
+     * @return
+     */
+    public List<Panier> getPanierLivre();
+
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
+    public Panier getPanierActif(Long idClient) throws ClientInconnuException;
         
 
 }

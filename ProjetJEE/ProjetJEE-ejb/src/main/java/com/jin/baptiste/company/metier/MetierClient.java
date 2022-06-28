@@ -6,14 +6,12 @@
 package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Client;
-import com.jin.baptiste.company.entities.Panier;
 import com.jin.baptiste.company.facade.ClientFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientAlreadyExistException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientCompteAlreadyLinkedException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ClientInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.FormatInvalideException;
-import java.util.List;
 import java.util.regex.Pattern;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -31,9 +29,18 @@ public class MetierClient implements MetierClientLocal {
     @EJB
     private ClientFacadeLocal clientFacade;
     
-    
-    
-
+    /**
+     *
+     * @param nom
+     * @param prenom
+     * @param email
+     * @param adresse
+     * @throws FormatInvalideException
+     * @throws EmptyFieldException
+     * @throws ClientAlreadyExistException
+     * @throws ClientCompteAlreadyLinkedException
+     * @throws ClientInconnuException
+     */
     @Override
     public void creerClient(String nom, String prenom, String email, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientCompteAlreadyLinkedException, ClientInconnuException {
         
@@ -61,6 +68,12 @@ public class MetierClient implements MetierClientLocal {
         }
     }
 
+    /**
+     *
+     * @param idClient
+     * @return
+     * @throws ClientInconnuException
+     */
     @Override
     public Client getClient(long idClient) throws ClientInconnuException {
         Client clt = this.clientFacade.find(idClient);
@@ -70,7 +83,12 @@ public class MetierClient implements MetierClientLocal {
         return clt;
     }  
 
-
+    /**
+     *
+     * @param email
+     * @return
+     * @throws FormatInvalideException
+     */
     @Override
     public boolean authentification(String email) throws FormatInvalideException {
         
@@ -83,28 +101,16 @@ public class MetierClient implements MetierClientLocal {
         }else{
             return true;
         }
-        /*List<Client> findAllClient = this.clientFacade.findAll();
-        boolean auth = false;
-        for(Client c : findAllClient){       
-            if (c.getEmail().equals(email))
-                auth = true;
-        }
-        return auth;*/
     }
 
-    /*@Override
-    public void ajouterPanier(Panier panier, long idClient) throws ClientInconnuException {
-        Client clt = this.clientFacade.find(idClient);
-        if(clt == null){
-            throw new ClientInconnuException();
-        }
-        if(panier == null){
-            
-        }
-        clt.getListePanier().add(panier);
-    }
-    */
-    //Error a traiter
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     */
     @Override
     public Client getClientparMail(String email) throws FormatInvalideException, ClientInconnuException {
         //Verifier le formal du Mail xxx@yyy.zz

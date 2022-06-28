@@ -5,10 +5,8 @@
  */
 package com.jin.baptiste.company.projetjeecltlrd;
 
-import com.jin.baptiste.company.exception.CompteClotureException;
-import com.jin.baptiste.company.exception.CompteInconnuException;
-import com.jin.baptiste.company.exception.SoldeInsufisantException;
 import com.jin.baptiste.company.exposition.ExpoLrdRemote;
+import com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSoldeNegaException;
 import com.jin.baptiste.company.projetjeeshared.Exception.CompteSommeNegaException;
 import com.jin.baptiste.company.projetjeeshared.utilities.Position;
@@ -35,7 +33,7 @@ public class DABCLI {
         this.services = services;
     }
 
-    public void run() throws com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSoldeNegaException, CompteSommeNegaException {
+    public void run(){
         int choix = -1;
         do {
             this.authentifier();
@@ -61,9 +59,6 @@ public class DABCLI {
                         default:
                             System.out.println("Erreur de choix");
                     }
-                } catch(CompteInconnuException ex){
-                    System.out.println("Votre compte est inconnu.");
-                    choix = 0;
                 } catch (EJBException ex) {
                     System.out.println("Erreur non gérée (" + ex.getClass().getName() + " : " + ex.getMessage() + ")");
                     Throwable cause = ex.getCause();
@@ -94,36 +89,44 @@ public class DABCLI {
         return CLIUtils.yesNoQuestion(scanner, "Souhaitez-vous effectuer une autre operation (y|n) ?") ? 1 : 0;
     }
 
-    private void consulterCompte() throws CompteInconnuException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException{
+    private void consulterCompte(){
         CLIUtils.afficherTitreSection("Consultation de solde");
-//        try {
-            Position p = this.services.getCompte(this.idCompte);
+        Position p;
+        try {
+            p = this.services.getCompte(this.idCompte);
             System.out.println("Solde le " + this.dateFormat.format(p.getDate().getTime()) + " : " + this.soldeFormat.format(p.getSolde()) + ".");
-//        } catch (CompteClotureException ex) {
-//            System.out.println("Le compte est clôturé.");
-//        }
+        } catch (CompteInconnuException ex) {
+            System.out.println("Le compte n'a pas été trouvé");
+        }
+        
     }
 
-    private void debiterCompte() throws CompteInconnuException, CompteSoldeNegaException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSommeNegaException{
-        CLIUtils.afficherTitreSection("Opération de Debit");
-        final double montant = CLIUtils.saisirDouble(scanner, "Montant à débiter : ", 0, Double.POSITIVE_INFINITY);
-//        try {
+    private void debiterCompte(){
+        try {
+            CLIUtils.afficherTitreSection("Opération de Debit");
+            final double montant = CLIUtils.saisirDouble(scanner, "Montant à débiter : ", 0, Double.POSITIVE_INFINITY);
             this.services.debiter(idCompte, montant);
             System.out.println("Compte " + idCompte + " a été débité de " + this.soldeFormat.format(montant) + ".");
-//        } catch (CompteClotureException | MontantInvalidException | SoldeInsufisantException ex) {
-//            System.out.println("Erreur : " + ex.getMessage());
-//        }
+        } catch (CompteSoldeNegaException ex) {
+            System.out.println("Le solde du compte après débit est négatif. Débit annulé");
+        } catch (CompteInconnuException ex) {
+            System.out.println("Le compte n'a pas été trouvé");
+        } catch (CompteSommeNegaException ex) {
+            System.out.println("Erreur: la somme entrée est négative");
+        }
     }
 
-    private void crediterCompte() throws CompteInconnuException, com.jin.baptiste.company.projetjeeshared.Exception.CompteInconnuException, CompteSommeNegaException{
-        CLIUtils.afficherTitreSection("Opération de Crédit");
-        final double montant = CLIUtils.saisirDouble(scanner, "Montant à créditer : ", 0, Double.POSITIVE_INFINITY);
-//        try {
+    private void crediterCompte() {
+        try {
+            CLIUtils.afficherTitreSection("Opération de Crédit");
+            final double montant = CLIUtils.saisirDouble(scanner, "Montant à créditer : ", 0, Double.POSITIVE_INFINITY);
             this.services.crediter(idCompte, montant);
             System.out.println("Compte " + idCompte + " a été crédité de " + this.soldeFormat.format(montant) + ".");
-//        } catch (CompteClotureException | MontantInvalidException ex) {
-//            System.out.println("Erreur : " + ex.getMessage());
-//        }
+        } catch (CompteInconnuException ex) {
+            System.out.println("Le compte n'a pas été trouvé");
+        } catch (CompteSommeNegaException ex) {
+            System.out.println("Erreur: la somme entrée est négative");
+        }
     }
 
     private void quitter() {

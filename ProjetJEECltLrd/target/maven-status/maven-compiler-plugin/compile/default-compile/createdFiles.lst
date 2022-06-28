@@ -4,3 +4,5 @@ com\jin\baptiste\company\exception\SoldeInsufisantException.class
 com\jin\baptiste\company\projetjeecltlrd\RMIDABServiceManager.class
 com\jin\baptiste\company\exception\CompteInconnuException.class
 com\jin\baptiste\company\exception\MontantInvalidException.class
+com\jin\baptiste\company\projetjeecltlrd\DABCLI.class
+com\jin\baptiste\company\projetjeecltlrd\Main.class

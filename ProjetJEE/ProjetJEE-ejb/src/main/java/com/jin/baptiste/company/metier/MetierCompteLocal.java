@@ -23,16 +23,57 @@ import javax.ejb.Local;
 @Local
 public interface MetierCompteLocal {
     
+    /**
+     *
+     * @param solde
+     * @param email
+     * @throws EmptyFieldException
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     * @throws ClientCompteAlreadyLinkedException
+     */
     public void creerCompte (double solde, String email) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException ;
     // au choix entre les deux
+
+    /**
+     *
+     * @param idCompte
+     * @return
+     * @throws CompteInconnuException
+     */
     public Compte getComptebyidCompte(long idCompte) throws CompteInconnuException;
     
 //    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException;
+
+    /**
+     *
+     * @param idCompte
+     * @param somme
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     */
     
     public void crediter(long idCompte, double somme) throws CompteInconnuException, CompteSommeNegaException;
     // throws CompteSoldeNegaException
+
+    /**
+     *
+     * @param idCompte
+     * @param somme
+     * @throws CompteSoldeNegaException
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     */
     public void debiter(long idCompte, double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException;
     
     //Pour ClientLrd
+
+    /**
+     *
+     * @param mail
+     * @return
+     * @throws FormatInvalideException
+     * @throws CompteInconnuException
+     */
     public Compte getComptebyMail(String mail)throws FormatInvalideException, CompteInconnuException;
 }

@@ -7,18 +7,14 @@ package com.jin.baptiste.company.metier;
 
 import com.jin.baptiste.company.entities.Produit;
 import com.jin.baptiste.company.projetjeeshared.utilities.TypeProduitEnum;
-import com.jin.baptiste.company.facade.ProduitFacade;
 import com.jin.baptiste.company.facade.ProduitFacadeLocal;
 import com.jin.baptiste.company.projetjeeshared.Exception.EmptyFieldException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitInconnuException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitPrixNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitQuantiteNegativeException;
 import com.jin.baptiste.company.projetjeeshared.Exception.ProduitStockInsuffisantException;
-import com.jin.baptiste.company.projetjeeshared.utilities.ProduitExport;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -32,9 +28,15 @@ public class MetierProduit implements MetierProduitLocal {
     @EJB
     private ProduitFacadeLocal produitFacade;
     
-
-    
-    
+    /**
+     *
+     * @param idProduit
+     * @param nom
+     * @param description
+     * @param prixHT
+     * @param type
+     * @throws ProduitInconnuException
+     */
     @Override
     public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type) throws ProduitInconnuException {
         Produit p = this.produitFacade.find(idProduit);
@@ -54,6 +56,14 @@ public class MetierProduit implements MetierProduitLocal {
         this.produitFacade.edit(p);
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param quantite
+     * @throws ProduitInconnuException
+     * @throws ProduitStockInsuffisantException
+     * @throws ProduitQuantiteNegativeException
+     */
     @Override
     public void vendreProduit(long idProduit, int quantite) throws ProduitInconnuException, ProduitStockInsuffisantException, ProduitQuantiteNegativeException { // Ajouter exception
         Produit p = this.produitFacade.find(idProduit);
@@ -72,6 +82,13 @@ public class MetierProduit implements MetierProduitLocal {
         
     }
 
+    /**
+     *
+     * @param idProduit
+     * @param quantite
+     * @throws ProduitInconnuException
+     * @throws ProduitQuantiteNegativeException
+     */
     @Override
     public void stockerProduit(long idProduit, int quantite) throws ProduitInconnuException, ProduitQuantiteNegativeException {
         Produit p = this.produitFacade.find(idProduit);
@@ -87,9 +104,10 @@ public class MetierProduit implements MetierProduitLocal {
         
             
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    /**
+     *
+     * @param idProduit
+     */
 
     @Override
     public void supprimerProduit(long idProduit) {
@@ -97,6 +115,17 @@ public class MetierProduit implements MetierProduitLocal {
         this.produitFacade.remove(p);
     }
 
+    /**
+     *
+     * @param nom
+     * @param description
+     * @param prixHT
+     * @param type
+     * @param stock
+     * @throws EmptyFieldException
+     * @throws ProduitPrixNegativeException
+     * @throws ProduitQuantiteNegativeException
+     */
     @Override
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) throws EmptyFieldException, ProduitPrixNegativeException, ProduitQuantiteNegativeException {        
         Produit p = new Produit();
@@ -117,23 +146,26 @@ public class MetierProduit implements MetierProduitLocal {
         this.produitFacade.create(p);
     }
 
+    /**
+     *
+     * @param idProduit
+     * @return
+     * @throws ProduitInconnuException
+     */
     @Override
     public Produit getProduit(Long idProduit) throws ProduitInconnuException {
         Produit p = this.produitFacade.find(idProduit);
         if(p == null){
             throw new ProduitInconnuException();
         }
-//        List<Long> listeIdPanier = null;
-//        List<Panier> listePanier = p.getListePanier();
-//        for(Panier pan : listePanier){
-//              listeIdPanier.add(pan.getId());
-//        }
-//        ProduitExport pe = new ProduitExport(p.getId(), p.getNom(),p.getType().toString(), p.getPrixHT(),p.getDescription(), p.getStock(), listeIdPanier );
-//        return pe;
           return p;
         
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<TypeProduitEnum> getAllType() {
         List<TypeProduitEnum> listType = new ArrayList<TypeProduitEnum>();
@@ -142,6 +174,11 @@ public class MetierProduit implements MetierProduitLocal {
         return listType;
     }
 
+    /**
+     *
+     * @param type
+     * @return
+     */
     @Override
     public List<Produit> getProduitByType(TypeProduitEnum type) {
         List<Produit> listeProduitRes = new ArrayList<Produit>();
@@ -154,6 +191,11 @@ public class MetierProduit implements MetierProduitLocal {
         return listeProduitRes;
     }
 
+    /**
+     *
+     * @param nom
+     * @return
+     */
     @Override
     public List<Produit> searchProduitByName(String nom) {
         List<Produit> listeProduitRes = new ArrayList<Produit>();
@@ -166,6 +208,10 @@ public class MetierProduit implements MetierProduitLocal {
         return listeProduitRes;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<Produit> getAllProduit() {
         return this.produitFacade.findAll();

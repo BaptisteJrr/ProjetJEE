@@ -36,75 +36,144 @@ public class Produit implements Serializable {
     @ManyToMany(mappedBy = "listeProduit")
     private List<Panier> listePanier;
 
+    /**
+     *
+     */
     public Produit() {
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Panier> getListePanier() {
         return listePanier;
     }
 
+    /**
+     *
+     * @param listePanier
+     */
     public void setListePanier(List<Panier> listePanier) {
         this.listePanier = listePanier;
     }
     
-    
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public TypeProduitEnum getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(TypeProduitEnum type) {
         this.type = type;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrixHT() {
         return prixHT;
     }
 
+    /**
+     *
+     * @param prixHT
+     */
     public void setPrixHT(double prixHT) {
         this.prixHT = prixHT;
     }
 
+    /**
+     *
+     * @return
+     */
     public Panier getPanier() {
         return panier;
     }
 
+    /**
+     *
+     * @param panier
+     */
     public void setPanier(Panier panier) {
         this.panier = panier;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStock() {
         return stock;
     }
 
+    /**
+     *
+     * @param stock
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int hashCode() {
         int hash = 0;
@@ -112,6 +181,11 @@ public class Produit implements Serializable {
         return hash;
     }
 
+    /**
+     *
+     * @param object
+     * @return
+     */
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
@@ -125,6 +199,10 @@ public class Produit implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String toString() {
         return "Produit{" + "id=" + id + ", nom=" + nom + ", type=" + type + ", prixHT=" + prixHT + ", panier=" + panier + ", description=" + description + ", stock=" + stock + '}';

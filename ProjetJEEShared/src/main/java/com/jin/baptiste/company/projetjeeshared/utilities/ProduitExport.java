@@ -6,7 +6,6 @@
 package com.jin.baptiste.company.projetjeeshared.utilities;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  *
@@ -21,6 +20,15 @@ public class ProduitExport implements Serializable{
     private int stock;
     //private List<Long> listIdPaniers;
 
+    /**
+     *
+     * @param id
+     * @param nom
+     * @param type
+     * @param prixHT
+     * @param description
+     * @param stock
+     */
     public ProduitExport(Long id, String nom, String type, double prixHT, String description, int stock) {
         this.id = id;
         this.nom = nom;
@@ -31,62 +39,102 @@ public class ProduitExport implements Serializable{
        // this.listIdPaniers = listIdPaniers;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNom() {
         return nom;
     }
 
+    /**
+     *
+     * @param nom
+     */
     public void setNom(String nom) {
         this.nom = nom;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     *
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getPrixHT() {
         return prixHT;
     }
 
+    /**
+     *
+     * @param prixHT
+     */
     public void setPrixHT(double prixHT) {
         this.prixHT = prixHT;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getStock() {
         return stock;
     }
 
+    /**
+     *
+     * @param stock
+     */
     public void setStock(int stock) {
         this.stock = stock;
     }
 
-    /*public List<Long> getListIdPaniers() {
-        return listIdPaniers;
-    }
-
-    public void setListIdPaniers(List<Long> listIdPaniers) {
-        this.listIdPaniers = listIdPaniers;
-    }*/
     
     
 }

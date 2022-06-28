@@ -10,9 +10,25 @@ package com.jin.baptiste.company.projetjeeshared.utilities;
  * @author LeNonGrillePain
  */
 public enum TypeProduitEnum {
+
+    /**
+     *
+     */
     Livre,
+
+    /**
+     *
+     */
     Vetements,
+
+    /**
+     *
+     */
     Activite,
+
+    /**
+     *
+     */
     Technologie
     
 }

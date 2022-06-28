@@ -37,6 +37,11 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 
+    /**
+     *
+     * @param idPanier
+     */
+
     @Override
     public void livrerPanier(Long idPanier) {
         try {
@@ -49,6 +54,11 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     }   
 
     //on doit faire une algotithemique pour lister les panier avec leur adresse ou code postal asc ou decs 
+
+    /**
+     *
+     * @return
+     */
     @Override
     public List<PanierExport> getListPanierNonLivre() {
         //une list export?
@@ -93,6 +103,10 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
         
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public List<PanierExport> getListPanierLivre() {
         List<Panier> listePanier = this.metierPanier.getPanierLivre();

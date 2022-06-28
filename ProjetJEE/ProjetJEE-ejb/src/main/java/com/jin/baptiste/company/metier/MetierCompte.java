@@ -35,7 +35,15 @@ public class MetierCompte implements MetierCompteLocal {
     @EJB
     private CompteFacadeLocal compteFacade;
     
-  
+    /**
+     *
+     * @param solde
+     * @param email
+     * @throws EmptyFieldException
+     * @throws FormatInvalideException
+     * @throws ClientInconnuException
+     * @throws ClientCompteAlreadyLinkedException
+     */
     @Override
     public void creerCompte(double solde, String email) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException{
         //Verification email existe dans la BD  
@@ -67,32 +75,15 @@ public class MetierCompte implements MetierCompteLocal {
                 this.compteFacade.create(cpt);
             }
         }
-        /*boolean auth = false;
-        boolean compteFlg = false;
-        for(Client c : findAllClient){       
-            if (c.getEmail().equals(email)){
-                auth = true;
-                // Client a pas de Compte
-                if (c.getCompte()!= null) {
-                    compteFlg = true;
-                } 
-            }
-        }
-        if (auth && !compteFlg) {
-             Compte cpt = new Compte();      
-             cpt.setSolde(solde);
-             Client clt = this.clientFacade.findbyEmail(email);
-             cpt.setClient(clt);
-             clt.setCompte(cpt);
-             this.compteFacade.create(cpt); 
-        } else {
-            if (!auth)
-                System.out.println("Client non existe");
-            if (compteFlg)
-                System.out.println("Client a déjà un compte");
-        }*/
     }
 
+    /**
+     *
+     * @param idCompte
+     * @param somme
+     * @throws CompteInconnuException
+     * @throws CompteSommeNegaException
+     */
     @Override
     public void crediter(long idCompte, double somme) throws CompteInconnuException, CompteSommeNegaException {
         Compte cpt = this.compteFacade.find(idCompte);
@@ -110,6 +101,14 @@ public class MetierCompte implements MetierCompteLocal {
         
     }
 
+    /**
+     *
+     * @param idCompte
+     * @param somme
+     * @throws CompteInconnuException
+     * @throws CompteSoldeNegaException
+     * @throws CompteSommeNegaException
+     */
     @Override
     public void debiter(long idCompte, double somme) throws CompteInconnuException, CompteSoldeNegaException, CompteSommeNegaException {
         Compte cpt = this.compteFacade.find(idCompte);
@@ -130,8 +129,12 @@ public class MetierCompte implements MetierCompteLocal {
         
     }
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
+    /**
+     *
+     * @param idCompte
+     * @return
+     * @throws CompteInconnuException
+     */
 
     @Override
     public Compte getComptebyidCompte(long idCompte) throws CompteInconnuException {        
@@ -143,19 +146,13 @@ public class MetierCompte implements MetierCompteLocal {
         return cpt;
     }
 
-//    @Override
-//    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException {
-//        Client clt = this.clientFacade.find(idClient);
-//        if(clt == null){
-//            throw new ClientInconnuException();
-//        }
-//        Compte cpt = this.compteFacade.find(clt.getCompte());
-//        if(cpt == null){
-//            throw new CompteInconnuException();
-//        }
-//
-//        return cpt;
-//    }
+    /**
+     *
+     * @param mail
+     * @return
+     * @throws FormatInvalideException
+     * @throws CompteInconnuException
+     */
 
     @Override
     public Compte getComptebyMail(String mail) throws FormatInvalideException, CompteInconnuException {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jin.baptiste.company.test;
+package com.jin.baptiste.company.initialisation;
 
 import com.jin.baptiste.company.metier.MetierClientLocal;
 import com.jin.baptiste.company.metier.MetierCompteLocal;
@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
-import javax.ejb.Stateless;
 
 /**
  *
@@ -47,18 +46,6 @@ public class StartupSingleton implements StartupSingletonLocal {
         } catch (EmptyFieldException ex) {
             Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClientAlreadyExistException ex) {
-            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClientInconnuException ex) {
-            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClientCompteAlreadyLinkedException ex) {
-            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        try {
-            this.metierCompte.creerCompte(0, "compteAtem@atem.fr");
-        } catch (EmptyFieldException ex) {
-            Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FormatInvalideException ex) {
             Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClientInconnuException ex) {
             Logger.getLogger(StartupSingleton.class.getName()).log(Level.SEVERE, null, ex);
