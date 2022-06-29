@@ -31,7 +31,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     private MetierProduitLocal metierProduit;
     
     /**
-     *
+     * Permet de récupérer un produit à partir de son id
      * @param idProduit
      * @return
      * @throws ProduitInconnuException
@@ -45,7 +45,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de rajouter des produits au stock.
      * @param idProduit
      * @param n
      * @throws ProduitInconnuException
@@ -57,7 +57,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de modifier les caractéristiques d'un produit
      * @param idProduit
      * @param nom
      * @param description
@@ -71,7 +71,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de vendre un produit (et de destocker la quantité nécessaire)
      * @param idProduit
      * @param quantite
      * @throws ProduitInconnuException
@@ -85,7 +85,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de supprimer un produit
      * @param idProduit
      */
     @Override
@@ -94,7 +94,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de récupérer l'ensemble des produits
      * @return
      */
     @Override
@@ -112,7 +112,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de trouver tous les produits à partir d'un type
      * @param type
      * @return
      */
@@ -130,7 +130,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de trouver l'ensemble des produits possédant dans leur nom une chaine de caractère
      * @param nom
      * @return
      */
@@ -149,7 +149,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
     }
 
     /**
-     *
+     * Permet de créer un produit (son nom, sa description, son prix, son type et la quantité initiale en stock)
      * @param nom
      * @param description
      * @param prixHT
@@ -165,7 +165,7 @@ public class ExporLegCommerce implements ExporLegCommerceLocal {
 }
 
     /**
-     *
+     * Permet de lister l'ensemble des types existant
      * @return
      */
     @Override

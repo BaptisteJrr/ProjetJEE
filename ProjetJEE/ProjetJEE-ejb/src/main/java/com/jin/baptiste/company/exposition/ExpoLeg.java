@@ -70,11 +70,9 @@ public class ExpoLeg implements ExpoLegLocal {
     
     
     
-    
-    //les autentifications c'est a ce niveau-la a faire pas dans le metier
 
     /**
-     *
+     * Création du client ainsi que son compte
      * @param nom
      * @param prenom
      * @param mail
@@ -93,7 +91,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Création du compte du client
      * @param solde
      * @param mail
      * @throws EmptyFieldException
@@ -110,7 +108,7 @@ public class ExpoLeg implements ExpoLegLocal {
 
 
     /**
-     *
+     * Récupération d'un client à partir de son mail
      * @param mail
      * @return
      * @throws FormatInvalideException
@@ -136,7 +134,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }    
 
     /**
-     *
+     * Récupération des factures d'un client a partir de son mail
      * @param email
      * @return
      */
@@ -153,7 +151,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
     
     /**
-     *
+     * Récupérer un panier à partir de son id
      * @param idPanier
      * @return
      * @throws PanierInconnuException
@@ -195,7 +193,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * payer le panier en fonction de son id, se base sur le client, son compte et le(s) produit(s) présent(s) dans le panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierEmptyException
@@ -213,7 +211,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
     
     /**
-     *
+     * Permet de retirer un exemplaire d'un produit dans un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -227,7 +225,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Permet de retirer tous les exemplaires d'un produit dans un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -241,7 +239,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Permet de supprimer un panier à partir de son id
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierAlreadyPayeException
@@ -254,7 +252,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
     
     /**
-     *
+     * Permet de récuperer toutes les informations d'un produit à partir de son id
      * @param idProduit
      * @return
      * @throws ProduitInconnuException
@@ -268,7 +266,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Récupère la liste des produits du type saisie
      * @param type
      * @return
      */
@@ -281,11 +279,10 @@ public class ExpoLeg implements ExpoLegLocal {
             resList.add(produitExport);
         }
         return resList;
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
-     *
+     * Permet de trouver tous les produits contenant la chaine de caractère saisie
      * @param nom
      * @return
      */
@@ -298,12 +295,10 @@ public class ExpoLeg implements ExpoLegLocal {
             resList.add(produitExport);
         }
         return resList;
-
-//throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     /**
-     *
+     * permet d'ajouter un produit donnée au panier actif d'un client (et le créer si nécessaire)
      * @param idProduit
      * @param idClient
      * @throws ClientInconnuException
@@ -315,7 +310,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Permet de récupérer le panier actif d'un client à partir de son id.
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -358,7 +353,7 @@ public class ExpoLeg implements ExpoLegLocal {
 
 
     /**
-     *
+     * Permet de récupérer l'ensemble des paniers d'un client en attente de livraison
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -404,7 +399,7 @@ public class ExpoLeg implements ExpoLegLocal {
     }
 
     /**
-     *
+     * Permet de récupérer l'ensemble des produits existants
      * @return
      */
     @Override
@@ -417,7 +412,6 @@ public class ExpoLeg implements ExpoLegLocal {
         }
         
         return listProduitExport;
-        
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
+

@@ -17,19 +17,19 @@ import javax.ejb.Local;
 public interface ExporLegLivrerLocal {
     
     /**
-     *
+     * Permet de passer au stade livré un panier
      * @param idPanier
      */
     public void livrerPanier(Long idPanier);
 
     /**
-     *
+     * Permet de lister l'ensemble des paniers pas encore livré
      * @return
      */
     public List<PanierExport> getListPanierNonLivre();
 
     /**
-     *
+     * Permet de lister l'ensemble des paniers livrés
      * @return
      */
     public List<PanierExport> getListPanierLivre();

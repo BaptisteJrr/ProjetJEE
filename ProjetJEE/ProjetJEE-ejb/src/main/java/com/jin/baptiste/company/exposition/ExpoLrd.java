@@ -36,7 +36,7 @@ public class ExpoLrd implements ExpoLrdRemote {
     private MetierCompteLocal metierCompte;
     
     /**
-     *
+     * Permet de créer un compte
      * @param solde
      * @param mail
      */
@@ -56,7 +56,7 @@ public class ExpoLrd implements ExpoLrdRemote {
     }
 
     /**
-     *
+     * Permet de créditer un compte d'une somme définit
      * @param id
      * @param somme
      */
@@ -72,7 +72,7 @@ public class ExpoLrd implements ExpoLrdRemote {
     }
 
     /**
-     *
+     * Permet de débiter un compte d'une somme définit
      * @param id
      * @param somme
      */
@@ -90,7 +90,7 @@ public class ExpoLrd implements ExpoLrdRemote {
     }
 
     /**
-     *
+     * Permet de récupérer le compte à partir de son id
      * @param idCompte
      * @return
      */
@@ -111,7 +111,7 @@ public class ExpoLrd implements ExpoLrdRemote {
     }
 
     /**
-     *
+     * Permet de récupérer le compte à partir de son mail
      * @param mail
      * @return
      */

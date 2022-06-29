@@ -34,11 +34,9 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     
     
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     /**
-     *
+     * Permet de passer au stade livré un panier
      * @param idPanier
      */
 
@@ -53,10 +51,8 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
         }
     }   
 
-    //on doit faire une algotithemique pour lister les panier avec leur adresse ou code postal asc ou decs 
-
     /**
-     *
+     * Permet de lister l'ensemble des paniers pas encore livré
      * @return
      */
     @Override
@@ -104,7 +100,7 @@ public class ExporLegLivrer implements ExporLegLivrerLocal {
     }
 
     /**
-     *
+     * Permet de lister l'ensemble des paniers livrés
      * @return
      */
     @Override

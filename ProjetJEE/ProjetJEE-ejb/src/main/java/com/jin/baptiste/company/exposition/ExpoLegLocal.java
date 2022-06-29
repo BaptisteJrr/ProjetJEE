@@ -35,10 +35,9 @@ import javax.ejb.Local;
  */
 @Local
 public interface ExpoLegLocal {
-    // Action du Client sur le Compte 
 
     /**
-     *
+     * Création du client ainsi que son compte
      * @param nom
      * @param prenom
      * @param mail
@@ -50,10 +49,9 @@ public interface ExpoLegLocal {
      * @throws ClientCompteAlreadyLinkedException
      */
     public void creerClient(String nom, String prenom, String mail, String adresse)throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientInconnuException, ClientCompteAlreadyLinkedException;
-//    public ClientExport getClient(Long id);
 
     /**
-     *
+     * Récupération d'un client à partir de son mail
      * @param mail
      * @return
      * @throws FormatInvalideException
@@ -62,7 +60,7 @@ public interface ExpoLegLocal {
     public ClientExport getClientByMail(String mail) throws FormatInvalideException, ClientInconnuException;
 
     /**
-     *
+     * Création du compte du client
      * @param solde
      * @param mail
      * @throws EmptyFieldException
@@ -71,19 +69,16 @@ public interface ExpoLegLocal {
      * @throws ClientCompteAlreadyLinkedException
      */
     public void creerCompte(Double solde, String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException;
-    //public void crediter(Long id, Double somme) throws CompteInconnuException, CompteSommeNegaException;
-    //public void debiter(Long id, Double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException;
-    //public Position getCompte(Long idCompte) throws CompteInconnuException;
-
+    
     /**
-     *
+     * Récupération des factures d'un client a partir de son mail
      * @param email
      * @return
      */
     public List<FactureExport> getFacture(String email);
     
     /**
-     *
+     * Permet de récuperer toutes les informations d'un produit à partir de son id
      * @param idProduit
      * @return
      * @throws ProduitInconnuException
@@ -91,22 +86,21 @@ public interface ExpoLegLocal {
     public ProduitExport getProduit(Long idProduit) throws ProduitInconnuException;
     
     /**
-     *
+     * Récupère la liste des produits du type saisie
      * @param type
      * @return
      */
     public List<ProduitExport> getProduitByType(TypeProduitEnum type);
-    // algo LIKE %%....
 
     /**
-     *
+     * Permet de trouver tous les produits contenant la chaine de caractère saisie
      * @param nom
      * @return
      */
     public List<ProduitExport> searchProduitByName(String nom);
         
     /**
-     *
+     * Récupérer un panier à partir de son id
      * @param idPanier
      * @return
      * @throws PanierInconnuException
@@ -114,7 +108,7 @@ public interface ExpoLegLocal {
     public PanierExport getPanier(Long idPanier) throws PanierInconnuException;
 
     /**
-     *
+     * payer le panier en fonction de son id, se base sur le client, son compte et le(s) produit(s) présent(s) dans le panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierEmptyException
@@ -129,7 +123,7 @@ public interface ExpoLegLocal {
     public void payerPanier(Long idPanier) throws PanierInconnuException, PanierEmptyException, CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException, PanierNoAccountLinkedToClientException, ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException;
    
     /**
-     *
+     * permet d'ajouter un produit donnée au panier actif d'un client (et le créer si nécessaire)
      * @param idProduit
      * @param idClient
      * @throws ClientInconnuException
@@ -138,7 +132,7 @@ public interface ExpoLegLocal {
     public void ajouterProduitToClient(Long idProduit, Long idClient) throws ClientInconnuException, ProduitInconnuException;
 
     /**
-     *
+     * Permet de retirer un exemplaire d'un produit dans un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -148,10 +142,9 @@ public interface ExpoLegLocal {
      */
     public void retirerProduit(Long idProduit, Long idPanier) throws PanierInconnuException,ProduitInconnuException,PanierAlreadyPayeException,PanierAlreadyLivreException;
     
-    //Nessecaire?
 
     /**
-     *
+     * Permet de retirer tous les exemplaires d'un produit dans un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -162,7 +155,7 @@ public interface ExpoLegLocal {
     public void retirerAllProduit(Long idProduit, Long idPanier) throws PanierInconnuException,ProduitInconnuException,PanierAlreadyPayeException,PanierAlreadyLivreException;
 
     /**
-     *
+     * Permet de supprimer un panier à partir de son id
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierAlreadyPayeException
@@ -171,7 +164,7 @@ public interface ExpoLegLocal {
     public void supprimerPanier(Long idPanier) throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException;
     
     /**
-     *
+     * Permet de récupérer le panier actif d'un client à partir de son id.
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -179,7 +172,7 @@ public interface ExpoLegLocal {
     public PanierExport getPanierActif(Long idClient) throws ClientInconnuException;
 
     /**
-     *
+     * Permet de récupérer l'ensemble des paniers d'un client en attente de livraison
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -187,7 +180,7 @@ public interface ExpoLegLocal {
     public List<PanierExport> getPanierNonLivreByClient(Long idClient) throws ClientInconnuException;
 
     /**
-     *
+     * Permet de récupérer l'ensemble des produits existants
      * @return
      */
     public List<ProduitExport> getListProduit();

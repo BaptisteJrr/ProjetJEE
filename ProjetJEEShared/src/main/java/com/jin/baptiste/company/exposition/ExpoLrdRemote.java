@@ -23,7 +23,7 @@ import javax.ejb.Remote;
 public interface ExpoLrdRemote {
     
     /**
-     *
+     * Permet de créer un compte
      * @param solde
      * @param mail
      * @throws EmptyFieldException
@@ -34,7 +34,7 @@ public interface ExpoLrdRemote {
     public void creerCompte(Double solde, String mail) throws EmptyFieldException, FormatInvalideException, ClientInconnuException, ClientCompteAlreadyLinkedException;
 
     /**
-     *
+     * Permet de créditer un compte d'une somme définit
      * @param id
      * @param somme
      * @throws CompteInconnuException
@@ -43,7 +43,7 @@ public interface ExpoLrdRemote {
     public void crediter(Long id, Double somme) throws CompteInconnuException, CompteSommeNegaException;
 
     /**
-     *
+     * Permet de débiter un compte d'une somme définit
      * @param id
      * @param somme
      * @throws CompteSoldeNegaException
@@ -53,7 +53,7 @@ public interface ExpoLrdRemote {
     public void debiter(Long id, Double somme) throws CompteSoldeNegaException, CompteInconnuException, CompteSommeNegaException;
 
     /**
-     *
+     * Permet de récupérer le compte à partir de son id
      * @param idCompte
      * @return
      * @throws CompteInconnuException
@@ -63,7 +63,7 @@ public interface ExpoLrdRemote {
     // by mail ou by idClient??
 
     /**
-     *
+     * Permet de récupérer le compte à partir de son mail
      * @param mail
      * @return
      * @throws FormatInvalideException
