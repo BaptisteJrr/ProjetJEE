@@ -24,7 +24,7 @@ import javax.ejb.Local;
 public interface MetierCompteLocal {
     
     /**
-     *
+     * creation d'un compte appele dans la methode creerClient
      * @param solde
      * @param email
      * @throws EmptyFieldException
@@ -36,7 +36,7 @@ public interface MetierCompteLocal {
     // au choix entre les deux
 
     /**
-     *
+     * Get Compte par idCompte
      * @param idCompte
      * @return
      * @throws CompteInconnuException
@@ -46,7 +46,7 @@ public interface MetierCompteLocal {
 //    public Compte getComptebyidClient(long idClient) throws ClientInconnuException, CompteInconnuException;
 
     /**
-     *
+     * crediter compte
      * @param idCompte
      * @param somme
      * @throws CompteInconnuException
@@ -57,7 +57,7 @@ public interface MetierCompteLocal {
     // throws CompteSoldeNegaException
 
     /**
-     *
+     * debiter compte
      * @param idCompte
      * @param somme
      * @throws CompteSoldeNegaException
@@ -69,7 +69,7 @@ public interface MetierCompteLocal {
     //Pour ClientLrd
 
     /**
-     *
+     * get compte par mail
      * @param mail
      * @return
      * @throws FormatInvalideException

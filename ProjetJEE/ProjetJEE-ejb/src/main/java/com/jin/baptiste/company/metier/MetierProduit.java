@@ -29,7 +29,7 @@ public class MetierProduit implements MetierProduitLocal {
     private ProduitFacadeLocal produitFacade;
     
     /**
-     *
+     * modifier les attributs d'un produit
      * @param idProduit
      * @param nom
      * @param description
@@ -57,7 +57,7 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * vendre un produit avec une quantite parametre
      * @param idProduit
      * @param quantite
      * @throws ProduitInconnuException
@@ -83,7 +83,7 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * stocker produit avec une quantite parametre
      * @param idProduit
      * @param quantite
      * @throws ProduitInconnuException
@@ -105,7 +105,7 @@ public class MetierProduit implements MetierProduitLocal {
             
     }
     /**
-     *
+     * supprimer produit
      * @param idProduit
      */
 
@@ -116,7 +116,7 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * creation d'un produit
      * @param nom
      * @param description
      * @param prixHT
@@ -147,9 +147,9 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * get produit par idProduit
      * @param idProduit
-     * @return
+     * @return produit
      * @throws ProduitInconnuException
      */
     @Override
@@ -163,8 +163,8 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
-     * @return
+     * get tous les types des produits
+     * @return List<TypeProduitEnum>
      */
     @Override
     public List<TypeProduitEnum> getAllType() {
@@ -175,9 +175,9 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * get produit par type
      * @param type
-     * @return
+     * @return List<Produit>
      */
     @Override
     public List<Produit> getProduitByType(TypeProduitEnum type) {
@@ -192,9 +192,9 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
+     * searche produit par le nom
      * @param nom
-     * @return
+     * @return List<Produit>
      */
     @Override
     public List<Produit> searchProduitByName(String nom) {
@@ -209,8 +209,8 @@ public class MetierProduit implements MetierProduitLocal {
     }
 
     /**
-     *
-     * @return
+     *get tous les produits
+     * @return List<TypeProduitEnum>
      */
     @Override
     public List<Produit> getAllProduit() {

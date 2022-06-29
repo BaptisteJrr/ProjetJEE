@@ -30,7 +30,7 @@ import javax.ejb.Local;
 public interface MetierPanierLocal {
     
     /**
-     *
+     * payer panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierEmptyException
@@ -45,7 +45,7 @@ public interface MetierPanierLocal {
     public void payer(long idPanier) throws PanierInconnuException,PanierEmptyException,CompteSoldeNegaException,CompteInconnuException,CompteSommeNegaException,PanierNoAccountLinkedToClientException,ProduitInconnuException, ProduitQuantiteNegativeException, ProduitStockInsuffisantException ;
         
     /**
-     *
+     * livrer panier
      * @param idPanier
      * @throws PanierNonPayeException
      * @throws PanierInconnuException
@@ -55,7 +55,7 @@ public interface MetierPanierLocal {
         //public void ajouterProduit(long idProduit,long idPanier);
 
     /**
-     *
+     * ajouter un produit dans le panier actif d'un client, s'il n'y pas de parnier courrant, la creation d'un panier est automatique
      * @param idProduit
      * @param idClient
      * @throws ClientInconnuException
@@ -64,7 +64,7 @@ public interface MetierPanierLocal {
         public void ajouterProduitByClient(long idProduit, Long idClient)throws ClientInconnuException, ProduitInconnuException;
 
     /**
-     *
+     * retirer un produit d'un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -75,7 +75,7 @@ public interface MetierPanierLocal {
     public void retirerProduit(long idProduit, long idPanier) throws PanierInconnuException, ProduitInconnuException, PanierAlreadyPayeException,PanierAlreadyLivreException;
     
     /**
-     *
+     * retirer tous les produits
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -86,7 +86,7 @@ public interface MetierPanierLocal {
     public void retirerAllProduit(long idProduit, long idPanier)throws PanierInconnuException,ProduitInconnuException, PanierAlreadyLivreException, PanierAlreadyPayeException;
         
     /**
-     *
+     * supprimer panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierAlreadyPayeException
@@ -95,47 +95,44 @@ public interface MetierPanierLocal {
     public void supprimerPanier(long idPanier)throws PanierInconnuException, PanierAlreadyPayeException, PanierAlreadyLivreException;
         
     /**
-     *
+     * get panier par idPanier
      * @param idPanier
-     * @return
+     * @return panier
      * @throws PanierInconnuException
      */
     public Panier getPanier(long idPanier) throws PanierInconnuException;
-        
-        //public List<Panier> getPanier();    
-//        public List<Panier> getPanierNonPaye();       
+          
 
     /**
-     *
-     * @return
+     * get la list Panier paye
+     * @return List<Panier>
      */
         public List<Panier> getPanierPaye();
-        //suivre la livraison par client?   public List<Panier> getPanierNonLivreByClient(long idClient);
 
     /**
-     *
+     * get la listPanier non livre d'un client
      * @param idClient
-     * @return
+     * @return list<Panier>
      * @throws ClientInconnuException
      */
         public List<Panier> getPanierNonLivreByClient(long idClient) throws ClientInconnuException;
 
     /**
-     *
-     * @return
+     * get la listPanier non livre
+     * @return list<Panier>
      */
     public List<Panier> getPanierNonLivre();
 
     /**
-     *
-     * @return
+     * get la listPanier livre
+     * @return list<Panier>
      */
     public List<Panier> getPanierLivre();
 
     /**
-     *
+     * get panier courrant d'un client
      * @param idClient
-     * @return
+     * @return panier
      * @throws ClientInconnuException
      */
     public Panier getPanierActif(Long idClient) throws ClientInconnuException;

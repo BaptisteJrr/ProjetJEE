@@ -30,7 +30,7 @@ public class MetierClient implements MetierClientLocal {
     private ClientFacadeLocal clientFacade;
     
     /**
-     *
+     * creation d'un client avec un compte attache
      * @param nom
      * @param prenom
      * @param email
@@ -61,6 +61,7 @@ public class MetierClient implements MetierClientLocal {
             c.setPrenom(prenom);
             c.setAdresse(adresse);
             this.clientFacade.create(c);
+            //Creation du compte
             this.metierCompte.creerCompte(0.0, email);
             
         }else{
@@ -69,7 +70,7 @@ public class MetierClient implements MetierClientLocal {
     }
 
     /**
-     *
+     * get client par idClient
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -84,7 +85,7 @@ public class MetierClient implements MetierClientLocal {
     }  
 
     /**
-     *
+     * verificatoion du mail d'un client existe
      * @param email
      * @return
      * @throws FormatInvalideException
@@ -105,7 +106,7 @@ public class MetierClient implements MetierClientLocal {
 
 
     /**
-     *
+     * get client par mail
      * @param email
      * @return
      * @throws FormatInvalideException

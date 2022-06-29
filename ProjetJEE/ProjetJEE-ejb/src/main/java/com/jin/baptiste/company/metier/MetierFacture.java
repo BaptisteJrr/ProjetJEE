@@ -30,7 +30,7 @@ public class MetierFacture implements MetierFactureLocal {
     private FactureFacadeLocal factureFacade;
 
     /**
-     *
+     * creation d'une facture 
      * @param p
      */
     @Override
@@ -52,9 +52,9 @@ public class MetierFacture implements MetierFactureLocal {
 
 
     /**
-     *
+     * get facutre par mail
      * @param mail
-     * @return
+     * @return la list<Facture>
      */
 
     @Override

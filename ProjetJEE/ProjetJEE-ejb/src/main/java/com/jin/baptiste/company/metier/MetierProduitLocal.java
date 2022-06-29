@@ -23,7 +23,7 @@ import javax.ejb.Local;
 public interface MetierProduitLocal {
     
     /**
-     *
+     * modifier les attributs d'un produit
      * @param idProduit
      * @param nom
      * @param description
@@ -34,15 +34,15 @@ public interface MetierProduitLocal {
     public void modifierProduit(long idProduit, String nom, String description, double prixHT, TypeProduitEnum type) throws ProduitInconnuException;
     
     /**
-     *
+     * get produit par idProduit
      * @param idProduit
-     * @return
+     * @return produit
      * @throws ProduitInconnuException
      */
     public Produit getProduit(Long idProduit) throws ProduitInconnuException;
     
     /**
-     *
+     * vendre un produit avec une quantite parametre
      * @param idProduit
      * @param quantite
      * @throws ProduitInconnuException
@@ -52,7 +52,7 @@ public interface MetierProduitLocal {
     public void vendreProduit(long idProduit, int quantite) throws ProduitInconnuException, ProduitStockInsuffisantException, ProduitQuantiteNegativeException;
     
     /**
-     *
+     * stocker produit avec une quantite parametre
      * @param idProduit
      * @param quantite
      * @throws ProduitInconnuException
@@ -61,13 +61,13 @@ public interface MetierProduitLocal {
     public void stockerProduit(long idProduit, int quantite) throws ProduitInconnuException,ProduitQuantiteNegativeException;
     
     /**
-     *
+     * supprimer produit
      * @param idProduit
      */
     public void supprimerProduit(long idProduit);
     
     /**
-     *
+     * creation d'un produit
      * @param nom
      * @param description
      * @param prixHT
@@ -80,28 +80,28 @@ public interface MetierProduitLocal {
     public void creerProduit(String nom, String description, double prixHT, TypeProduitEnum type, int stock) throws EmptyFieldException,ProduitQuantiteNegativeException, ProduitPrixNegativeException;
     
     /**
-     *
-     * @return
+     * get tous les types des produits
+     * @return List<TypeProduitEnum>
      */
     public List<TypeProduitEnum> getAllType();
     
     /**
-     *
+     * get produit par type
      * @param type
-     * @return
+     * @return List<Produit>
      */
     public List<Produit> getProduitByType(TypeProduitEnum type);
     
     /**
-     *
+     * searche produit par le nom
      * @param nom
-     * @return
+     * @return List<Produit>
      */
     public List<Produit> searchProduitByName(String nom);
     
     /**
-     *
-     * @return
+     * get tous les produits
+     * @return List<TypeProduitEnum>
      */
     public List<Produit> getAllProduit();
 }

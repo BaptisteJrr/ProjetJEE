@@ -21,7 +21,7 @@ import javax.ejb.Local;
 public interface MetierClientLocal {
     
     /**
-     *
+     * creation d'un client avec un compte attache
      * @param nom
      * @param prenom
      * @param email
@@ -35,7 +35,7 @@ public interface MetierClientLocal {
     public void creerClient(String nom, String prenom, String email, String adresse) throws FormatInvalideException, EmptyFieldException, ClientAlreadyExistException, ClientInconnuException, ClientCompteAlreadyLinkedException;
     
     /**
-     *
+     * get client par idClient
      * @param idClient
      * @return
      * @throws ClientInconnuException
@@ -43,19 +43,18 @@ public interface MetierClientLocal {
     public Client getClient(long idClient) throws ClientInconnuException;
     
     /**
-     *
+     * verification du client
      * @param email
-     * @return
+     * @return boolean
      * @throws FormatInvalideException
      */
     public boolean authentification(String email) throws FormatInvalideException;
     
-    //public void ajouterPanier(Panier panier, long idCLient) throws ClientInconnuException;
 
     /**
-     *
+     * get client par email
      * @param email
-     * @return
+     * @return client
      * @throws FormatInvalideException
      * @throws ClientInconnuException
      */

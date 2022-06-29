@@ -36,7 +36,7 @@ public class MetierCompte implements MetierCompteLocal {
     private CompteFacadeLocal compteFacade;
     
     /**
-     *
+     * creation d'un compte appele dans la methode creerClient
      * @param solde
      * @param email
      * @throws EmptyFieldException
@@ -78,7 +78,7 @@ public class MetierCompte implements MetierCompteLocal {
     }
 
     /**
-     *
+     * crediter un compte
      * @param idCompte
      * @param somme
      * @throws CompteInconnuException
@@ -102,7 +102,7 @@ public class MetierCompte implements MetierCompteLocal {
     }
 
     /**
-     *
+     * debiter un compte
      * @param idCompte
      * @param somme
      * @throws CompteInconnuException
@@ -130,7 +130,7 @@ public class MetierCompte implements MetierCompteLocal {
     }
 
     /**
-     *
+     * get compte par idCompte
      * @param idCompte
      * @return
      * @throws CompteInconnuException
@@ -147,7 +147,7 @@ public class MetierCompte implements MetierCompteLocal {
     }
 
     /**
-     *
+     * get compte par mail 
      * @param mail
      * @return
      * @throws FormatInvalideException

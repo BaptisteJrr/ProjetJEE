@@ -69,7 +69,7 @@ public class MetierPanier implements MetierPanierLocal {
     private PanierFacadeLocal panierFacade;
     
     /**
-     *
+     * payer panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws CompteSoldeNegaException
@@ -143,7 +143,7 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * livrer panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierNonPayeException
@@ -167,7 +167,7 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * retirer un produit d'un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierInconnuException
@@ -210,7 +210,7 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * retirer tous les produits d'un panier
      * @param idProduit
      * @param idPanier
      * @throws PanierAlreadyPayeException
@@ -249,7 +249,7 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * supprimer un panier
      * @param idPanier
      * @throws PanierInconnuException
      * @throws PanierAlreadyPayeException
@@ -271,9 +271,9 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * get panier par idPanier
      * @param idPanier
-     * @return
+     * @return panier
      * @throws PanierInconnuException
      */
     @Override
@@ -286,8 +286,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
     
     /**
-     *
-     * @return
+     * get la list Panier paye
+     * @return List<Panier>
      */
 
     @Override
@@ -302,8 +302,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
-     * @return
+     * get la listPanier non livre
+     * @return List<Panier>
      */
     @Override
     public List<Panier> getPanierNonLivre() {
@@ -318,8 +318,8 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
-     * @return
+     * get la listPanier livre
+     * @return List<Panier>
      */
     @Override
     public List<Panier> getPanierLivre() {
@@ -333,7 +333,7 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * ajouter un produit dans le panier actif d'un client, s'il n'y pas de parnier courrant, la creation d'un panier est automatique
      * @param idProduit
      * @param idClient
      * @throws ClientInconnuException
@@ -423,9 +423,9 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * get panier courrant d'un client
      * @param idClient
-     * @return
+     * @return panier
      * @throws ClientInconnuException
      */
     @Override
@@ -446,12 +446,11 @@ public class MetierPanier implements MetierPanierLocal {
     }
 
     /**
-     *
+     * get la listPanier non livre d'un client
      * @param idClient
-     * @return
+     * @return list<Panier>
      * @throws ClientInconnuException
      */
-
     @Override
     public List<Panier> getPanierNonLivreByClient(long idClient) throws ClientInconnuException {
         Client clt = this.clientFacade.find(idClient);
